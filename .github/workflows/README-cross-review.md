@@ -48,3 +48,8 @@ strictly advisory.
 ```
 python3 -m unittest .github.workflows.pr_cross_review_test
 ```
+
+## Verification (2026-05-17)
+
+This line is here to trigger an end-to-end run of the cross-review action
+against a real PR diff, with LITELLM_API_KEY now set as an org secret.
