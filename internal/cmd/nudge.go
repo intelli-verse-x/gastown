@@ -37,12 +37,14 @@ func hasACPSessionByName(townRoot, sessionName string) bool {
 }
 
 var (
-	nudgeMessageFlag  string
-	nudgeForceFlag    bool
-	nudgeStdinFlag    bool
-	nudgeIfFreshFlag  bool
-	nudgeModeFlag     string
-	nudgePriorityFlag string
+	nudgeMessageFlag    string
+	nudgeForceFlag      bool
+	nudgeStdinFlag      bool
+	nudgeIfFreshFlag    bool
+	nudgeModeFlag       string
+	nudgePriorityFlag   string
+	nudgeBeadFlag       string
+	nudgeAllowProseFlag bool
 )
 
 // Nudge delivery modes.
@@ -66,6 +68,8 @@ func init() {
 	nudgeCmd.Flags().BoolVar(&nudgeIfFreshFlag, "if-fresh", false, "Only send if caller's tmux session is <60s old (suppresses compaction nudges)")
 	nudgeCmd.Flags().StringVar(&nudgeModeFlag, "mode", NudgeModeWaitIdle, "Delivery mode: wait-idle (default), queue, or immediate")
 	nudgeCmd.Flags().StringVar(&nudgePriorityFlag, "priority", nudge.PriorityNormal, "Queue priority: normal (default) or urgent")
+	nudgeCmd.Flags().StringVar(&nudgeBeadFlag, "bead", "", "Send an attention pointer to a bead. Body is built from the bead's title/type/priority/status; -m/--stdin (if any) is a short note (≤280 chars). State lives in the bead.")
+	nudgeCmd.Flags().BoolVar(&nudgeAllowProseFlag, "allow-prose", false, "Silence the prose lint for this call. Use only for legitimate one-off prose; state-bearing pings should use --bead instead.")
 }
 
 var nudgeCmd = &cobra.Command{
@@ -112,6 +116,18 @@ DND (Do Not Disturb):
   If the target has DND enabled (gt dnd on), the nudge is skipped.
   Use --force to override DND and send anyway.
 
+State lives in beads. Nudges carry attention, not state. For task handoffs
+or any message that "is" the work, point at a bead instead of narrating it:
+
+  bd create --title "Fix login redirect" --type bug --priority 1   # state
+  gt nudge greenplace/Toast --bead bd-abc123                       # pointer
+
+When --bead is used the body is built from the bead's current title, type,
+priority, and status, and recipients are told to run "bd show <id>" for the
+authoritative state. A short attention note (-m, ≤280 chars) may ride along.
+Prose nudges over 800 chars without --bead print a soft warning; pass
+--allow-prose to silence it for one-offs.
+
 Examples:
   gt nudge greenplace/furiosa "Check your mail and start working"
   gt nudge greenplace/alpha -m "What's your status?"
@@ -119,6 +135,8 @@ Examples:
   gt nudge witness "Check polecat health"
   gt nudge deacon session-started
   gt nudge channel:workers "New priority work available"
+  gt nudge greenplace/Toast --bead bd-abc123
+  gt nudge greenplace/refinery --bead bd-xyz789 -m "blocker — auth 500"
 
   # Use --stdin for messages with special characters or formatting:
   gt nudge gastown/alpha --stdin <<'EOF'
@@ -411,14 +429,30 @@ func runNudge(cmd *cobra.Command, args []string) (retErr error) {
 		nudgeMessageFlag = strings.TrimRight(string(data), "\n")
 	}
 
-	// Get message from -m flag or positional arg
+	// Get message from -m flag or positional arg. When --bead is set the
+	// positional/-m text is treated as an optional short note, not as the
+	// message — the body is built from the bead.
 	var message string
 	if nudgeMessageFlag != "" {
 		message = nudgeMessageFlag
 	} else if len(args) >= 2 {
 		message = args[1]
-	} else {
+	} else if nudgeBeadFlag == "" {
 		return fmt.Errorf("message required: use -m flag or provide as second argument")
+	}
+
+	// Beads-as-source-of-truth: --bead rewrites the body into an attention
+	// pointer so the wire format never embeds state. User-supplied text is
+	// preserved as a short note (capped) attached to the pointer.
+	if nudgeBeadFlag != "" {
+		townRootForBead, _ := workspace.FindFromCwd()
+		pointer, err := BuildBeadPointerBody(townRootForBead, nudgeBeadFlag, message)
+		if err != nil {
+			return fmt.Errorf("--bead: %w", err)
+		}
+		message = pointer
+	} else {
+		_ = WarnIfProseState(message, false, nudgeAllowProseFlag, "gt nudge <target>")
 	}
 
 	// Identify sender for message prefix (needed before channel check)

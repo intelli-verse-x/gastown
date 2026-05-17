@@ -34,6 +34,12 @@ var (
 	mailReplyMessage  string
 	mailStdin         bool // Read message body from stdin
 
+	// Beads-as-source-of-truth flags. --bead converts the body into an
+	// attention pointer at a bead (no state in the wire format).
+	// --allow-prose silences the prose lint for legitimate one-off messages.
+	mailBead       string
+	mailAllowProse bool
+
 	// Search flags
 	mailSearchFrom    string
 	mailSearchSubject bool
@@ -126,6 +132,19 @@ Priority levels:
 
 Use --urgent as shortcut for --priority 0.
 
+State lives in beads. Mail carries attention, not state. For task handoffs,
+status updates, or anything that "is" the work, create a bead and point at
+it instead of embedding the work in the message body:
+
+  bd create --title "Fix login redirect" --type bug --priority 1   # state
+  gt mail send greenplace/Toast -s "Work for you" --bead bd-abc123 # pointer
+
+When --bead is used the body is built from the bead's current title, type,
+priority, and status — recipients are told to run "bd show <id>" for the
+authoritative state. A short note (-m, ≤280 chars) may be attached to the
+pointer. Prose messages over 800 chars without --bead print a soft warning;
+pass --allow-prose to silence it for one-offs.
+
 Examples:
   gt mail send greenplace/Toast -s "Status check" -m "How's that bug fix going?"
   gt mail send mayor/ -s "Work complete" -m "Finished gt-abc"
@@ -136,6 +155,8 @@ Examples:
   gt mail send --self -s "Handoff" -m "Context for next session"
   gt mail send greenplace/Toast -s "Update" -m "Progress report" --cc overseer
   gt mail send list:oncall -s "Alert" -m "System down"
+  gt mail send greenplace/Toast -s "Ready for review" --bead bd-abc123
+  gt mail send greenplace/refinery -s "Blocker" --bead bd-xyz789 -m "auth call returns 500"
 
   # Read body from stdin (avoids shell quoting issues):
   gt mail send mayor/ -s "Update" --stdin <<'BODY'
@@ -477,6 +498,8 @@ func init() {
 	mailSendCmd.Flags().StringVar(&mailFrom, "from", "", "Override sender address (for relay/bridge use)")
 	mailSendCmd.Flags().BoolVar(&mailSendSelf, "self", false, "Send to self (auto-detect from cwd)")
 	mailSendCmd.Flags().StringArrayVar(&mailCC, "cc", nil, "CC recipients (can be used multiple times)")
+	mailSendCmd.Flags().StringVar(&mailBead, "bead", "", "Send an attention pointer to a bead. Body is built from the bead's title/type/priority/status; -m/--stdin (if any) is treated as a short note (≤280 chars). State lives in the bead.")
+	mailSendCmd.Flags().BoolVar(&mailAllowProse, "allow-prose", false, "Silence the prose lint for this call. Use only for legitimate one-off prose; state-bearing messages should use --bead instead.")
 	_ = mailSendCmd.MarkFlagRequired("subject") // cobra flags: error only at runtime if missing
 
 	// Inbox flags

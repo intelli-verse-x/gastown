@@ -30,6 +30,21 @@ func runMailSend(cmd *cobra.Command, args []string) error {
 		mailBody = strings.TrimRight(string(data), "\n")
 	}
 
+	// Beads-as-source-of-truth: --bead rewrites the body into an attention
+	// pointer at the bead so the wire format never embeds state. Any user
+	// body becomes a short note attached to the pointer.
+	if mailBead != "" {
+		townRootForBead, _ := workspace.FindFromCwd()
+		pointer, err := BuildBeadPointerBody(townRootForBead, mailBead, mailBody)
+		if err != nil {
+			return fmt.Errorf("--bead: %w", err)
+		}
+		mailBody = pointer
+	} else {
+		// Soft lint: large prose body without --bead is the A2A anti-pattern.
+		_ = WarnIfProseState(mailBody, false, mailAllowProse, "gt mail send <to>")
+	}
+
 	var to string
 
 	if mailSendSelf {
