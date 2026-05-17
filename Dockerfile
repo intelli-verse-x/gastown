@@ -45,6 +45,12 @@ RUN echo 'export COLORTERM="truecolor"' >> /etc/profile.d/colorterm.sh && \
 RUN echo 'export TERM="xterm-256color"' >> /etc/profile.d/term.sh && \
     echo 'export TERM="xterm-256color"' >> /etc/zsh/zshenv
 
+# Bake `firecrawl-cli` into the image so audit/remediation agents always have it
+# (the running pod has read-only npm-global, so a runtime npm -g install fails as
+# the unprivileged agent user). Installing here as root mirrors how the base
+# image bakes in `claude`.
+RUN npm install -g firecrawl-cli
+
 USER agent
 
 COPY --chown=agent:agent . /app/gastown
