@@ -61,17 +61,23 @@ type MCPConfig struct {
 //	auditor  | firecrawl, intelli-verse-x
 //	seo      | firecrawl, intelli-verse-x
 //	geo      | firecrawl, intelli-verse-x
-//	content  | firecrawl, intelli-verse-x
+//	content  | firecrawl, intelli-verse-x, leantime
 //	qa       | intelli-verse-x, cursor-ide-browser
 //	crew     | firecrawl, intelli-verse-x   (broad default for code-edit roles)
 //	polecats | firecrawl, intelli-verse-x
 //	witness  | intelli-verse-x              (coordinator, narrow surface)
 //	refinery | intelli-verse-x              (gate role, narrow surface)
-//	mayor    | firecrawl, intelli-verse-x, n8n-mcp
-//	deacon   | firecrawl, intelli-verse-x, n8n-mcp
+//	mayor    | firecrawl, intelli-verse-x, n8n-mcp, leantime
+//	deacon   | firecrawl, intelli-verse-x, n8n-mcp, leantime
 //
 // Nothing gets unityMCP or nakama-hiro-satori by default; rigs that need
 // those servers must opt in via an on-disk override.
+//
+// Leantime is wired into the strategic coordinators (mayor, deacon) and
+// the content role because those are the surfaces that translate Leantime
+// tickets into agent-actionable work. Specialists (seo/geo/auditor/qa)
+// stay narrow — they don't need ticket access; their bead is the unit of
+// work.
 func DefaultMCPOverrides() map[string]*MCPConfig {
 	deny := false
 	allow := func(servers ...string) *MCPConfig {
@@ -83,14 +89,14 @@ func DefaultMCPOverrides() map[string]*MCPConfig {
 		"auditor":  allow("firecrawl", "intelli-verse-x"),
 		"seo":      allow("firecrawl", "intelli-verse-x"),
 		"geo":      allow("firecrawl", "intelli-verse-x"),
-		"content":  allow("firecrawl", "intelli-verse-x"),
+		"content":  allow("firecrawl", "intelli-verse-x", "leantime"),
 		"qa":       allow("intelli-verse-x", "cursor-ide-browser"),
 		"crew":     allow("firecrawl", "intelli-verse-x"),
 		"polecats": allow("firecrawl", "intelli-verse-x"),
 		"witness":  allow("intelli-verse-x"),
 		"refinery": allow("intelli-verse-x"),
-		"mayor":    allow("firecrawl", "intelli-verse-x", "n8n-mcp"),
-		"deacon":   allow("firecrawl", "intelli-verse-x", "n8n-mcp"),
+		"mayor":    allow("firecrawl", "intelli-verse-x", "n8n-mcp", "leantime"),
+		"deacon":   allow("firecrawl", "intelli-verse-x", "n8n-mcp", "leantime"),
 	}
 }
 
