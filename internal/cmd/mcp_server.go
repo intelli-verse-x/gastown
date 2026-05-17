@@ -18,7 +18,7 @@
 //     by ExcludeFlags so they can't leak through tool schemas or be set by
 //     a remote model.
 //   - Inherited persistent flags are NOT exposed (NoFlags); models should
-//     not be able to flip global gt behaviour through any subcommand.
+//     not be able to flip global gt behavior through any subcommand.
 //   - A 5-minute per-tool timeout is enforced by middleware so a hung
 //     subprocess can't pin the MCP server.
 //
