@@ -44,10 +44,18 @@ WORKFLOW:
 
 CONFIGURATION:
   Routing is configured in ~/gt/settings/escalation.json:
-  - routes: Map severity to action lists (bead, mail:mayor, email:human, sms:human)
-  - contacts: Human email/SMS for external notifications
+  - routes: Map severity to action lists. Valid actions:
+      bead, mail:mayor, email:human, sms:human, slack, discord, log
+  - contacts: Human email/SMS plus webhook URLs (slack, discord, sms)
   - stale_threshold: When unacked escalations are re-escalated (default: 4h)
   - max_reescalations: How many times to bump severity (default: 2)
+
+  Discord routing:
+  - Set DISCORD_WEBHOOK_URL env var (preferred — keeps the token out of disk
+    config) or contacts.discord_webhook in settings/escalation.json.
+  - Add "discord" to the action list for each severity you want to mirror to
+    the channel. Embeds use a severity-colored bar (critical=red, high=orange,
+    medium=yellow, low=green) so triage stays scannable.
 
 Examples:
   gt escalate "Build failing" --severity critical --reason "CI blocked"

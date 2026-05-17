@@ -698,6 +698,30 @@ func executeExternalActions(actions []string, cfg *config.EscalationConfig, bead
 			}
 			statuses = append(statuses, status)
 
+		case action == "discord":
+			// Resolve the webhook URL with env precedence: DISCORD_WEBHOOK_URL
+			// wins over the config file. This is deliberate — in K8s the URL
+			// lives in a Secret and gets injected as an env var, so the
+			// settings/escalation.json on disk never has to carry the token.
+			status := deliveryStatus{Channel: "discord", Target: "discord", Severity: severity}
+			webhook := os.Getenv("DISCORD_WEBHOOK_URL")
+			if webhook == "" {
+				webhook = cfg.Contacts.DiscordWebhook
+			}
+			if webhook == "" {
+				status.Warning = "discord webhook not configured"
+				style.PrintWarning("discord action skipped: set DISCORD_WEBHOOK_URL env or contacts.discord_webhook in settings/escalation.json")
+			} else {
+				if err := sendEscalationDiscord(webhook, beadID, severity, description); err != nil {
+					status.Error = err.Error()
+					style.PrintWarning("discord post failed: %v", err)
+				} else {
+					status.RuntimeNotified = true
+					fmt.Printf("  🎮 Posted to Discord\n")
+				}
+			}
+			statuses = append(statuses, status)
+
 		case action == "log":
 			status := deliveryStatus{Channel: "log", Target: "log", Severity: severity}
 			if err := writeEscalationLog(townRoot, beadID, severity, description); err != nil {
@@ -776,6 +800,75 @@ func sendEscalationSlack(cfg *config.EscalationConfig, beadID, severity, descrip
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		respBody, _ := io.ReadAll(resp.Body)
 		return fmt.Errorf("slack webhook returned %d: %s", resp.StatusCode, string(respBody))
+	}
+	return nil
+}
+
+// discordSeverityColor maps an escalation severity to a Discord embed color
+// (decimal-encoded RGB). Discord renders the embed left-bar in this color so
+// readers can triage at a glance.
+func discordSeverityColor(severity string) int {
+	switch severity {
+	case config.SeverityCritical:
+		return 0xE53935 // red
+	case config.SeverityHigh:
+		return 0xFB8C00 // orange
+	case config.SeverityMedium:
+		return 0xFDD835 // yellow
+	case config.SeverityLow:
+		return 0x43A047 // green
+	default:
+		return 0x9E9E9E // grey
+	}
+}
+
+// sendEscalationDiscord posts an escalation as a Discord embed. Embeds carry
+// more structure than plain text (color bar, fields, footer) so triage in
+// the channel can stay close to bead-level fidelity without re-encoding state.
+//
+// Beads is still the source of truth: the embed includes the bead ID and a
+// "bd show <id>" instruction so the reader's next step lands them on the
+// authoritative version, not the snapshot embedded here.
+func sendEscalationDiscord(webhookURL, beadID, severity, description string) error {
+	if webhookURL == "" {
+		return errors.New("discord webhook URL is empty")
+	}
+
+	embed := map[string]any{
+		"title":       fmt.Sprintf("[%s] Escalation %s", strings.ToUpper(severity), beadID),
+		"description": description,
+		"color":       discordSeverityColor(severity),
+		"fields": []map[string]any{
+			{"name": "Severity", "value": strings.ToUpper(severity), "inline": true},
+			{"name": "Bead", "value": beadID, "inline": true},
+			{"name": "Acknowledge", "value": fmt.Sprintf("`gt escalate ack %s`", beadID), "inline": false},
+		},
+		"footer": map[string]any{
+			"text": "state lives in beads — run `bd show " + beadID + "` for current state",
+		},
+		"timestamp": time.Now().UTC().Format(time.RFC3339),
+	}
+
+	payload := map[string]any{
+		"username":   "Gas Town",
+		"avatar_url": "https://raw.githubusercontent.com/steveyegge/gastown/main/docs/assets/logo.png",
+		"embeds":     []any{embed},
+	}
+
+	body, err := json.Marshal(payload)
+	if err != nil {
+		return fmt.Errorf("marshaling discord payload: %w", err)
+	}
+
+	resp, err := http.Post(webhookURL, "application/json", strings.NewReader(string(body)))
+	if err != nil {
+		return fmt.Errorf("posting to discord: %w", err)
+	}
+	defer func() { _ = resp.Body.Close() }()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		respBody, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("discord webhook returned %d: %s", resp.StatusCode, string(respBody))
 	}
 	return nil
 }
