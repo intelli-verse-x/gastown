@@ -72,6 +72,40 @@ creates nothing. **Default to nudge for routine agent-to-agent communication.**
 Only use mail when the message MUST survive the recipient's session death
 (handoffs, structured protocol messages, escalations). See `mail-protocol.md`.
 
+### Beads is the only source of truth
+
+A coordinator routing free-form prose between specialized agents is the
+agent-to-agent (A2A) anti-pattern: context drifts every hop because each
+agent re-interprets natural language. Beads is the versioned backbone that
+breaks the drift. So:
+
+- **State lives in beads.** Task definitions, status, plans, results,
+  blockers, decisions — all of it goes into a bead via `bd create` /
+  `bd update`. Beads commits to Dolt, which is versioned and auditable.
+- **Nudge and mail carry attention, not state.** Their job is "look here,"
+  not "do this thing whose definition I am about to narrate at you."
+
+Use the `--bead` flag on both commands so the wire format points at the
+authoritative bead instead of re-encoding it:
+
+```bash
+bd create --title "Fix login redirect" --type bug --priority 1
+# → bd-abc123
+
+{{cmd}} mail send greenplace/Toast -s "Work for you" --bead bd-abc123
+{{cmd}} nudge greenplace/Toast --bead bd-abc123 -m "blocker on auth — see comment"
+```
+
+The body is built from the bead's current title/type/priority/status, and
+the recipient is directed to `bd show <id>` for the authoritative state.
+An optional `-m`/`--stdin` is allowed as a short attention note (≤280 chars)
+— anything longer is truncated. If you find yourself wanting to write a long
+prose note, you are about to re-encode state; create or update a bead instead.
+
+If you genuinely need to send a long one-off prose message (e.g. a
+human-readable explanation that does not represent state), pass
+`--allow-prose` to silence the lint. Treat this as the exception, not the rule.
+
 ## Agent Memory
 
 **Use `{{cmd}} remember`, not MEMORY.md.** Memories are stored in beads and injected

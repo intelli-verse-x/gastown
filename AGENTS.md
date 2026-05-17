@@ -80,6 +80,36 @@ git push              # Push to remote
 This workspace is part of a **Gas Town** multi-agent environment. You communicate
 with other agents using `gt` commands — never by printing text or using raw tmux.
 
+### Beads is the only source of truth
+
+A coordinator routing free-form prose between specialized agents is the
+agent-to-agent (A2A) anti-pattern: context drifts every hop because each
+agent re-interprets the natural language. Beads is the versioned backbone
+that breaks the drift, so:
+
+- **State lives in beads.** Task definitions, plans, status, results,
+  blockers, decisions — all of it goes into a bead via `bd create` /
+  `bd update`. Beads commits to Dolt, which is versioned and auditable.
+- **Nudge and mail carry attention, not state.** They mean "look here,"
+  not "do this thing whose definition I am about to narrate at you."
+
+Use `--bead` on both commands. The wire format then points at the bead
+instead of re-encoding it:
+
+```bash
+bd create --title "Fix login redirect" --type bug --priority 1
+# → bd-abc123
+
+gt mail send greenplace/Toast -s "Work for you" --bead bd-abc123
+gt nudge greenplace/Toast --bead bd-abc123 -m "blocker — auth 500"
+```
+
+The body is built from the bead's current title/type/priority/status; the
+recipient is told to `bd show <id>` for authoritative state. An optional
+`-m` note (≤280 chars) may ride along. If your "note" is more than a
+sentence, you are re-encoding state — update the bead instead. Pass
+`--allow-prose` only for genuine one-off prose messages.
+
 ### Nudging Agents (Immediate Delivery)
 
 `gt nudge` sends a message directly to another agent's active session:
