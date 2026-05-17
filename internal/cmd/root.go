@@ -128,12 +128,12 @@ func persistentPreRun(cmd *cobra.Command, args []string) error {
 	cmdName := cmd.Name()
 
 	// Check for stale binary (warning only, doesn't block)
-	if !beadsExemptCommands[cmdName] {
+	if !beadsExemptCommands[cmdName] && !isMCPCommand(cmd) {
 		checkStaleBinaryWarning()
 	}
 
 	// Check town root branch (warning only, non-blocking)
-	if !branchCheckExemptCommands[cmdName] {
+	if !branchCheckExemptCommands[cmdName] && !isMCPCommand(cmd) {
 		warnIfTownRootOffMain()
 	}
 
@@ -144,7 +144,7 @@ func persistentPreRun(cmd *cobra.Command, args []string) error {
 	touchPolecatHeartbeat()
 
 	// Skip beads check for exempt commands
-	if beadsExemptCommands[cmdName] || isRoleCommand(cmd) {
+	if beadsExemptCommands[cmdName] || isRoleCommand(cmd) || isMCPCommand(cmd) {
 		return nil
 	}
 
@@ -163,6 +163,20 @@ func persistentPreRun(cmd *cobra.Command, args []string) error {
 func isRoleCommand(cmd *cobra.Command) bool {
 	for c := cmd; c != nil; c = c.Parent() {
 		if c.Name() == "role" {
+			return true
+		}
+	}
+	return false
+}
+
+// isMCPCommand returns true when the invoked command belongs to the `gt mcp` tree
+// (added by internal/cmd/mcp.go via ophis). The MCP server and its config-mgmt
+// helpers must run cleanly without bd / branch warnings polluting their stdout
+// (the MCP stdio transport speaks JSON-RPC over stdout and the editor configs
+// are parsed verbatim).
+func isMCPCommand(cmd *cobra.Command) bool {
+	for c := cmd; c != nil; c = c.Parent() {
+		if c.Name() == "mcp" {
 			return true
 		}
 	}
