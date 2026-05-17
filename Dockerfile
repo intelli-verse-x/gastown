@@ -30,6 +30,10 @@ ENV PATH="/app/gastown:/usr/local/go/bin:/home/agent/go/bin:${PATH}"
 RUN curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
 RUN curl -fsSL https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
 
+# Install Anthropic Claude Code CLI (required by `gt start` agent runner).
+# The base image already includes node; reinstall pinned to keep upgrades explicit.
+RUN npm install -g @anthropic-ai/claude-code
+
 # Set up directories
 RUN mkdir -p /app /gt /gt/.dolt-data && chown -R agent:agent /app /gt
 
