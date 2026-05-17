@@ -165,6 +165,26 @@ gt hook               # Check for assigned work
 gt mail inbox         # Check for messages
 ```
 
+### Per-role MCP allowlists (tool surface)
+
+Each role's `.claude/settings.json` declares which MCP servers claude-code is
+allowed to load, via `enabledMcpjsonServers` + `enableAllProjectMcpServers=false`.
+The default policy is conservative — most roles get `firecrawl` and
+`intelli-verse-x` only — to keep the visible tool count under the ~20-tool
+threshold above which completion rates degrade (Vercel / Atlan, 2026).
+
+```bash
+gt mcp show auditor             # built-in default for a role
+gt mcp show audits/qa           # rig-qualified target
+gt mcp show audits/auditor --json
+```
+
+Extend a role's allowlist via on-disk override at
+`~/.gt/mcp-overrides/<rig>__<role>.json` (or unqualified `<role>.json`),
+unioned with the role default by `gt hooks sync`. To remove a server, list it
+in `disabledMcpjsonServers` in the override. Source of truth:
+`internal/hooks/mcp.go::DefaultMCPOverrides`.
+
 <!-- end-gastown-agent-instructions -->
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
