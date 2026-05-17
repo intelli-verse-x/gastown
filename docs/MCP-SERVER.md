@@ -64,7 +64,7 @@ allowlist lives in [`internal/cmd/mcp.go`](../internal/cmd/mcp.go).
 Any flag whose name contains `token`, `secret`, `password`, `key`,
 `credential`, `api-key`, `auth-token`, or `bearer` is removed from the
 tool schema. Persistent (inherited) flags are stripped entirely — a model
-should not be able to flip global `gt` behaviour through any subcommand.
+should not be able to flip global `gt` behavior through any subcommand.
 
 ### Timeouts
 
