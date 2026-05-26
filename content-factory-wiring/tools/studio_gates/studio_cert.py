@@ -44,6 +44,7 @@ GATE_MODULES = {
     "G11": "g11_localization",
     "G13": "g13_dual_signoff",
     "G14": "g14_chain_of_custody",
+    "G15": "g15_character_identity",
 }
 
 # G5 (audio) + G8 (platform cert) + G12 (live-ops) live in sibling tools/.

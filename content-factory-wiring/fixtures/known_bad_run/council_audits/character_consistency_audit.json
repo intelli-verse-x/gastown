@@ -1,0 +1,11 @@
+{
+  "rubric_id": "character_consistency",
+  "auditor": "G15CharacterIdentity",
+  "auditor_role": "agent://auditor/character_identity",
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.258276+00:00",
+  "tier": "aa",
+  "passed": false,
+  "per_frame": [],
+  "signature": "fdbde6e1ca1042d153321c0ed8e1209bf7c9f41140181fb3297bf06e8fdeb9ae"
+}

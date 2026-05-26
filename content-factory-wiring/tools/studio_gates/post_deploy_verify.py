@@ -44,7 +44,7 @@ sys.path.insert(0, str(ROOT / "tools" / "studio_gates"))
 
 # Late-imports so we can capture import failures as findings.
 
-GATE_IDS = ["G1", "G2", "G3", "G4", "G6", "G7", "G9", "G10", "G11", "G13", "G14"]
+GATE_IDS = ["G1", "G2", "G3", "G4", "G6", "G7", "G9", "G10", "G11", "G13", "G14", "G15"]
 GATE_MODULES = {
     "G1": "g1_concept_lock",
     "G2": "g2_canon_lock",
@@ -57,6 +57,7 @@ GATE_MODULES = {
     "G11": "g11_localization",
     "G13": "g13_dual_signoff",
     "G14": "g14_chain_of_custody",
+    "G15": "g15_character_identity",
 }
 ALL_TIERS = ["internal", "indie", "aa", "aaa", "live-aaa"]
 
@@ -153,7 +154,7 @@ def check_sign_verify_roundtrip() -> Check:
 
 
 def check_refinery_toml() -> Check:
-    c = Check(id="C04", name="refinery.toml has all 14 [[studio_gate]] bindings")
+    c = Check(id="C04", name="refinery.toml has all 15 [[studio_gate]] bindings")
     toml = ROOT / "configs" / "refinery.toml"
     if not toml.exists():
         c.passed = False
@@ -161,8 +162,8 @@ def check_refinery_toml() -> Check:
         return c
     text = toml.read_text()
     n = text.count("[[studio_gate]]")
-    c.passed = n == 14
-    c.detail = f"found {n}/14 [[studio_gate]] sections"
+    c.passed = n == 15
+    c.detail = f"found {n}/15 [[studio_gate]] sections"
     c.artifacts = {"count": n}
     return c
 
@@ -232,7 +233,8 @@ def check_known_bad_blocks(fixtures_root: Path) -> Check:
     # - Media-based gates (G4, G7, G9, G11) correctly pass when there's no media
     #   to check — adding media to the bad fixture is out of scope for state-only
     #   verification.
-    must_block = {"G1", "G2", "G6", "G10", "G13", "G14"}
+    # G15 must block on bad fixture because cast/cast_manifest.json is missing.
+    must_block = {"G1", "G2", "G6", "G10", "G13", "G14", "G15"}
     leaks = must_block - set(blocked)
     c.passed = not leaks and not errors
     c.detail = (
@@ -380,7 +382,7 @@ def check_schemas_present() -> Check:
         ("04", "continuity"), ("05", "audio_mix"), ("06", "rights_manifest"),
         ("07", "accessibility"), ("08", "platform_cert"), ("09", "frame_qa"),
         ("10", "council_verdict"), ("11", "localization"), ("12", "liveops_kpi"),
-        ("13", "signoff"), ("14", "chain_of_custody"),
+        ("13", "signoff"), ("14", "chain_of_custody"), ("15", "character_identity"),
     ]}
     present = {p.name for p in schemas_dir.glob("*.schema.json")}
     missing = expected - present

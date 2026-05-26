@@ -2,8 +2,8 @@
   "run_id": "known_good_run",
   "role": "technical_director",
   "signer": "Fixture TD",
-  "signed_at": "2026-05-26T23:04:50.946069+00:00",
+  "signed_at": "2026-05-26T23:17:27.003464+00:00",
   "output_hash": "d98c8e4d0852b0695bcb48f5b33b0c08ee7875efc5690ebe34b552186694ea6e",
   "gate_results_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "signature": "3784f71af447b7b5d2ce1c18f46e77671e49e279accf77eec4350f57d2d2cb4f"
+  "signature": "4d6aa6f450a62edf3bfc28275bf6dc1b94c336278b8f7e14f34c8ff5b3cafa11"
 }

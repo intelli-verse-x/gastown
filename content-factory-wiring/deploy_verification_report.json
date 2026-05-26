@@ -1,8 +1,8 @@
 {
-  "started_at": "2026-05-26T23:04:50.950439+00:00",
-  "finished_at": "2026-05-26T23:04:51.365347+00:00",
+  "started_at": "2026-05-26T23:17:27.020682+00:00",
+  "finished_at": "2026-05-26T23:17:27.446064+00:00",
   "host": "Devashishs-MacBook-Pro.local",
-  "git_sha": "b7d3fc6b",
+  "git_sha": "0392b53d",
   "summary": {
     "total": 12,
     "passed": 12,
@@ -14,9 +14,9 @@
       "name": "every gate module imports + has evaluate()",
       "passed": true,
       "detail": "all importable",
-      "duration_ms": 118.8,
+      "duration_ms": 49.4,
       "artifacts": {
-        "gates_checked": 11
+        "gates_checked": 12
       }
     },
     {
@@ -37,12 +37,12 @@
     },
     {
       "id": "C04",
-      "name": "refinery.toml has all 14 [[studio_gate]] bindings",
+      "name": "refinery.toml has all 15 [[studio_gate]] bindings",
       "passed": true,
-      "detail": "found 14/14 [[studio_gate]] sections",
-      "duration_ms": 0.1,
+      "detail": "found 15/15 [[studio_gate]] sections",
+      "duration_ms": 0.2,
       "artifacts": {
-        "count": 14
+        "count": 15
       }
     },
     {
@@ -69,8 +69,8 @@
       "id": "C07",
       "name": "known_bad fixture produces blockers on every required gate",
       "passed": true,
-      "detail": "blocked=['G1', 'G10', 'G13', 'G14', 'G2', 'G3', 'G6'] passed=['G11', 'G4', 'G7', 'G9'] ",
-      "duration_ms": 1.2,
+      "detail": "blocked=['G1', 'G10', 'G13', 'G14', 'G15', 'G2', 'G3', 'G6'] passed=['G11', 'G4', 'G7', 'G9'] ",
+      "duration_ms": 1.8,
       "artifacts": {
         "blocked": [
           "G1",
@@ -79,7 +79,8 @@
           "G6",
           "G10",
           "G13",
-          "G14"
+          "G14",
+          "G15"
         ],
         "passed": [
           "G4",
@@ -95,23 +96,23 @@
       "name": "known_good fixture passes the indie tier",
       "passed": true,
       "detail": "certified",
-      "duration_ms": 43.8,
+      "duration_ms": 98.0,
       "artifacts": {
-        "passed_count": 6,
+        "passed_count": 7,
         "failed_count": 0,
-        "total": 6
+        "total": 7
       }
     },
     {
       "id": "C09",
       "name": "studio_cert refuses the known_bad fixture (exit 1)",
       "passed": true,
-      "detail": "correctly rejected, exit=1, {'passed_count': 4, 'failed_count': 8, 'total': 12}",
-      "duration_ms": 75.9,
+      "detail": "correctly rejected, exit=1, {'passed_count': 5, 'failed_count': 8, 'total': 13}",
+      "duration_ms": 87.1,
       "artifacts": {
-        "passed_count": 4,
+        "passed_count": 5,
         "failed_count": 8,
-        "total": 12
+        "total": 13
       }
     },
     {
@@ -119,7 +120,7 @@
       "name": "chain_of_custody tamper detection works",
       "passed": true,
       "detail": "tamper detected",
-      "duration_ms": 1.2,
+      "duration_ms": 1.0,
       "artifacts": {}
     },
     {
@@ -127,15 +128,15 @@
       "name": "post-signoff output mutation invalidates G13",
       "passed": true,
       "detail": "post-signoff mutation invalidates G13",
-      "duration_ms": 161.6,
+      "duration_ms": 174.8,
       "artifacts": {}
     },
     {
       "id": "C12",
       "name": "JSON schemas for every gate file are present",
       "passed": true,
-      "detail": "found 15/14 schemas",
-      "duration_ms": 0.2,
+      "detail": "found 16/15 schemas",
+      "duration_ms": 0.3,
       "artifacts": {
         "present": [
           "01_concept_lock.schema.json",
@@ -152,6 +153,7 @@
           "12_liveops_kpi.schema.json",
           "13_signoff.schema.json",
           "14_chain_of_custody.schema.json",
+          "15_character_identity.schema.json",
           "_common.schema.json"
         ],
         "missing": []

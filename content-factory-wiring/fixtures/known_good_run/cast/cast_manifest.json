@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "characters": [
+        {
+          "char_id": "quizzy",
+          "expected_outfit": "default",
+          "expected_state": "neutral",
+          "voice_id": "quizzy_v3",
+          "frame_share_min": 0.0
+        }
+      ]
+    }
+  ],
+  "signature": "50e618bc3620cea578f105a088b058678e06077d192d101990f9615f2b5cef35"
+}

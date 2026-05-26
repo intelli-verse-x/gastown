@@ -5,6 +5,6 @@
   "tier": "aa",
   "findings": [],
   "run_id": "known_good_run",
-  "evaluated_at": "2026-05-26T23:05:34.030756+00:00",
-  "signature": "ebc1047c02f6002d010e16c6dcccd30333e93265078fcd1b70a96eee693753ca"
+  "evaluated_at": "2026-05-26T23:18:32.155222+00:00",
+  "signature": "61f79003ec18ae02a7828596d0765979f044f4b5ad60188a2ff63d50c1fd2365"
 }

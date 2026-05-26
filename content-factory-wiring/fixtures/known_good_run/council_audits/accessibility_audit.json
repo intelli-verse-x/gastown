@@ -3,7 +3,7 @@
   "auditor": "AccessibilityAuditor",
   "auditor_role": "agent://auditor/accessibility",
   "run_id": "known_good_run",
-  "evaluated_at": "2026-05-26T23:05:34.041367+00:00",
+  "evaluated_at": "2026-05-26T23:18:32.164784+00:00",
   "scores": {
     "captions_coverage": 10.0,
     "photosensitivity_safe": 10.0,
@@ -19,5 +19,5 @@
   "approved_output": null,
   "waiver_bead": null,
   "scoring_source": "deterministic_rule",
-  "signature": "820ed1855c5922c6e474a23593a4bb978900ede1df7b5767619efd41b8cc9716"
+  "signature": "fcec5d41e6db91f27b2ba340974657f4344acdc8adcbca0d5cb7ee691fa88fca"
 }

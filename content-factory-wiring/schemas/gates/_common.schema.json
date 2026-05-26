@@ -21,7 +21,7 @@
       "type": "object",
       "required": ["gate_id", "gate_name", "passed", "tier", "run_id", "evaluated_at", "signature"],
       "properties": {
-        "gate_id": { "type": "string", "pattern": "^G(1[0-4]|[1-9])$" },
+        "gate_id": { "type": "string", "pattern": "^G(1[0-5]|[1-9])$" },
         "gate_name": { "type": "string" },
         "passed": { "type": "boolean" },
         "tier": { "$ref": "#/$defs/tier" },

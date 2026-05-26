@@ -3,7 +3,7 @@
   "auditor": "RightsAuditor",
   "auditor_role": "agent://auditor/rights",
   "run_id": "known_good_run",
-  "evaluated_at": "2026-05-26T23:05:34.041491+00:00",
+  "evaluated_at": "2026-05-26T23:18:32.164897+00:00",
   "scores": {
     "manifest_completeness": 10.0,
     "license_compliance": 10.0,
@@ -19,5 +19,5 @@
   "approved_output": null,
   "waiver_bead": null,
   "scoring_source": "deterministic_rule",
-  "signature": "256da67c808cb545885cd64ced41743ec062b426a33f4da760430e401ce4d8a2"
+  "signature": "12b4121cca554c72b455abd4ab72de3138bb8dc7cdb66d094e9ea65ffbcf6e27"
 }

@@ -2,8 +2,8 @@
   "run_id": "known_good_run",
   "role": "creative_director",
   "signer": "Fixture CD",
-  "signed_at": "2026-05-26T23:04:50.945102+00:00",
+  "signed_at": "2026-05-26T23:17:27.002446+00:00",
   "output_hash": "d98c8e4d0852b0695bcb48f5b33b0c08ee7875efc5690ebe34b552186694ea6e",
   "gate_results_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "signature": "96570f97e8b105cfc06ce17394315168089b653fef095bb1e26de3e8782da3b5"
+  "signature": "ea5b99fe7e83314c336f2a05861a8f72d012c57eb6ad2bb50f103ce0d319c5e8"
 }

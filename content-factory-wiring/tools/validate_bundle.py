@@ -46,7 +46,7 @@ def _emit_all_gate_outputs(run_path: Path) -> None:
         "G6":  "g6_rights_manifest",      "G7":  "g7_accessibility",
         "G9":  "g9_frame_qa",             "G10": "g10_council_enforcer",
         "G11": "g11_localization",        "G13": "g13_dual_signoff",
-        "G14": "g14_chain_of_custody",
+        "G14": "g14_chain_of_custody",    "G15": "g15_character_identity",
     }
     for gid, modname in modules.items():
         try:
@@ -90,6 +90,7 @@ def validate_schemas() -> list[tuple[str, bool, str]]:
         "G11.json": "11_localization.schema.json",
         "G13.json": "13_signoff.schema.json",
         "G14.json": "14_chain_of_custody.schema.json",
+        "G15.json": "15_character_identity.schema.json",
     }
     results: list[tuple[str, bool, str]] = []
     for gate_file, schema_file in gate_to_schema.items():
@@ -214,8 +215,8 @@ def validate_canvas() -> list[tuple[str, bool, str]]:
     out.append(("TierGateMatrix section", "function TierGateMatrix(" in text, ""))
     out.append(("DeployVerificationSection",
                 "function DeployVerificationSection(" in text, ""))
-    out.append(("STUDIO_GATES list has 14 rows",
-                text.count('{ id: "G') >= 14, ""))
+    out.append(("STUDIO_GATES list has 15 rows",
+                text.count('{ id: "G') >= 15, ""))
     out.append(("DEPLOY_CHECKS list has 12 rows",
                 text.count('id: "C0') + text.count('id: "C1') >= 12, ""))
     out.append(("wired into root", "<TierGateMatrix />" in text and "<DeployVerificationSection />" in text, ""))

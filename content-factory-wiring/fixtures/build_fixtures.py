@@ -25,7 +25,68 @@ from __init__ import sign, now_utc  # type: ignore  # noqa: E402
 from g14_chain_of_custody import append as coc_append  # type: ignore  # noqa: E402
 from g13_dual_signoff import sign_for  # type: ignore  # noqa: E402
 
+import numpy as np
+
 GOOD = HERE / "known_good_run"
+
+
+def _seed_character_registry(run_path: Path) -> None:
+    """Create a minimal in-run character registry so G15 can exercise."""
+    sys.path.insert(0, str(ROOT / "tools" / "character_consistency"))
+    from registry import CharacterRegistry  # type: ignore  # noqa: E402
+    from _models import OutfitState  # type: ignore  # noqa: E402
+
+    reg = CharacterRegistry(run_path / "character_registry")
+    if reg.exists("quizzy"):
+        return
+    # Two outfit states with deterministic 12-bin HSV histograms.
+    default_hist = [0.18,0.10,0.08,0.07,0.06,0.06,0.07,0.08,0.08,0.07,0.07,0.08]
+    lab_hist     = [0.05,0.05,0.05,0.20,0.20,0.15,0.10,0.05,0.05,0.04,0.03,0.03]
+    canon = reg.create_character(
+        char_id="quizzy",
+        name="Quizzy",
+        char_type="animated_2d",
+        voice_id="quizzy_v3",
+        tags=["brand:quizverse"],
+        outfit_states=[
+            OutfitState(state_id="default", description="standard purple visor",
+                        primary_colors=["#7c4dff", "#f3a712"], histogram=default_hist),
+            OutfitState(state_id="lab_coat", description="white coat halloween_2026",
+                        primary_colors=["#ffffff", "#22d3ee"], histogram=lab_hist),
+        ],
+    )
+    # Seed face bank with a deterministic dummy embedding (phash-shape so the
+    # phash fallback path also passes without an ML backend installed).
+    bank_emb = np.array([1.0] * 64, dtype=np.float32)
+    reg.add_face_reference("quizzy", bank_emb, backend="phash", source="fixture")
+    # Add a 13-dim MFCC-lite reference
+    voice_emb = np.array([0.5] * 13, dtype=np.float32)
+    voice_emb /= np.linalg.norm(voice_emb)
+    reg.add_voice_reference("quizzy", voice_emb, backend="mfcc", source="fixture")
+
+
+def _write_cast_manifest(run_path: Path) -> None:
+    cast_dir = run_path / "cast"
+    cast_dir.mkdir(exist_ok=True)
+    manifest = {
+        "version": "1.0",
+        "scenes": [
+            {
+                "scene_id": "scene_01",
+                "characters": [
+                    {
+                        "char_id": "quizzy",
+                        "expected_outfit": "default",
+                        "expected_state": "neutral",
+                        "voice_id": "quizzy_v3",
+                        "frame_share_min": 0.0,
+                    },
+                ],
+            },
+        ],
+    }
+    manifest["signature"] = sign(manifest)
+    (cast_dir / "cast_manifest.json").write_text(json.dumps(manifest, indent=2))
 
 
 def main() -> int:
@@ -162,6 +223,10 @@ def main() -> int:
     (GOOD / "approvals").mkdir(exist_ok=True)
     sign_for(GOOD, "creative_director", "Fixture CD")
     sign_for(GOOD, "technical_director", "Fixture TD")
+
+    # ---------------- G15 character_identity ------------------------------
+    _seed_character_registry(GOOD)
+    _write_cast_manifest(GOOD)
 
     print(f"known_good_run rebuilt at {GOOD}")
     return 0

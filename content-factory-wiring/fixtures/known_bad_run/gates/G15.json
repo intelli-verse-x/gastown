@@ -1,0 +1,17 @@
+{
+  "gate_id": "G15",
+  "gate_name": "character_identity",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "CC1_cast_manifest_missing",
+      "severity": "blocker",
+      "message": "cast/cast_manifest.json not found \u2014 every pipeline must declare cast before render",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.258276+00:00",
+  "signature": "dd241a37c9fe53cdd6bd8d91fe6b139470b16193d9ed2c42c1ad256bfe083550"
+}

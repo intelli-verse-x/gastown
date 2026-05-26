@@ -3,7 +3,7 @@
   "auditor": "BrandAuditor",
   "auditor_role": "agent://auditor/brand",
   "run_id": "known_good_run",
-  "evaluated_at": "2026-05-26T23:05:34.039627+00:00",
+  "evaluated_at": "2026-05-26T23:18:32.163160+00:00",
   "scores": {
     "voice_match": 6.0,
     "banned_term_compliance": 10.0,
@@ -21,5 +21,5 @@
   "approved_output": null,
   "waiver_bead": null,
   "scoring_source": "deterministic_rule",
-  "signature": "e96dac29c6083e7285ebfcf0ce1595d347a18fa889ee02ea8c82e0813512e2ab"
+  "signature": "fe00143aa0fd1cb088c03f74690da2e42f391f302541419bd4b59f07e2d7f1f4"
 }

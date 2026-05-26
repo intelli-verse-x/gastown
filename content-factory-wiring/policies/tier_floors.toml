@@ -19,14 +19,14 @@ optional_gates = []  # everything else recorded but never blocks
 description    = "Default tier for viral_shorts, ads, learning_series clip-form."
 pass_floor     = 6.0
 notes_floor    = 5.0
-required_gates = ["G1", "G3", "G5", "G7", "G9", "G14"]
+required_gates = ["G1", "G3", "G5", "G7", "G9", "G14", "G15"]
 optional_gates = ["G2", "G4", "G6"]  # advisory; surface as warnings
 
 [tier.aa]
 description    = "Flagship channel content. Requires Creative + Technical Director."
 pass_floor     = 7.0
 notes_floor    = 6.5
-required_gates = ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14"]
+required_gates = ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14", "G15"]
 optional_gates = ["G11", "G12"]
 
 [tier.aaa]
@@ -34,7 +34,7 @@ description    = "Studio tentpole / hero content. Multi-locale, multi-platform."
 pass_floor     = 8.0
 notes_floor    = 7.5
 required_gates = [
-    "G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G13","G14",
+    "G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G13","G14","G15",
 ]
 optional_gates = ["G12"]
 
@@ -43,7 +43,7 @@ description    = "AAA + closed engagement loop (G12 enforced from yesterday's KP
 pass_floor     = 8.0
 notes_floor    = 7.5
 kpi_delta_required = 0.0   # next slate must be ≥ baseline; uplift via G12 feedback
-required_gates = ["G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G12","G13","G14"]
+required_gates = ["G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G12","G13","G14","G15"]
 optional_gates = []
 
 # Per-pipeline overrides

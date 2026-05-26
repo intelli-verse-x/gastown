@@ -166,7 +166,7 @@ F5_open_feedback       = { severity = "MEDIUM",   route = "polecat://contentx-fe
 F6_nested_duplication  = { severity = "HIGH",     route = "polecat://contentx-cleanup", sla_hours = 24 }
 
 # ---------------------------------------------------------------------------
-# Studio-grade gates (G1–G14)
+# Studio-grade gates (G1–G15)
 # Each binds to the runnable enforcer at tools/studio_gates/<id>_<name>.py.
 # Exit code 0 = pass, !=0 = block. Refinery calls these in order, short-circuits
 # on first BLOCKER finding within a single gate.
@@ -287,3 +287,17 @@ required_for = ["indie", "aa", "aaa", "live-aaa"]
 blocks_at_phase = "publish"
 severity_on_fail = "BLOCKER"
 retention_years = 7
+
+[[studio_gate]]
+id = "G15"
+name = "character_identity"
+binary = "python tools/studio_gates/g15_character_identity.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "final_assembly"
+severity_on_fail = "BLOCKER"
+# Cross-pipeline: registry root is shared across viral_shorts, learning_series,
+# movies, ads, podcast — same Quizzy character must look like Quizzy everywhere.
+registry_root = "/var/lib/content-factory/character_registry"
+face_backend_preference = ["insightface", "face_recognition", "phash"]
+voice_backend_preference = ["resemblyzer", "mfcc"]
+multi_character_strict = true   # multi-char scenes must show ALL declared required chars

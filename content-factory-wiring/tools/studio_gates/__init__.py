@@ -105,13 +105,14 @@ GATE_NAMES = {
     "G12": "live_ops_feedback",          # handled by postiz_engagement_scraper.py
     "G13": "dual_signoff",
     "G14": "chain_of_custody",
+    "G15": "character_identity",
 }
 
 TIER_GATES = {
     "internal":  ["G1", "G14"],
-    "indie":     ["G1", "G3", "G5", "G6", "G10", "G14"],
-    "aa":        ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14"],
-    "aaa":       ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G13", "G14"],
+    "indie":     ["G1", "G3", "G5", "G6", "G10", "G14", "G15"],
+    "aa":        ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14", "G15"],
+    "aaa":       ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G13", "G14", "G15"],
     "live-aaa":  list(GATE_NAMES.keys()),
 }
 

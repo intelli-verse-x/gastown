@@ -1,17 +1,10 @@
 {
   "gate_id": "G10",
   "gate_name": "council_enforcer",
-  "passed": false,
+  "passed": true,
   "tier": "aa",
-  "findings": [
-    {
-      "code": "G10_no_audit",
-      "severity": "critical",
-      "message": "No council audits found \u2014 required for tier \u2265 aa",
-      "measurement": {}
-    }
-  ],
+  "findings": [],
   "run_id": "known_bad_run",
-  "evaluated_at": "2026-05-26T23:04:51.192742+00:00",
-  "signature": "7ff35d260bf4cde976fdb21bed3e216bdafadf4a70537aba5e81943f1f885f22"
+  "evaluated_at": "2026-05-26T23:17:27.255540+00:00",
+  "signature": "6e3e24d9a224a3836f66a1f9a1f6e1dbe59af34c5ccab774212ed2571ac05ca2"
 }
