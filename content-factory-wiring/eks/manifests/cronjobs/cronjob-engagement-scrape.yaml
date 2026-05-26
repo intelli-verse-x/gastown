@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: contentx-engagement-scrape
+  namespace: content-factory
+spec:
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: contentx-cron
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: scrape
+              image: IMAGE_PLACEHOLDER
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - /opt/content-factory-wiring/hermes/postiz_engagement_scraper.py
+                - --working-dir
+                - /var/lib/contentx/working_dir
+                - --delays
+                - "24"
+                - "72"
+                - "168"
+              envFrom:
+                - configMapRef: { name: contentx-webhook-config }
+                - secretRef:    { name: contentx-webhook-secrets }
+              resources:
+                requests: { cpu: 200m, memory: 256Mi }
+                limits:   { cpu: 500m, memory: 512Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: ["ALL"] }
+              volumeMounts:
+                - { name: working-dir, mountPath: /var/lib/contentx }
+          volumes:
+            - { name: working-dir, emptyDir: { sizeLimit: 4Gi } }
