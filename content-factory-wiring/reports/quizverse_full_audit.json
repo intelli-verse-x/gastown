@@ -1,0 +1,2426 @@
+{
+  "summary": {
+    "AUTOcurio": {
+      "by_severity": {
+        "critical": 7,
+        "blocker": 2,
+        "major": 2
+      },
+      "by_code": {
+        "F3_sprite_layout_mismatch": 2,
+        "F11_empty_sprite": 2,
+        "F4_pixelation_low_detail": 1,
+        "F7_unity_pivot_inconsistent": 1,
+        "F5_frame_drift": 3,
+        "F8_padding_missing": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 11
+    },
+    "Atlas": {
+      "by_severity": {
+        "major": 1,
+        "critical": 3
+      },
+      "by_code": {
+        "F8_padding_missing": 1,
+        "F5_frame_drift": 2,
+        "F1_transparency_missing": 1
+      },
+      "total": 4
+    },
+    "Bear": {
+      "by_severity": {
+        "major": 2,
+        "critical": 5
+      },
+      "by_code": {
+        "F8_padding_missing": 2,
+        "F5_frame_drift": 3,
+        "F7_unity_pivot_inconsistent": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 7
+    },
+    "Dog": {
+      "by_severity": {
+        "major": 1,
+        "critical": 3
+      },
+      "by_code": {
+        "F8_padding_missing": 1,
+        "F7_unity_pivot_inconsistent": 1,
+        "F5_frame_drift": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 4
+    },
+    "Duck": {
+      "by_severity": {
+        "critical": 3
+      },
+      "by_code": {
+        "F5_frame_drift": 1,
+        "F7_unity_pivot_inconsistent": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 3
+    },
+    "Echo": {
+      "by_severity": {
+        "critical": 5,
+        "major": 2
+      },
+      "by_code": {
+        "F7_unity_pivot_inconsistent": 2,
+        "F8_padding_missing": 2,
+        "F5_frame_drift": 2,
+        "F1_transparency_missing": 1
+      },
+      "total": 7
+    },
+    "IX": {
+      "by_severity": {
+        "blocker": 2,
+        "critical": 6,
+        "major": 2
+      },
+      "by_code": {
+        "F12_corrupt_asset": 1,
+        "F7_unity_pivot_inconsistent": 2,
+        "F8_padding_missing": 1,
+        "F10_background_color_leak": 1,
+        "F5_frame_drift": 2,
+        "F3_sprite_layout_mismatch": 1,
+        "F11_empty_sprite": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 10
+    },
+    "Luna": {
+      "by_severity": {
+        "critical": 4
+      },
+      "by_code": {
+        "F5_frame_drift": 2,
+        "F7_unity_pivot_inconsistent": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 4
+    },
+    "Nova": {
+      "by_severity": {
+        "critical": 5,
+        "major": 3
+      },
+      "by_code": {
+        "F7_unity_pivot_inconsistent": 3,
+        "F8_padding_missing": 2,
+        "F10_background_color_leak": 1,
+        "F5_frame_drift": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 8
+    },
+    "Pixel": {
+      "by_severity": {
+        "major": 4,
+        "critical": 7
+      },
+      "by_code": {
+        "F8_padding_missing": 2,
+        "F5_frame_drift": 4,
+        "F7_unity_pivot_inconsistent": 2,
+        "F4_pixelation_low_detail": 1,
+        "F10_background_color_leak": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 11
+    },
+    "Professor": {
+      "by_severity": {
+        "critical": 4,
+        "major": 1
+      },
+      "by_code": {
+        "F5_frame_drift": 2,
+        "F7_unity_pivot_inconsistent": 1,
+        "F8_padding_missing": 1,
+        "F1_transparency_missing": 1
+      },
+      "total": 5
+    },
+    "Quizzy": {
+      "by_severity": {
+        "blocker": 9,
+        "critical": 13,
+        "major": 1
+      },
+      "by_code": {
+        "F1_transparency_missing": 9,
+        "F6_mode_mismatch": 9,
+        "F9_size_inconsistency": 1,
+        "F7_unity_pivot_inconsistent": 2,
+        "F8_padding_missing": 1,
+        "F5_frame_drift": 1
+      },
+      "total": 23
+    },
+    "Quizzy_v1": {
+      "by_severity": {
+        "blocker": 9,
+        "critical": 11,
+        "major": 1
+      },
+      "by_code": {
+        "F1_transparency_missing": 9,
+        "F6_mode_mismatch": 9,
+        "F8_padding_missing": 1,
+        "F7_unity_pivot_inconsistent": 1,
+        "F5_frame_drift": 1
+      },
+      "total": 21
+    },
+    "Quizzy_v2": {
+      "by_severity": {
+        "blocker": 9,
+        "critical": 22,
+        "major": 4
+      },
+      "by_code": {
+        "F1_transparency_missing": 9,
+        "F6_mode_mismatch": 9,
+        "F9_size_inconsistency": 1,
+        "F3_sprite_layout_mismatch": 6,
+        "F7_unity_pivot_inconsistent": 4,
+        "F8_padding_missing": 4,
+        "F5_frame_drift": 2
+      },
+      "total": 35
+    },
+    "Sparky": {
+      "by_severity": {
+        "critical": 6,
+        "major": 1
+      },
+      "by_code": {
+        "F7_unity_pivot_inconsistent": 2,
+        "F8_padding_missing": 1,
+        "F5_frame_drift": 3,
+        "F1_transparency_missing": 1
+      },
+      "total": 7
+    }
+  },
+  "flaws_by_character": {
+    "AUTOcurio": [
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "AUTOcurio/sprites/attack_spritesheet.png",
+        "message": "actual 2928x352, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2928,
+            352
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F11_empty_sprite",
+        "asset": "AUTOcurio/sprites/attack_spritesheet.png",
+        "message": "sheet is FULLY TRANSPARENT \u2014 0 opaque pixels in 2928x352 canvas",
+        "measurement": {
+          "opaque_pixels": 0,
+          "canvas": [
+            2928,
+            352
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "AUTOcurio/sprites/hurt_spritesheet.png",
+        "message": "actual 2064x512, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2064,
+            512
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F11_empty_sprite",
+        "asset": "AUTOcurio/sprites/hurt_spritesheet.png",
+        "message": "sheet is FULLY TRANSPARENT \u2014 0 opaque pixels in 2064x512 canvas",
+        "measurement": {
+          "opaque_pixels": 0,
+          "canvas": [
+            2064,
+            512
+          ]
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F4_pixelation_low_detail",
+        "asset": "AUTOcurio/sprites/jump_spritesheet.png#frame_5",
+        "message": "frame 5 Laplacian variance 2.7 \u2014 likely pixelated/blurry",
+        "measurement": {
+          "laplacian_var": 2.7416138648986816,
+          "frame": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "AUTOcurio/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 15x 180y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 14.610418426142928,
+          "y_drift": 179.52609656692243,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "AUTOcurio/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 99% wide / 99% tall across frames",
+        "measurement": {
+          "width_variance": 0.9870689655172413,
+          "height_variance": 0.9865229110512129,
+          "widths": [
+            185,
+            232,
+            191,
+            172,
+            180,
+            3
+          ],
+          "heights": [
+            307,
+            332,
+            351,
+            363,
+            371,
+            5
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "AUTOcurio/sprites/run_spritesheet.png",
+        "message": "character bbox varies 31% wide / 6% tall across frames",
+        "measurement": {
+          "width_variance": 0.31210191082802546,
+          "height_variance": 0.057494866529774126,
+          "widths": [
+            314,
+            285,
+            216,
+            313,
+            305,
+            217
+          ],
+          "heights": [
+            480,
+            459,
+            475,
+            487,
+            471,
+            487
+          ]
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "AUTOcurio/sprites/walk_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "AUTOcurio/sprites/walk_spritesheet.png",
+        "message": "character bbox varies 60% wide / 3% tall across frames",
+        "measurement": {
+          "width_variance": 0.5988023952095808,
+          "height_variance": 0.026748971193415638,
+          "widths": [
+            239,
+            501,
+            205,
+            238,
+            501,
+            201
+          ],
+          "heights": [
+            473,
+            473,
+            473,
+            482,
+            486,
+            483
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "AUTOcurio/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Atlas": [
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Atlas/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Atlas/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 36% wide / 3% tall across frames",
+        "measurement": {
+          "width_variance": 0.3640552995391705,
+          "height_variance": 0.034261241970021415,
+          "widths": [
+            297,
+            276,
+            345,
+            434,
+            364,
+            307
+          ],
+          "heights": [
+            456,
+            451,
+            451,
+            467,
+            467,
+            467
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Atlas/sprites/hurt_spritesheet.png",
+        "message": "character bbox varies 38% wide / 16% tall across frames",
+        "measurement": {
+          "width_variance": 0.380352644836272,
+          "height_variance": 0.162217659137577,
+          "widths": [
+            297,
+            301,
+            397,
+            383,
+            246,
+            280
+          ],
+          "heights": [
+            470,
+            474,
+            465,
+            408,
+            447,
+            487
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Atlas/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Bear": [
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Bear/sprites/attack_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Bear/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 42% wide / 8% tall across frames",
+        "measurement": {
+          "width_variance": 0.423963133640553,
+          "height_variance": 0.08102345415778252,
+          "widths": [
+            251,
+            330,
+            404,
+            434,
+            412,
+            250
+          ],
+          "heights": [
+            459,
+            431,
+            439,
+            453,
+            446,
+            469
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Bear/sprites/hurt_spritesheet.png",
+        "message": "character bbox varies 39% wide / 5% tall across frames",
+        "measurement": {
+          "width_variance": 0.3937007874015748,
+          "height_variance": 0.05473684210526316,
+          "widths": [
+            231,
+            303,
+            381,
+            358,
+            328,
+            257
+          ],
+          "heights": [
+            472,
+            449,
+            459,
+            470,
+            458,
+            475
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Bear/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 270x 143y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 270.35263500969165,
+          "y_drift": 143.45157002763133,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Bear/sprites/jump_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Bear/sprites/walk_spritesheet.png",
+        "message": "character bbox varies 34% wide / 0% tall across frames",
+        "measurement": {
+          "width_variance": 0.34120734908136485,
+          "height_variance": 0.00404040404040404,
+          "widths": [
+            380,
+            325,
+            251,
+            381,
+            370,
+            287
+          ],
+          "heights": [
+            493,
+            493,
+            493,
+            495,
+            495,
+            495
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Bear/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Dog": [
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Dog/sprites/attack_spritesheet.png",
+        "message": "4/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 4,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Dog/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 14x 170y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 13.868015568229225,
+          "y_drift": 169.73117743013424,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Dog/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 8% wide / 31% tall across frames",
+        "measurement": {
+          "width_variance": 0.08064516129032258,
+          "height_variance": 0.3076923076923077,
+          "widths": [
+            412,
+            417,
+            399,
+            427,
+            434,
+            409
+          ],
+          "heights": [
+            252,
+            327,
+            352,
+            300,
+            364,
+            271
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Dog/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Duck": [
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Duck/sprites/hurt_spritesheet.png",
+        "message": "character bbox varies 33% wide / 8% tall across frames",
+        "measurement": {
+          "width_variance": 0.33035714285714285,
+          "height_variance": 0.07900677200902935,
+          "widths": [
+            313,
+            300,
+            396,
+            448,
+            371,
+            324
+          ],
+          "heights": [
+            416,
+            419,
+            443,
+            431,
+            422,
+            408
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Duck/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 19x 106y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 19.462960880992796,
+          "y_drift": 105.91542697728636,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Duck/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Echo": [
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Echo/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 214x 38y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 214.28369633531202,
+          "y_drift": 37.621412915104486,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Echo/sprites/attack_spritesheet.png",
+        "message": "3/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 3,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Echo/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 41% wide / 11% tall across frames",
+        "measurement": {
+          "width_variance": 0.410958904109589,
+          "height_variance": 0.10970464135021098,
+          "widths": [
+            442,
+            511,
+            301,
+            443,
+            377,
+            340
+          ],
+          "heights": [
+            440,
+            436,
+            422,
+            464,
+            464,
+            474
+          ]
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Echo/sprites/hurt_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Echo/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 14x 119y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 13.874725151278142,
+          "y_drift": 119.46347834419524,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Echo/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 44% wide / 24% tall across frames",
+        "measurement": {
+          "width_variance": 0.44345238095238093,
+          "height_variance": 0.24166666666666667,
+          "widths": [
+            302,
+            307,
+            259,
+            336,
+            187,
+            287
+          ],
+          "heights": [
+            383,
+            436,
+            364,
+            383,
+            480,
+            380
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Echo/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "IX": [
+      {
+        "severity": "blocker",
+        "code": "F12_corrupt_asset",
+        "asset": "IX/views/back_nobg.png",
+        "message": "cannot decode image: OSError",
+        "measurement": {
+          "path": "/tmp/quizverse-audit/raw/IX/views/back_nobg.png",
+          "size_bytes": 1547782
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "IX/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 126x 18y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 126.05889275767174,
+          "y_drift": 18.077364636604955,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "IX/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F10_background_color_leak",
+        "asset": "IX/sprites/attack_spritesheet.png",
+        "message": "1/6 frames have opaque pixels in corners \u2014 character not cleanly cut",
+        "measurement": {
+          "frames_with_leak": 1,
+          "total_frames": 6
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "IX/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 37% wide / 2% tall across frames",
+        "measurement": {
+          "width_variance": 0.3699788583509514,
+          "height_variance": 0.020876826722338204,
+          "widths": [
+            325,
+            298,
+            350,
+            342,
+            473,
+            313
+          ],
+          "heights": [
+            469,
+            469,
+            469,
+            479,
+            479,
+            479
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "IX/sprites/hurt_spritesheet.png",
+        "message": "actual 2064x512, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2064,
+            512
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F11_empty_sprite",
+        "asset": "IX/sprites/hurt_spritesheet.png",
+        "message": "sheet is FULLY TRANSPARENT \u2014 0 opaque pixels in 2064x512 canvas",
+        "measurement": {
+          "opaque_pixels": 0,
+          "canvas": [
+            2064,
+            512
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "IX/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 21x 140y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 20.523165829619302,
+          "y_drift": 140.0736724669942,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "IX/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 33% wide / 27% tall across frames",
+        "measurement": {
+          "width_variance": 0.3303834808259587,
+          "height_variance": 0.2698744769874477,
+          "widths": [
+            300,
+            300,
+            227,
+            233,
+            339,
+            247
+          ],
+          "heights": [
+            349,
+            431,
+            379,
+            376,
+            478,
+            400
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "IX/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Luna": [
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Luna/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 35% wide / 7% tall across frames",
+        "measurement": {
+          "width_variance": 0.3511777301927195,
+          "height_variance": 0.06561085972850679,
+          "widths": [
+            303,
+            345,
+            467,
+            385,
+            403,
+            325
+          ],
+          "heights": [
+            434,
+            425,
+            413,
+            442,
+            442,
+            442
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Luna/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 5x 142y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 4.915898514637547,
+          "y_drift": 141.78440491054556,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Luna/sprites/run_spritesheet.png",
+        "message": "character bbox varies 39% wide / 6% tall across frames",
+        "measurement": {
+          "width_variance": 0.3880597014925373,
+          "height_variance": 0.0574468085106383,
+          "widths": [
+            402,
+            349,
+            260,
+            376,
+            340,
+            246
+          ],
+          "heights": [
+            458,
+            443,
+            463,
+            466,
+            445,
+            470
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Luna/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Nova": [
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Nova/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 250x 22y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 250.3104385969915,
+          "y_drift": 21.97420405064298,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Nova/sprites/attack_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F10_background_color_leak",
+        "asset": "Nova/sprites/attack_spritesheet.png",
+        "message": "1/6 frames have opaque pixels in corners \u2014 character not cleanly cut",
+        "measurement": {
+          "frames_with_leak": 1,
+          "total_frames": 6
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Nova/sprites/hurt_spritesheet.png",
+        "message": "pivot drifts 97x 17y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 96.74756378525606,
+          "y_drift": 16.861648649590194,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Nova/sprites/hurt_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Nova/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 16x 113y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 15.79495794575098,
+          "y_drift": 112.7916066843797,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Nova/sprites/run_spritesheet.png",
+        "message": "character bbox varies 41% wide / 6% tall across frames",
+        "measurement": {
+          "width_variance": 0.40714285714285714,
+          "height_variance": 0.0649895178197065,
+          "widths": [
+            420,
+            317,
+            249,
+            382,
+            316,
+            255
+          ],
+          "heights": [
+            446,
+            462,
+            459,
+            463,
+            477,
+            470
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Nova/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Pixel": [
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Pixel/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Pixel/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 46% wide / 1% tall across frames",
+        "measurement": {
+          "width_variance": 0.45807770961145194,
+          "height_variance": 0.014184397163120567,
+          "widths": [
+            265,
+            330,
+            409,
+            489,
+            385,
+            308
+          ],
+          "heights": [
+            422,
+            422,
+            417,
+            419,
+            420,
+            423
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Pixel/sprites/hurt_spritesheet.png",
+        "message": "character bbox varies 38% wide / 5% tall across frames",
+        "measurement": {
+          "width_variance": 0.37752161383285304,
+          "height_variance": 0.04612159329140461,
+          "widths": [
+            235,
+            302,
+            347,
+            327,
+            257,
+            216
+          ],
+          "heights": [
+            477,
+            455,
+            471,
+            462,
+            476,
+            464
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Pixel/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 21x 193y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 20.831840797839874,
+          "y_drift": 192.93405812533757,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Pixel/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 50% wide / 52% tall across frames",
+        "measurement": {
+          "width_variance": 0.5,
+          "height_variance": 0.5179856115107914,
+          "widths": [
+            206,
+            334,
+            206,
+            167,
+            308,
+            205
+          ],
+          "heights": [
+            374,
+            374,
+            374,
+            201,
+            417,
+            340
+          ]
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F4_pixelation_low_detail",
+        "asset": "Pixel/sprites/walk_spritesheet.png#frame_4",
+        "message": "frame 4 Laplacian variance 7.4 \u2014 likely pixelated/blurry",
+        "measurement": {
+          "laplacian_var": 7.376814365386963,
+          "frame": 4
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Pixel/sprites/walk_spritesheet.png",
+        "message": "pivot drifts 194x 171y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 194.30430037252466,
+          "y_drift": 170.9853328495344,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Pixel/sprites/walk_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F10_background_color_leak",
+        "asset": "Pixel/sprites/walk_spritesheet.png",
+        "message": "1/6 frames have opaque pixels in corners \u2014 character not cleanly cut",
+        "measurement": {
+          "frames_with_leak": 1,
+          "total_frames": 6
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Pixel/sprites/walk_spritesheet.png",
+        "message": "character bbox varies 96% wide / 94% tall across frames",
+        "measurement": {
+          "width_variance": 0.958904109589041,
+          "height_variance": 0.938034188034188,
+          "widths": [
+            269,
+            511,
+            244,
+            245,
+            21,
+            240
+          ],
+          "heights": [
+            467,
+            466,
+            467,
+            468,
+            29,
+            468
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Pixel/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Professor": [
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Professor/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 32% wide / 8% tall across frames",
+        "measurement": {
+          "width_variance": 0.31771894093686354,
+          "height_variance": 0.08009708737864078,
+          "widths": [
+            368,
+            335,
+            449,
+            461,
+            491,
+            400
+          ],
+          "heights": [
+            384,
+            410,
+            379,
+            408,
+            401,
+            412
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Professor/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 39x 157y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 38.67397082917134,
+          "y_drift": 157.46584157404263,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Professor/sprites/jump_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Professor/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 41% wide / 22% tall across frames",
+        "measurement": {
+          "width_variance": 0.4105691056910569,
+          "height_variance": 0.2230769230769231,
+          "widths": [
+            290,
+            339,
+            373,
+            436,
+            492,
+            329
+          ],
+          "heights": [
+            306,
+            387,
+            387,
+            322,
+            390,
+            303
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Professor/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ],
+    "Quizzy": [
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/back_happy.png",
+        "message": "back_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/back_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/back_neutral.png",
+        "message": "back_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/back_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/back_sad.png",
+        "message": "back_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/back_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/front_happy.png",
+        "message": "front_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/front_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/front_neutral.png",
+        "message": "front_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/front_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/front_sad.png",
+        "message": "front_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/front_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/side_happy.png",
+        "message": "side_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/side_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/side_neutral.png",
+        "message": "side_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/side_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy/views/side_sad.png",
+        "message": "side_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy/views/side_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F9_size_inconsistency",
+        "asset": "Quizzy/views/*",
+        "message": "base views have 2 different canvas sizes",
+        "measurement": {
+          "sizes": {
+            "back": [
+              832,
+              1248
+            ],
+            "front": [
+              1024,
+              1536
+            ],
+            "side": [
+              832,
+              1248
+            ]
+          }
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 108x 21y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 107.56634796867493,
+          "y_drift": 20.615490411399776,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Quizzy/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 44% wide / 35% tall across frames",
+        "measurement": {
+          "width_variance": 0.441588785046729,
+          "height_variance": 0.34915254237288135,
+          "widths": [
+            239,
+            281,
+            271,
+            428,
+            251,
+            261
+          ],
+          "heights": [
+            192,
+            224,
+            223,
+            295,
+            239,
+            213
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 11x 150y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 11.192855675862262,
+          "y_drift": 150.03231254094518,
+          "cell": 512
+        }
+      }
+    ],
+    "Quizzy_v1": [
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/back_happy.png",
+        "message": "back_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/back_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/back_neutral.png",
+        "message": "back_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/back_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/back_sad.png",
+        "message": "back_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/back_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/front_happy.png",
+        "message": "front_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/front_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/front_neutral.png",
+        "message": "front_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/front_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/front_sad.png",
+        "message": "front_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/front_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/side_happy.png",
+        "message": "side_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/side_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/side_neutral.png",
+        "message": "side_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/side_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v1/views/side_sad.png",
+        "message": "side_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v1/views/side_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy_v1/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy_v1/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 17x 197y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 16.994076391832436,
+          "y_drift": 197.20118526622628,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Quizzy_v1/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 32% wide / 35% tall across frames",
+        "measurement": {
+          "width_variance": 0.32009345794392524,
+          "height_variance": 0.3506849315068493,
+          "widths": [
+            291,
+            332,
+            312,
+            428,
+            376,
+            311
+          ],
+          "heights": [
+            241,
+            365,
+            351,
+            288,
+            330,
+            237
+          ]
+        }
+      }
+    ],
+    "Quizzy_v2": [
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/back_happy.png",
+        "message": "back_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/back_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/back_neutral.png",
+        "message": "back_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/back_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/back_sad.png",
+        "message": "back_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/back_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/front_happy.png",
+        "message": "front_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/front_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/front_neutral.png",
+        "message": "front_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/front_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/front_sad.png",
+        "message": "front_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/front_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/side_happy.png",
+        "message": "side_happy should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/side_happy.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/side_neutral.png",
+        "message": "side_neutral should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/side_neutral.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "blocker",
+        "code": "F1_transparency_missing",
+        "asset": "Quizzy_v2/views/side_sad.png",
+        "message": "side_sad should have transparent BG but is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0,
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F6_mode_mismatch",
+        "asset": "Quizzy_v2/views/side_sad.png",
+        "message": "mode is RGB, expected RGBA",
+        "measurement": {
+          "mode": "RGB"
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F9_size_inconsistency",
+        "asset": "Quizzy_v2/views/*",
+        "message": "base views have 2 different canvas sizes",
+        "measurement": {
+          "sizes": {
+            "back": [
+              832,
+              1248
+            ],
+            "front": [
+              1024,
+              1536
+            ],
+            "side": [
+              832,
+              1248
+            ]
+          }
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/attack_spritesheet.png",
+        "message": "actual 2928x352, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2928,
+            352
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy_v2/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 102x 30y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 102.41251253648116,
+          "y_drift": 29.86170412219542,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy_v2/sprites/attack_spritesheet.png",
+        "message": "2/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 2,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Quizzy_v2/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 60% wide / 26% tall across frames",
+        "measurement": {
+          "width_variance": 0.6,
+          "height_variance": 0.2553191489361702,
+          "widths": [
+            248,
+            429,
+            460,
+            338,
+            266,
+            184
+          ],
+          "heights": [
+            246,
+            258,
+            282,
+            236,
+            210,
+            216
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/hurt_spritesheet.png",
+        "message": "actual 2064x512, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2064,
+            512
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy_v2/sprites/hurt_spritesheet.png",
+        "message": "pivot drifts 195x 11y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 194.7370726297676,
+          "y_drift": 11.451483438591367,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy_v2/sprites/hurt_spritesheet.png",
+        "message": "3/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 3,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/idle_spritesheet.png",
+        "message": "actual 2064x512, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2064,
+            512
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy_v2/sprites/idle_spritesheet.png",
+        "message": "pivot drifts 117x 54y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 116.51908363776325,
+          "y_drift": 54.21038507531384,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/jump_spritesheet.png",
+        "message": "actual 2064x512, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2064,
+            512
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Quizzy_v2/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 171x 120y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 170.66572769987727,
+          "y_drift": 119.52406208299328,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Quizzy_v2/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 43% wide / 27% tall across frames",
+        "measurement": {
+          "width_variance": 0.42857142857142855,
+          "height_variance": 0.2655086848635236,
+          "widths": [
+            224,
+            343,
+            242,
+            293,
+            343,
+            196
+          ],
+          "heights": [
+            296,
+            323,
+            315,
+            357,
+            403,
+            298
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/run_spritesheet.png",
+        "message": "actual 2928x352, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2928,
+            352
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy_v2/sprites/run_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F3_sprite_layout_mismatch",
+        "asset": "Quizzy_v2/sprites/walk_spritesheet.png",
+        "message": "actual 2928x352, spec claims 3072x512",
+        "measurement": {
+          "actual": [
+            2928,
+            352
+          ],
+          "expected": [
+            3072,
+            512
+          ],
+          "cell": 512,
+          "cols": 6,
+          "rows": 1
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Quizzy_v2/sprites/walk_spritesheet.png",
+        "message": "4/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 4,
+          "total_seams": 5
+        }
+      }
+    ],
+    "Sparky": [
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Sparky/sprites/attack_spritesheet.png",
+        "message": "pivot drifts 78x 10y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 77.8314575244932,
+          "y_drift": 10.491546356439642,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "major",
+        "code": "F8_padding_missing",
+        "asset": "Sparky/sprites/attack_spritesheet.png",
+        "message": "1/5 seams lack 2-4px transparent padding between frames",
+        "measurement": {
+          "violations": 1,
+          "total_seams": 5
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Sparky/sprites/attack_spritesheet.png",
+        "message": "character bbox varies 46% wide / 1% tall across frames",
+        "measurement": {
+          "width_variance": 0.46153846153846156,
+          "height_variance": 0.014218009478672985,
+          "widths": [
+            231,
+            308,
+            408,
+            348,
+            429,
+            239
+          ],
+          "heights": [
+            422,
+            416,
+            419,
+            417,
+            417,
+            417
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Sparky/sprites/hurt_spritesheet.png",
+        "message": "character bbox varies 47% wide / 7% tall across frames",
+        "measurement": {
+          "width_variance": 0.4734607218683652,
+          "height_variance": 0.06958250497017893,
+          "widths": [
+            317,
+            386,
+            455,
+            471,
+            248,
+            317
+          ],
+          "heights": [
+            503,
+            493,
+            468,
+            468,
+            503,
+            503
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F7_unity_pivot_inconsistent",
+        "asset": "Sparky/sprites/jump_spritesheet.png",
+        "message": "pivot drifts 22x 112y across frames (cell=512)",
+        "measurement": {
+          "x_drift": 21.75480898602075,
+          "y_drift": 111.92984530575109,
+          "cell": 512
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F5_frame_drift",
+        "asset": "Sparky/sprites/jump_spritesheet.png",
+        "message": "character bbox varies 38% wide / 51% tall across frames",
+        "measurement": {
+          "width_variance": 0.3806818181818182,
+          "height_variance": 0.5081967213114754,
+          "widths": [
+            250,
+            302,
+            274,
+            223,
+            352,
+            218
+          ],
+          "heights": [
+            316,
+            346,
+            366,
+            350,
+            340,
+            180
+          ]
+        }
+      },
+      {
+        "severity": "critical",
+        "code": "F1_transparency_missing",
+        "asset": "Sparky/expressions/expressions_front.png",
+        "message": "expressions asset should have alpha, is 100% opaque",
+        "measurement": {
+          "opaque_ratio": 1.0
+        }
+      }
+    ]
+  }
+}

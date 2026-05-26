@@ -1,0 +1,10 @@
+{
+  "gate_id": "G11",
+  "gate_name": "localization",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.028609+00:00",
+  "signature": "8110272757f271b5018334a099746e096dc8c85ee6c411db94e73ab888f2795a"
+}

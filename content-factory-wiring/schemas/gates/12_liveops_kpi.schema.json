@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/12_liveops_kpi.schema.json",
+  "title": "12_liveops_kpi (G12)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G12"
+    },
+    "gate_name": {
+      "const": "live_ops_feedback"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "kpi_24h": {
+          "type": "object"
+        },
+        "kpi_72h": {
+          "type": "object"
+        },
+        "kpi_7d": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

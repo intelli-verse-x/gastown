@@ -1,0 +1,25 @@
+{
+  "rubric_id": "script_brand",
+  "auditor": "BrandAuditor",
+  "auditor_role": "agent://auditor/brand",
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.039627+00:00",
+  "scores": {
+    "voice_match": 6.0,
+    "banned_term_compliance": 10.0,
+    "topic_safety": 10.0,
+    "cta_match": 10.0,
+    "competitor_neutrality": 10.0
+  },
+  "overall_score": 8.8,
+  "final_verdict": "PASS_WITH_NOTES",
+  "directives": [
+    "Brand: tone drifts from voice DNA \u2014 see persona.voice_examples for reference."
+  ],
+  "redo_count": 0,
+  "max_redos": 1,
+  "approved_output": null,
+  "waiver_bead": null,
+  "scoring_source": "deterministic_rule",
+  "signature": "e96dac29c6083e7285ebfcf0ce1595d347a18fa889ee02ea8c82e0813512e2ab"
+}

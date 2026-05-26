@@ -1,0 +1,65 @@
+# Retention policy — chain-of-custody storage windows by jurisdiction.
+#
+# WHO OWNS THIS FILE: Legal counsel (regulated content lead).
+# CITATIONS:
+#   US      — IRS §6001 (7y financial), SEC Rule 17a-4 (6y), generic civil statute (max 6y)
+#   EU/UK   — GDPR Art 17 (right to erasure) but ePrivacy + ad accountability → 7y
+#   DE      — HGB §257 (10y for commercial communications, incl. paid ads)
+#   FR      — Code de commerce L123-22 (10y)
+#   CA      — PIPEDA (sector-specific; 7y default)
+#
+# `min_days` is the floor; lifecycle in S3 expires at exactly this.
+# `legal_hold` flag means chain_of_custody.jsonl is also legally non-mutable.
+
+[jurisdiction.default]
+description = "Catch-all when run has no jurisdiction tag"
+min_days    = 2557   # 7y + 2 leap days
+legal_hold  = true
+
+[jurisdiction.US]
+min_days   = 2557
+legal_hold = true
+citations  = ["IRS §6001", "SEC Rule 17a-4"]
+
+[jurisdiction.UK]
+min_days   = 2557
+legal_hold = true
+citations  = ["UK GDPR Art 17", "ePrivacy Reg"]
+
+[jurisdiction.EU]
+min_days   = 2557
+legal_hold = true
+citations  = ["GDPR Art 17", "ePrivacy"]
+
+[jurisdiction.DE]
+min_days   = 3653   # 10y
+legal_hold = true
+citations  = ["HGB §257"]
+
+[jurisdiction.FR]
+min_days   = 3653
+legal_hold = true
+citations  = ["Code de commerce L123-22"]
+
+[jurisdiction.IN]
+min_days   = 2557
+legal_hold = true
+citations  = ["DPDP Act 2023", "IT Act §66E"]
+
+[jurisdiction.CA]
+min_days   = 2557
+legal_hold = true
+citations  = ["PIPEDA"]
+
+# Per-content-type overrides (longest wins)
+[content_type.ads]
+extra_min_days = 365   # +1y for advertising self-regulation
+legal_hold     = true
+
+[content_type.financial_education]
+extra_min_days = 1095  # +3y for FINRA / FCA scrutiny window
+legal_hold     = true
+
+[content_type.children]
+extra_min_days = 1095  # COPPA / GDPR-K
+legal_hold     = true

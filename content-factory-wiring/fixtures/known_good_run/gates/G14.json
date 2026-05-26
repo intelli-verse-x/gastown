@@ -1,0 +1,10 @@
+{
+  "gate_id": "G14",
+  "gate_name": "chain_of_custody",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.031399+00:00",
+  "signature": "693ac5a28b8e587b2d1706867efc9cff28c9d299834b29cbb6808dc248ccce4c"
+}

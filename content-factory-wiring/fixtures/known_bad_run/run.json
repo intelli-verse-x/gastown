@@ -1,0 +1,6 @@
+{
+  "_purpose": "Intentionally-broken fixture. Every required gate at tier=aa must produce a blocker.",
+  "pipeline": "viral_shorts",
+  "tier_declared": "aa",
+  "started_at": "2026-05-26T00:00:00Z"
+}

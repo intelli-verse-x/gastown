@@ -1,0 +1,17 @@
+{
+  "gate_id": "G4",
+  "gate_name": "visual_continuity",
+  "passed": true,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G4_too_few_shots",
+      "severity": "low",
+      "message": "only 0 shots \u2014 continuity not measurable",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:33.910503+00:00",
+  "signature": "3cc6791b1e365470caa703dd0f879e84b5619f1e540d791ac58e24f0f30e0056"
+}

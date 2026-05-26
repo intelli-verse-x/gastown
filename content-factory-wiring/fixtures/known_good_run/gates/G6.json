@@ -1,0 +1,10 @@
+{
+  "gate_id": "G6",
+  "gate_name": "rights_manifest",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:33.915651+00:00",
+  "signature": "3d30744cdd75778874b6debc914d9f4d391aa0d07096e714e8dcf9f08c70f4b9"
+}

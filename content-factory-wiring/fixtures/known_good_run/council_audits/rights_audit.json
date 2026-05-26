@@ -1,0 +1,23 @@
+{
+  "rubric_id": "rights",
+  "auditor": "RightsAuditor",
+  "auditor_role": "agent://auditor/rights",
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.041491+00:00",
+  "scores": {
+    "manifest_completeness": 10.0,
+    "license_compliance": 10.0,
+    "consent_completeness": 10.0,
+    "clearance_status": 10.0,
+    "expiry_safety": 10.0
+  },
+  "overall_score": 10.0,
+  "final_verdict": "APPROVED",
+  "directives": [],
+  "redo_count": 0,
+  "max_redos": 1,
+  "approved_output": null,
+  "waiver_bead": null,
+  "scoring_source": "deterministic_rule",
+  "signature": "256da67c808cb545885cd64ced41743ec062b426a33f4da760430e401ce4d8a2"
+}

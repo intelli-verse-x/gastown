@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/02_canon_lock.schema.json",
+  "title": "02_canon_lock (G2)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G2"
+    },
+    "gate_name": {
+      "const": "canon_lock"
+    }
+  }
+}

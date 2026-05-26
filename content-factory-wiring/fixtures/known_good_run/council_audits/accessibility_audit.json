@@ -1,0 +1,23 @@
+{
+  "rubric_id": "accessibility",
+  "auditor": "AccessibilityAuditor",
+  "auditor_role": "agent://auditor/accessibility",
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.041367+00:00",
+  "scores": {
+    "captions_coverage": 10.0,
+    "photosensitivity_safe": 10.0,
+    "wcag_contrast": 10.0,
+    "audio_description": 10.0,
+    "dub_per_locale": 10.0
+  },
+  "overall_score": 10.0,
+  "final_verdict": "APPROVED",
+  "directives": [],
+  "redo_count": 0,
+  "max_redos": 1,
+  "approved_output": null,
+  "waiver_bead": null,
+  "scoring_source": "deterministic_rule",
+  "signature": "820ed1855c5922c6e474a23593a4bb978900ede1df7b5767619efd41b8cc9716"
+}

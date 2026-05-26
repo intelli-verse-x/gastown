@@ -1,0 +1,23 @@
+{
+  "title": "Quizzy demo short",
+  "premise": "a cheerful know-it-all who teaches one fact per video",
+  "audience": "gen-z trivia",
+  "tone": "warm, snappy, curious",
+  "hash": "32e2a364bf835f1b12716405098680a5d849c2b4df9de84d695709735b439eb4",
+  "approvals": {
+    "creative_director": {
+      "role": "creative_director",
+      "signer": "Fixture creative_director",
+      "signed_at": "2026-05-26T23:04:50.943816+00:00",
+      "pitch_hash": "32e2a364bf835f1b12716405098680a5d849c2b4df9de84d695709735b439eb4",
+      "signature": "8c592429771089d2e48e075511bfa4780cba47e6bb301a6d040f7f8e9f658dc6"
+    },
+    "technical_director": {
+      "role": "technical_director",
+      "signer": "Fixture technical_director",
+      "signed_at": "2026-05-26T23:04:50.943975+00:00",
+      "pitch_hash": "32e2a364bf835f1b12716405098680a5d849c2b4df9de84d695709735b439eb4",
+      "signature": "c185b22877627f4b4fc70c8ce704038a17921f29895aeb6c60e3282335ce4f7d"
+    }
+  }
+}

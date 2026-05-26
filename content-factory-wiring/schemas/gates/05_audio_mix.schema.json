@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/05_audio_mix.schema.json",
+  "title": "05_audio_mix (G5)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G5"
+    },
+    "gate_name": {
+      "const": "audio_mix"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "lufs": {
+          "type": "number"
+        },
+        "true_peak": {
+          "type": "number"
+        },
+        "spectral_balance_passed": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

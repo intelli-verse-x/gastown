@@ -1,0 +1,80 @@
+{
+  "run_id": "known_good_run",
+  "tier": "indie",
+  "issued_at": "2026-05-26T23:04:51.121969+00:00",
+  "required_gates": [
+    "G1",
+    "G3",
+    "G5",
+    "G6",
+    "G10",
+    "G14"
+  ],
+  "results": [
+    {
+      "gate_id": "G1",
+      "gate_name": "concept_lock",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:04:51.114890+00:00",
+      "signature": "518714348961dd6fbb6f02f90e81e19cc251d451ef79282684e4385c05824201"
+    },
+    {
+      "gate_id": "G3",
+      "gate_name": "script_multi_read",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:04:51.116771+00:00",
+      "signature": "df97c474bd0f05b8c360db50f8cbd4fee096e72520a7bc892f5c5ecd22fce7fe"
+    },
+    {
+      "gate_id": "G5",
+      "gate_name": "audio_mix",
+      "passed": true,
+      "evaluated_at": "2026-05-26T23:04:51.116962+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G6",
+      "gate_name": "rights_manifest",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:04:51.121057+00:00",
+      "signature": "09a506ac94f34a4a3ff36dfd489210adbcc4bcb45c56488e260e34971f87251a"
+    },
+    {
+      "gate_id": "G10",
+      "gate_name": "council_enforcer",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:04:51.121536+00:00",
+      "signature": "4e33e797d5287adc2312a9858838b68235739b2b2fcc38dac3a38f55af96041e"
+    },
+    {
+      "gate_id": "G14",
+      "gate_name": "chain_of_custody",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:04:51.121839+00:00",
+      "signature": "f11494ca826ee29dc8ba4216cc08a9e48e50894cb8ae5bd0563fed0bd8377f8e"
+    }
+  ],
+  "passed": true,
+  "summary": {
+    "passed_count": 6,
+    "failed_count": 0,
+    "total": 6
+  },
+  "signature": "e0f28b66d829ee057012a4218d3405a0f3c818f9dcf2c1f9e48339c675528109",
+  "certificate_signature": "e0f28b66d829ee057012a4218d3405a0f3c818f9dcf2c1f9e48339c675528109"
+}

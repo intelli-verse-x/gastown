@@ -1,0 +1,215 @@
+{
+  "run_id": "known_bad_run",
+  "tier": "aa",
+  "issued_at": "2026-05-26T23:04:51.193554+00:00",
+  "required_gates": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "G10",
+    "G13",
+    "G14"
+  ],
+  "results": [
+    {
+      "gate_id": "G1",
+      "gate_name": "concept_lock",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G1_no_pitch",
+          "severity": "blocker",
+          "message": "No pitch_deck.json found \u2014 concept must be locked before scripting.",
+          "measurement": {
+            "searched": "/Users/devashishbadlani/dev/gastown/content-factory-wiring/fixtures/known_bad_run"
+          }
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.157079+00:00",
+      "signature": "39438a2b21f1af7e6d8f75bef797165bd46a2fd348153f10619938906a04c9d0"
+    },
+    {
+      "gate_id": "G2",
+      "gate_name": "canon_lock",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G2_no_bible",
+          "severity": "blocker",
+          "message": "studio_bible.json missing \u2014 required for viral_shorts",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.157786+00:00",
+      "signature": "013f8d89cc4afa111102330fc8e036eba477c8533a51bacd5656abd3755b41b0"
+    },
+    {
+      "gate_id": "G3",
+      "gate_name": "script_multi_read",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G3_R1_missing",
+          "severity": "blocker",
+          "message": "creative read (screenwriting_audit.json) missing",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.158545+00:00",
+      "signature": "cab5d13ab637c4c803ae3d80ba5e90f58a0a071cbf7c494ac8acfe45c56bef78"
+    },
+    {
+      "gate_id": "G4",
+      "gate_name": "visual_continuity",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G4_too_few_shots",
+          "severity": "low",
+          "message": "only 0 shots \u2014 continuity not measurable",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.190657+00:00",
+      "signature": "bc6ff74040291591c4c9e0fb47b6a3282d5645d4a2648e8a7936d1e6b19697ae"
+    },
+    {
+      "gate_id": "G5",
+      "gate_name": "audio_mix",
+      "passed": false,
+      "evaluated_at": "2026-05-26T23:04:51.190937+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G6",
+      "gate_name": "rights_manifest",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G6_no_manifest",
+          "severity": "blocker",
+          "message": "rights_manifest.json missing \u2014 required for any external publish",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.191285+00:00",
+      "signature": "117d6ca74e9313d28b67d0b4f2dda909ba061757a843eebe511e7492e7c8a7d8"
+    },
+    {
+      "gate_id": "G7",
+      "gate_name": "accessibility",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G7_no_video",
+          "severity": "low",
+          "message": "no final video found \u2014 accessibility checks skipped",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.191946+00:00",
+      "signature": "ead272ce0d72c172ecd51ddb2666707fcc924adef10a243a16e2791f106490d6"
+    },
+    {
+      "gate_id": "G8",
+      "gate_name": "platform_cert",
+      "passed": false,
+      "evaluated_at": "2026-05-26T23:04:51.192123+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G9",
+      "gate_name": "frame_qa",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G9_no_video",
+          "severity": "low",
+          "message": "no final video \u2014 frame QA skipped",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.192387+00:00",
+      "signature": "80e01e3e9ddc046ee846c7db9f2410b437da17b2aa7ee8a0d40c871303502e69"
+    },
+    {
+      "gate_id": "G10",
+      "gate_name": "council_enforcer",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G10_no_audit",
+          "severity": "critical",
+          "message": "No council audits found \u2014 required for tier \u2265 aa",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.192742+00:00",
+      "signature": "7ff35d260bf4cde976fdb21bed3e216bdafadf4a70537aba5e81943f1f885f22"
+    },
+    {
+      "gate_id": "G13",
+      "gate_name": "dual_signoff",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G13_no_approvals_dir",
+          "severity": "blocker",
+          "message": "approvals/ directory missing \u2014 no signatures recorded",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.193048+00:00",
+      "signature": "a6b647e8f1abd4b7e78ecbd1588dda5e4c0f95d91aa310f81418b3fdc32eb24e"
+    },
+    {
+      "gate_id": "G14",
+      "gate_name": "chain_of_custody",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G14_no_retention_policy",
+          "severity": "critical",
+          "message": "retention.json missing \u2014 default 7y policy assumed",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:04:51.193387+00:00",
+      "signature": "b0f177b290ebcd8722f04e4a834d5374aa9c46512612ae529d78107261a89cfe"
+    }
+  ],
+  "passed": false,
+  "summary": {
+    "passed_count": 4,
+    "failed_count": 8,
+    "total": 12
+  },
+  "signature": "69b597521398f778bd1e7e150056134ff7b7443656ed0aef436a4ef44fd1b4d5",
+  "certificate_signature": "69b597521398f778bd1e7e150056134ff7b7443656ed0aef436a4ef44fd1b4d5"
+}

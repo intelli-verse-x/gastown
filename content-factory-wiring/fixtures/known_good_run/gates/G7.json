@@ -1,0 +1,17 @@
+{
+  "gate_id": "G7",
+  "gate_name": "accessibility",
+  "passed": true,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "A2_photosensitivity_unmeasured",
+      "severity": "medium",
+      "message": "output/final_video.mp4: could not scan (ffmpeg failed)",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:33.972437+00:00",
+  "signature": "fa0e1f9a82ea567b58171d98e06d9790c0502fb118f7a19a9bc0493961fa6e20"
+}

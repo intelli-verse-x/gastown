@@ -1,0 +1,96 @@
+# .gastown/refinery/quizverse-art-cert.toml
+# Blocks any republish to S3 unless every cert gate is signed for that character.
+
+[rig]
+name = "quizverse-art-cert"
+target_branch = "main"
+
+# Where the manifest lives (single source of truth)
+[manifest]
+path = "agent-assets/games/quiz-verse/game_developer_manifest.json"
+s3_bucket = "intelli-verse-x-media"
+
+# Cert gates — every character must pass ALL gates before its assets can be republished.
+[[gate]]
+id = "G1_transparency"
+description = "Every emotion view + sprite is RGBA with <95% opaque ratio"
+auditor_agent = "polecat://art-cert/transparency"
+blocking = true
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G2_sprite_atlas"
+description = "Single master_atlas.png exists, 3082x3082, 6x6 cells, 2px pad, RGBA"
+auditor_agent = "polecat://art-cert/atlas"
+blocking = true
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G3_unity_spec"
+description = "atlas.json conforms to unity_sprite_requirements (sprite_mode=Multiple, named frames)"
+auditor_agent = "polecat://art-cert/unity-spec"
+blocking = true
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G4_no_empty_sprites"
+description = "Zero sheets have 0 opaque pixels (catches the AUTOcurio attack/hurt bug)"
+auditor_agent = "polecat://art-cert/non-empty"
+blocking = true
+severity_on_fail = "CRITICAL"
+
+[[gate]]
+id = "G5_pivot_consistency"
+description = "Center-of-mass drift across frames < 15% of cell width"
+auditor_agent = "polecat://art-cert/pivot"
+blocking = true
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G6_no_frame_drift"
+description = "Character bbox width/height variance across frames < 30%"
+auditor_agent = "polecat://art-cert/frame-drift"
+blocking = false   # warn-only at Tier-2; blocking at Tier-3
+severity_on_fail = "MEDIUM"
+
+[[gate]]
+id = "G7_pixelation"
+description = "Laplacian variance > 30 on every frame (catches blur/upscale artifacts)"
+auditor_agent = "polecat://art-cert/pixelation"
+blocking = false   # warn at Tier-2; blocking at Tier-3
+severity_on_fail = "MEDIUM"
+
+[[gate]]
+id = "G8_canvas_uniformity"
+description = "Same-character base views all on identical canvas (no 832x1248 vs 1024x1536 mix)"
+auditor_agent = "polecat://art-cert/canvas"
+blocking = true
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G9_human_visual_signoff"
+description = "Art director eyeballs before/after comparison and signs"
+auditor_agent = "human:art-director"
+blocking = true
+severity_on_fail = "CRITICAL"
+delivery = "telegram://art-director?attach=comparisons/<char>_*.png"
+
+# Tier policy — what gates are required per release tier
+[tier_policy]
+internal   = ["G4"]                                       # smoke test
+indie      = ["G1", "G2", "G4", "G8"]                     # T1
+aa         = ["G1", "G2", "G3", "G4", "G5", "G8", "G9"]   # T2 (recommended for QuizVerse launch)
+aaa        = ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9"]  # T3
+
+# Signature requirements
+[signature]
+algo = "hmac-sha256"
+key_source = "vault://quizverse/cert-signing-key"
+retention_years = 7
+written_to = "agent-assets/games/quiz-verse/cert/<character>/<gate_id>.json.signed"
+
+# Escalation routing
+[escalation]
+"G4_no_empty_sprites"           = { severity = "CRITICAL", route = "mayor" }
+"G1_transparency"               = { severity = "HIGH",     route = "deacon" }
+"G9_human_visual_signoff_stale" = { severity = "HIGH",     route = "art-director-backup" }

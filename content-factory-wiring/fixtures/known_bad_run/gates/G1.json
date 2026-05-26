@@ -1,0 +1,19 @@
+{
+  "gate_id": "G1",
+  "gate_name": "concept_lock",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G1_no_pitch",
+      "severity": "blocker",
+      "message": "No pitch_deck.json found \u2014 concept must be locked before scripting.",
+      "measurement": {
+        "searched": "/Users/devashishbadlani/dev/gastown/content-factory-wiring/fixtures/known_bad_run"
+      }
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:04:51.157079+00:00",
+  "signature": "39438a2b21f1af7e6d8f75bef797165bd46a2fd348153f10619938906a04c9d0"
+}

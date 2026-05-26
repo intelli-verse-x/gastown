@@ -1,0 +1,17 @@
+{
+  "gate_id": "G13",
+  "gate_name": "dual_signoff",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G13_no_approvals_dir",
+      "severity": "blocker",
+      "message": "approvals/ directory missing \u2014 no signatures recorded",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:04:51.193048+00:00",
+  "signature": "a6b647e8f1abd4b7e78ecbd1588dda5e4c0f95d91aa310f81418b3fdc32eb24e"
+}

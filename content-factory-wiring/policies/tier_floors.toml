@@ -1,0 +1,65 @@
+# Tier floors — pass/notes thresholds for each tier.
+#
+# WHO OWNS THIS FILE: Head of Content (with input from VP Eng on rejection-rate impact).
+# WHO MAY EDIT: tracked PR with Creative Director approval; commits append to chain_of_custody.
+# ROTATION: review quarterly; emergency changes via `gt refinery override --policy-change`.
+#
+# Scoring scale is 0–10 per dimension; overall is the weight-normalized mean.
+# `pass_floor` — score required for APPROVED verdict (no directives).
+# `notes_floor` — score below which verdict moves from PASS_WITH_NOTES to NEEDS_REVIEW.
+
+[tier.internal]
+description    = "Throw-away canary or internal demo. Minimum trust."
+pass_floor     = 5.0
+notes_floor    = 4.0
+required_gates = ["G1", "G14"]
+optional_gates = []  # everything else recorded but never blocks
+
+[tier.indie]
+description    = "Default tier for viral_shorts, ads, learning_series clip-form."
+pass_floor     = 6.0
+notes_floor    = 5.0
+required_gates = ["G1", "G3", "G5", "G7", "G9", "G14"]
+optional_gates = ["G2", "G4", "G6"]  # advisory; surface as warnings
+
+[tier.aa]
+description    = "Flagship channel content. Requires Creative + Technical Director."
+pass_floor     = 7.0
+notes_floor    = 6.5
+required_gates = ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14"]
+optional_gates = ["G11", "G12"]
+
+[tier.aaa]
+description    = "Studio tentpole / hero content. Multi-locale, multi-platform."
+pass_floor     = 8.0
+notes_floor    = 7.5
+required_gates = [
+    "G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G13","G14",
+]
+optional_gates = ["G12"]
+
+[tier.live_aaa]
+description    = "AAA + closed engagement loop (G12 enforced from yesterday's KPIs)."
+pass_floor     = 8.0
+notes_floor    = 7.5
+kpi_delta_required = 0.0   # next slate must be ≥ baseline; uplift via G12 feedback
+required_gates = ["G1","G2","G3","G4","G5","G6","G7","G8","G9","G10","G11","G12","G13","G14"]
+optional_gates = []
+
+# Per-pipeline overrides
+[pipeline.viral_shorts]
+default_tier = "indie"
+allow_tiers  = ["internal", "indie", "aa"]
+
+[pipeline.ads]
+default_tier = "aa"
+allow_tiers  = ["indie", "aa", "aaa"]
+# Ads are regulated; never below aa once paid spend is connected.
+
+[pipeline.learning_series]
+default_tier = "aa"
+allow_tiers  = ["aa", "aaa", "live_aaa"]
+
+[pipeline.movies]
+default_tier = "aaa"
+allow_tiers  = ["aaa", "live_aaa"]

@@ -1,0 +1,10 @@
+{
+  "summary": {
+    "by_severity": {
+      "blocker": 0,
+      "critical": 0,
+      "high": 0
+    }
+  },
+  "_note": "Fixture: no video present, audit shape only."
+}

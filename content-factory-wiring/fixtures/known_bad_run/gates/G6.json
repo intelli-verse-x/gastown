@@ -1,0 +1,17 @@
+{
+  "gate_id": "G6",
+  "gate_name": "rights_manifest",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G6_no_manifest",
+      "severity": "blocker",
+      "message": "rights_manifest.json missing \u2014 required for any external publish",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:04:51.191285+00:00",
+  "signature": "117d6ca74e9313d28b67d0b4f2dda909ba061757a843eebe511e7492e7c8a7d8"
+}

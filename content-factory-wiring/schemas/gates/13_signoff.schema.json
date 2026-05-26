@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/13_signoff.schema.json",
+  "title": "13_signoff (G13)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G13"
+    },
+    "gate_name": {
+      "const": "dual_signoff"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "signers": {
+          "type": "object",
+          "required": [
+            "creative_director",
+            "technical_director"
+          ],
+          "properties": {
+            "creative_director": {
+              "type": "object"
+            },
+            "technical_director": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

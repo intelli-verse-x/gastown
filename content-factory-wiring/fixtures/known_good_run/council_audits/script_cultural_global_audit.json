@@ -1,0 +1,23 @@
+{
+  "rubric_id": "script_cultural_global",
+  "auditor": "CulturalAuditor",
+  "auditor_role": "agent://auditor/cultural",
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.041217+00:00",
+  "scores": {
+    "sensitive_language": 10.0,
+    "religious_safety": 10.0,
+    "political_neutrality": 10.0,
+    "gesture_safety": 10.0,
+    "holiday_calendar": 10.0
+  },
+  "overall_score": 10.0,
+  "final_verdict": "APPROVED",
+  "directives": [],
+  "redo_count": 0,
+  "max_redos": 1,
+  "approved_output": null,
+  "waiver_bead": null,
+  "scoring_source": "deterministic_rule",
+  "signature": "082f416160a7ea44d5d74689c78765453feade726ae4aae41e0cf5ba6d81ff43"
+}

@@ -1,0 +1,83 @@
+{
+  "batch": "/Users/devashishbadlani/dev/content-factory/.working_dir/video",
+  "findings": [
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_014531_16937e50",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_020548_17fd4e4e",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_032142_a9380cd7",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_124749_fbb22c2e",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_160612_1d46997e",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_161946_6d9585b4",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_210715_6bf845b0",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_215138_644d0cd0",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    },
+    {
+      "code": "S1_no_sync_manifest",
+      "severity": "high",
+      "run_id": "viral_shorts_20260420_224733_12854ae2",
+      "path": ".",
+      "message": "no s3_sync_manifest.json \u2014 cannot prove run is recoverable from S3",
+      "measurement": {}
+    }
+  ],
+  "by_code": {
+    "S1_no_sync_manifest": 9
+  },
+  "by_severity": {
+    "high": 9
+  }
+}

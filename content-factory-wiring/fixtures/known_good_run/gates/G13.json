@@ -1,0 +1,10 @@
+{
+  "gate_id": "G13",
+  "gate_name": "dual_signoff",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:34.030756+00:00",
+  "signature": "ebc1047c02f6002d010e16c6dcccd30333e93265078fcd1b70a96eee693753ca"
+}

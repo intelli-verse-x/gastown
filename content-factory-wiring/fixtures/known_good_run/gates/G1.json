@@ -1,0 +1,10 @@
+{
+  "gate_id": "G1",
+  "gate_name": "concept_lock",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:05:33.842594+00:00",
+  "signature": "79fab46107708dc9a8afdd03b6ed44f7d77d43984524c6e6ac3ac4260d2e635d"
+}

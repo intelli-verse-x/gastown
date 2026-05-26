@@ -1,0 +1,416 @@
+{
+  "batch": "/Users/devashishbadlani/dev/content-factory/.working_dir/video",
+  "runs": [
+    {
+      "run_id": "viral_shorts_20260420_014531_16937e50",
+      "findings": [
+        {
+          "code": "C0_too_few_shots",
+          "severity": "low",
+          "shot_a": "(none)",
+          "shot_b": null,
+          "message": "viral_shorts_20260420_014531_16937e50: only 0 shot frame(s) found \u2014 cannot evaluate continuity",
+          "measurement": {
+            "n_shots": 0
+          }
+        }
+      ],
+      "summary": {
+        "n": 1,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_020548_17fd4e4e",
+      "findings": [
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0-Scene-003",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0-Scene-003 (chi-sq distance 0.41, threshold 0.35)",
+          "measurement": {
+            "distance": 0.41139907600313463
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0-Scene-003",
+          "message": "sharpness ratio 16.8x between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0-Scene-003 (2786 vs 166) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 16.778590474839202,
+            "prev_var": 2786.057861328125,
+            "this_var": 166.0483856201172
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-003",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-003 \u2192 transition_video_from_shot_0 (chi-sq distance 0.46, threshold 0.35)",
+          "measurement": {
+            "distance": 0.4634738270773974
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-003",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "sharpness ratio 40.7x between transition_video_from_shot_0-Scene-003 \u2192 transition_video_from_shot_0 (166 vs 6753) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 40.66680150525443,
+            "prev_var": 166.0483856201172,
+            "this_var": 6752.65673828125
+          }
+        }
+      ],
+      "summary": {
+        "n": 4,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_032142_a9380cd7",
+      "findings": [
+        {
+          "code": "C0_too_few_shots",
+          "severity": "low",
+          "shot_a": "(none)",
+          "shot_b": null,
+          "message": "viral_shorts_20260420_032142_a9380cd7: only 0 shot frame(s) found \u2014 cannot evaluate continuity",
+          "measurement": {
+            "n_shots": 0
+          }
+        }
+      ],
+      "summary": {
+        "n": 1,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_124749_fbb22c2e",
+      "findings": [
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-001",
+          "shot_b": "transition_video_from_shot_0-Scene-002",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-001 \u2192 transition_video_from_shot_0-Scene-002 (chi-sq distance 0.36, threshold 0.35)",
+          "measurement": {
+            "distance": 0.36441777476604587
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-003",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-003 \u2192 transition_video_from_shot_0 (chi-sq distance 0.37, threshold 0.35)",
+          "measurement": {
+            "distance": 0.37474180094180565
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0",
+          "shot_b": "transition_video_from_shot_1-Scene-001",
+          "message": "background palette shifted between transition_video_from_shot_0 \u2192 transition_video_from_shot_1-Scene-001 (chi-sq distance 0.38, threshold 0.35)",
+          "measurement": {
+            "distance": 0.38188004178392465
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_1-Scene-001",
+          "shot_b": "transition_video_from_shot_1-Scene-002",
+          "message": "background palette shifted between transition_video_from_shot_1-Scene-001 \u2192 transition_video_from_shot_1-Scene-002 (chi-sq distance 0.48, threshold 0.35)",
+          "measurement": {
+            "distance": 0.4768356130272631
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_1-Scene-002",
+          "shot_b": "transition_video_from_shot_1",
+          "message": "background palette shifted between transition_video_from_shot_1-Scene-002 \u2192 transition_video_from_shot_1 (chi-sq distance 0.48, threshold 0.35)",
+          "measurement": {
+            "distance": 0.4767300290821355
+          }
+        }
+      ],
+      "summary": {
+        "n": 5,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_160612_1d46997e",
+      "findings": [
+        {
+          "code": "C0_too_few_shots",
+          "severity": "low",
+          "shot_a": "(none)",
+          "shot_b": null,
+          "message": "viral_shorts_20260420_160612_1d46997e: only 0 shot frame(s) found \u2014 cannot evaluate continuity",
+          "measurement": {
+            "n_shots": 0
+          }
+        }
+      ],
+      "summary": {
+        "n": 1,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_161946_6d9585b4",
+      "findings": [
+        {
+          "code": "C0_too_few_shots",
+          "severity": "low",
+          "shot_a": "(none)",
+          "shot_b": null,
+          "message": "viral_shorts_20260420_161946_6d9585b4: only 0 shot frame(s) found \u2014 cannot evaluate continuity",
+          "measurement": {
+            "n_shots": 0
+          }
+        }
+      ],
+      "summary": {
+        "n": 1,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_210715_6bf845b0",
+      "findings": [
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-001",
+          "shot_b": "transition_video_from_shot_0-Scene-002",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-001 \u2192 transition_video_from_shot_0-Scene-002 (chi-sq distance 0.88, threshold 0.35)",
+          "measurement": {
+            "distance": 0.8816589018874491
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-001",
+          "shot_b": "transition_video_from_shot_0-Scene-002",
+          "message": "sharpness ratio 4.5x between transition_video_from_shot_0-Scene-001 \u2192 transition_video_from_shot_0-Scene-002 (3244 vs 724) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 4.479615924560367,
+            "prev_var": 3244.10400390625,
+            "this_var": 724.1924438476562
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0 (chi-sq distance 0.88, threshold 0.35)",
+          "measurement": {
+            "distance": 0.8817756357297043
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "sharpness ratio 4.9x between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0 (724 vs 3536) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 4.882303151349972,
+            "prev_var": 724.1924438476562,
+            "this_var": 3535.72705078125
+          }
+        }
+      ],
+      "summary": {
+        "n": 4,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_215138_644d0cd0",
+      "findings": [
+        {
+          "code": "C0_too_few_shots",
+          "severity": "low",
+          "shot_a": "(none)",
+          "shot_b": null,
+          "message": "viral_shorts_20260420_215138_644d0cd0: only 0 shot frame(s) found \u2014 cannot evaluate continuity",
+          "measurement": {
+            "n_shots": 0
+          }
+        }
+      ],
+      "summary": {
+        "n": 1,
+        "blockers": 0
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_224733_12854ae2",
+      "findings": [
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-001",
+          "shot_b": "transition_video_from_shot_0-Scene-002",
+          "message": "sharpness ratio 3.8x between transition_video_from_shot_0-Scene-001 \u2192 transition_video_from_shot_0-Scene-002 (1537 vs 409) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 3.758643380273954,
+            "prev_var": 1536.9427490234375,
+            "this_var": 408.9089050292969
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0-Scene-003",
+          "message": "background palette shifted between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0-Scene-003 (chi-sq distance 0.39, threshold 0.35)",
+          "measurement": {
+            "distance": 0.39003805760812904
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-002",
+          "shot_b": "transition_video_from_shot_0-Scene-003",
+          "message": "sharpness ratio 3.6x between transition_video_from_shot_0-Scene-002 \u2192 transition_video_from_shot_0-Scene-003 (409 vs 114) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 3.588869787923483,
+            "prev_var": 408.9089050292969,
+            "this_var": 113.93807220458984
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_0-Scene-003",
+          "shot_b": "transition_video_from_shot_0",
+          "message": "sharpness ratio 14.1x between transition_video_from_shot_0-Scene-003 \u2192 transition_video_from_shot_0 (114 vs 1604) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 14.074884102420429,
+            "prev_var": 113.93807220458984,
+            "this_var": 1603.6651611328125
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_0",
+          "shot_b": "transition_video_from_shot_1-Scene-001",
+          "message": "background palette shifted between transition_video_from_shot_0 \u2192 transition_video_from_shot_1-Scene-001 (chi-sq distance 0.57, threshold 0.35)",
+          "measurement": {
+            "distance": 0.5710628792320322
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_1-Scene-001",
+          "shot_b": "transition_video_from_shot_1-Scene-002",
+          "message": "background palette shifted between transition_video_from_shot_1-Scene-001 \u2192 transition_video_from_shot_1-Scene-002 (chi-sq distance 0.67, threshold 0.35)",
+          "measurement": {
+            "distance": 0.6723261454697816
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_1-Scene-001",
+          "shot_b": "transition_video_from_shot_1-Scene-002",
+          "message": "sharpness ratio 14.4x between transition_video_from_shot_1-Scene-001 \u2192 transition_video_from_shot_1-Scene-002 (2877 vs 199) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 14.43901345157541,
+            "prev_var": 2876.804443359375,
+            "this_var": 199.23829650878906
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_1-Scene-002",
+          "shot_b": "transition_video_from_shot_1-Scene-003",
+          "message": "background palette shifted between transition_video_from_shot_1-Scene-002 \u2192 transition_video_from_shot_1-Scene-003 (chi-sq distance 0.73, threshold 0.35)",
+          "measurement": {
+            "distance": 0.7283277191973699
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_1-Scene-002",
+          "shot_b": "transition_video_from_shot_1-Scene-003",
+          "message": "sharpness ratio 3.8x between transition_video_from_shot_1-Scene-002 \u2192 transition_video_from_shot_1-Scene-003 (199 vs 751) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 3.771793836710721,
+            "prev_var": 199.23829650878906,
+            "this_var": 751.4857788085938
+          }
+        },
+        {
+          "code": "C3_sharpness_drift",
+          "severity": "major",
+          "shot_a": "transition_video_from_shot_1-Scene-003",
+          "shot_b": "transition_video_from_shot_1",
+          "message": "sharpness ratio 4.1x between transition_video_from_shot_1-Scene-003 \u2192 transition_video_from_shot_1 (751 vs 3090) \u2014 model swap or upscale inconsistency",
+          "measurement": {
+            "ratio": 4.111547899534638,
+            "prev_var": 751.4857788085938,
+            "this_var": 3089.769775390625
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_1",
+          "shot_b": "transition_video_from_shot_2-Scene-001",
+          "message": "background palette shifted between transition_video_from_shot_1 \u2192 transition_video_from_shot_2-Scene-001 (chi-sq distance 0.42, threshold 0.35)",
+          "measurement": {
+            "distance": 0.41561839721065386
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_2-Scene-001",
+          "shot_b": "transition_video_from_shot_2-Scene-002",
+          "message": "background palette shifted between transition_video_from_shot_2-Scene-001 \u2192 transition_video_from_shot_2-Scene-002 (chi-sq distance 0.69, threshold 0.35)",
+          "measurement": {
+            "distance": 0.6911639239321854
+          }
+        },
+        {
+          "code": "C1_background_palette_drift",
+          "severity": "critical",
+          "shot_a": "transition_video_from_shot_2-Scene-002",
+          "shot_b": "transition_video_from_shot_2",
+          "message": "background palette shifted between transition_video_from_shot_2-Scene-002 \u2192 transition_video_from_shot_2 (chi-sq distance 0.70, threshold 0.35)",
+          "measurement": {
+            "distance": 0.7013950491265837
+          }
+        }
+      ],
+      "summary": {
+        "n": 13,
+        "blockers": 0
+      }
+    }
+  ]
+}
