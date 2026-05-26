@@ -5,7 +5,7 @@
 // Events mapped:
 //   session_start       → gt prime --hook (capture context)
 //   before_agent_start  → inject captured context + check mail every prompt
-//   tool_call           → gt tap guard pr-workflow (on git push/pr create)
+//   tool_call           → gt tap guard pr-workflow (on pr create/branch create)
 //   session_shutdown    → gt costs record
 //
 // Enhancement over upstream: mail is checked on every prompt (throttled to
@@ -14,9 +14,13 @@
 // Loaded via: pi -e gastown-hooks.js
 
 export default (pi) => {
+  const role = (process.env.GT_ROLE || "").toLowerCase();
   let primeContext = null;
   let contextInjected = false;
   let lastMailCheck = 0;
+
+  const shouldCheckMail = () =>
+    !role.includes("witness") && !role.includes("refinery") && !role.startsWith("deacon") && !role.includes("boot");
 
   // SessionStart — run gt prime and capture context for injection
   pi.on("session_start", async (event, context) => {
@@ -32,22 +36,6 @@ export default (pi) => {
       console.error("[gastown] gt prime failed:", e.message);
     }
 
-    // Check mail at session start
-    try {
-      const mailResult = await pi.exec("gt", ["mail", "check", "--inject"]);
-      if (mailResult.code === 0 && mailResult.stdout.trim()) {
-        // Append mail context to prime context
-        if (primeContext) {
-          primeContext += "\n\n" + mailResult.stdout.trim();
-        } else {
-          primeContext = mailResult.stdout.trim();
-        }
-        console.error("[gastown] mail context appended");
-      }
-      lastMailCheck = Date.now();
-    } catch (e) {
-      console.error("[gastown] gt mail check failed:", e.message);
-    }
   });
 
   // BeforeAgentStart — inject prime context + check mail every prompt
@@ -56,7 +44,7 @@ export default (pi) => {
 
     // Check mail on every prompt (throttled to once per 30s)
     const now = Date.now();
-    if (now - lastMailCheck >= 30000) {
+    if (shouldCheckMail() && now - lastMailCheck >= 30000) {
       lastMailCheck = now;
       try {
         const mailResult = await pi.exec("gt", ["mail", "check", "--inject"]);
@@ -101,14 +89,14 @@ export default (pi) => {
     }
   });
 
-  // PreToolUse equivalent — guard dangerous git operations
+  // PreToolUse equivalent — guard PR workflow operations
   pi.on("tool_call", async (event, context) => {
     if (event.toolName === "bash" && event.input?.command) {
       const cmd = event.input.command;
       if (
-        cmd.includes("git push") ||
         cmd.includes("gh pr create") ||
-        cmd.includes("git checkout -b")
+        cmd.includes("git checkout -b") ||
+        cmd.includes("git switch -c")
       ) {
         try {
           const result = await pi.exec("gt", ["tap", "guard", "pr-workflow"]);

@@ -2621,6 +2621,7 @@
     // SLING BUTTONS
     // ============================================
     var activeSlingDropdown = null;
+    var pendingSlingByBead = {};
 
     function closeSlingDropdown() {
         if (activeSlingDropdown) {
@@ -2634,6 +2635,10 @@
 
         var beadId = btn.getAttribute('data-bead-id');
         if (!beadId) return;
+        if (pendingSlingByBead[beadId]) {
+            showToast('info', 'Already slinging', beadId);
+            return;
+        }
 
         var dropdown = document.createElement('div');
         dropdown.className = 'sling-dropdown';
@@ -2678,7 +2683,14 @@
     }
 
     function executeSling(beadId, rig) {
+        if (pendingSlingByBead[beadId]) {
+            showToast('info', 'Already slinging', beadId);
+            return;
+        }
+
         var cmd = 'sling ' + beadId + ' ' + rig;
+        pendingSlingByBead[beadId] = true;
+        setSlingButtonsPending(beadId, true, 'Slinging...');
         showToast('info', 'Slinging...', beadId + ' → ' + rig);
 
         fetch('/api/run', {
@@ -2690,11 +2702,17 @@
         .then(function(data) {
             if (data.success) {
                 showToast('success', 'Slung', beadId + ' → ' + rig);
+                setSlingButtonsPending(beadId, true, 'Launched');
+                if (window.refreshReadyPanel) {
+                    setTimeout(window.refreshReadyPanel, 1000);
+                }
                 if (data.output && data.output.trim()) {
                     showOutput(cmd, data.output);
                 }
             } else {
                 showToast('error', 'Sling failed', data.error || 'Unknown error');
+                pendingSlingByBead[beadId] = false;
+                setSlingButtonsPending(beadId, false, 'Sling');
                 if (data.output) {
                     showOutput(cmd, data.output);
                 }
@@ -2702,7 +2720,23 @@
         })
         .catch(function(err) {
             showToast('error', 'Error', err.message || 'Request failed');
+            pendingSlingByBead[beadId] = false;
+            setSlingButtonsPending(beadId, false, 'Sling');
         });
+    }
+
+    function setSlingButtonsPending(beadId, pending, label) {
+        var selector = '.sling-btn[data-bead-id="' + cssEscape(beadId) + '"]';
+        document.querySelectorAll(selector).forEach(function(btn) {
+            btn.disabled = pending;
+            btn.textContent = label;
+            btn.classList.toggle('is-pending', pending);
+        });
+    }
+
+    function cssEscape(value) {
+        if (window.CSS && CSS.escape) return CSS.escape(value);
+        return String(value).replace(/["\\]/g, '\\$&');
     }
 
     // Click handler for sling buttons

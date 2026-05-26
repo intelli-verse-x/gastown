@@ -1,6 +1,7 @@
 package witness
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -70,13 +71,45 @@ func DefaultBdCli() *BdCli {
 		Exec: func(workDir string, args ...string) (string, error) {
 			// bd v0.59+ requires --flat for list --json to produce JSON
 			args = beads.InjectFlatForListJSON(args)
-			return util.ExecWithOutput(workDir, "bd", args...)
+			return defaultBDExecWithOutput(workDir, args...)
 		},
 		Run: func(workDir string, args ...string) error {
 			args = beads.InjectFlatForListJSON(args)
-			return util.ExecRun(workDir, "bd", args...)
+			return defaultBDRun(workDir, args...)
 		},
 	}
+}
+
+func defaultBDExecWithOutput(workDir string, args ...string) (string, error) {
+	cmd := beads.Command(workDir, beads.ResolveBeadsDir(workDir), beads.SubprocessModeForArgs(args), args...)
+
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	if err := cmd.Run(); err != nil {
+		errMsg := strings.TrimSpace(stderr.String())
+		if errMsg != "" {
+			return "", fmt.Errorf("%s", errMsg)
+		}
+		return "", err
+	}
+	return strings.TrimSpace(stdout.String()), nil
+}
+
+func defaultBDRun(workDir string, args ...string) error {
+	cmd := beads.Command(workDir, beads.ResolveBeadsDir(workDir), beads.SubprocessModeForArgs(args), args...)
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		errMsg := strings.TrimSpace(stderr.String())
+		if errMsg != "" {
+			return fmt.Errorf("%s", errMsg)
+		}
+		return err
+	}
+	return nil
 }
 
 // initRegistryFromTownRoot initializes registries from a known town root,
@@ -707,6 +740,17 @@ func notifyMayorSlotOpen(workDir, rigName, polecatName, exitType string) {
 	if townRoot == "" {
 		return
 	}
+	decision := slotOpenDecision(townRoot, rigName, polecatName, exitType)
+	if !decision.Reusable {
+		_, _ = channelevents.EmitToTown(townRoot, "mayor", "SLOT_BLOCKED", []string{
+			"source=witness",
+			"rig=" + rigName,
+			"polecat=" + polecatName,
+			"exit=" + exitType,
+			"reason=" + decision.Reason,
+		})
+		return
+	}
 
 	// Emit SLOT_OPEN channel event so Mayor's await-event unblocks instantly.
 	_, _ = channelevents.EmitToTown(townRoot, "mayor", "SLOT_OPEN", []string{
@@ -733,6 +777,22 @@ func notifyMayorSlotOpen(workDir, rigName, polecatName, exitType string) {
 	cmd := exec.Command("gt", "mail", "send", "mayor/", "-s", subject, "-m", body)
 	cmd.Dir = townRoot
 	_ = cmd.Run()
+}
+
+func slotOpenDecision(townRoot, rigName, polecatName, exitType string) polecat.SlotReuseDecision {
+	if exitType != string(ExitTypeCompleted) {
+		return polecat.SlotReuseDecision{Reason: "exit-" + strings.ToLower(exitType)}
+	}
+	rigPath := filepath.Join(townRoot, rigName)
+	mgr := polecat.NewManager(&rig.Rig{Name: rigName, Path: rigPath}, git.NewGit(rigPath), tmux.NewTmux())
+	state, err := mgr.EvaluateCompletedSlotState(polecatName)
+	if err != nil {
+		return polecat.SlotReuseDecision{Reason: "workstate-error"}
+	}
+	if !state.SlotOpenEligible {
+		return polecat.SlotReuseDecision{Reason: state.Reason}
+	}
+	return polecat.SlotReuseDecision{Reusable: true, Reason: "reusable"}
 }
 
 // RecoveryPayload contains data for RECOVERY_NEEDED escalation.
@@ -2170,8 +2230,9 @@ func clearCompletionMetadata(bd *BdCli, workDir, agentBeadID string) error {
 	// Clear completion metadata fields
 	fields.ExitType = ""
 	fields.MRID = ""
-	fields.Branch = ""
-	fields.MRFailed = false
+	if !fields.MRFailed && !fields.PushFailed {
+		fields.Branch = ""
+	}
 	fields.CompletionTime = ""
 
 	newDesc := beads.FormatAgentDescription(issues[0].Title, fields)
