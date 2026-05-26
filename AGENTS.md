@@ -80,6 +80,36 @@ git push              # Push to remote
 This workspace is part of a **Gas Town** multi-agent environment. You communicate
 with other agents using `gt` commands — never by printing text or using raw tmux.
 
+### Beads is the only source of truth
+
+A coordinator routing free-form prose between specialized agents is the
+agent-to-agent (A2A) anti-pattern: context drifts every hop because each
+agent re-interprets the natural language. Beads is the versioned backbone
+that breaks the drift, so:
+
+- **State lives in beads.** Task definitions, plans, status, results,
+  blockers, decisions — all of it goes into a bead via `bd create` /
+  `bd update`. Beads commits to Dolt, which is versioned and auditable.
+- **Nudge and mail carry attention, not state.** They mean "look here,"
+  not "do this thing whose definition I am about to narrate at you."
+
+Use `--bead` on both commands. The wire format then points at the bead
+instead of re-encoding it:
+
+```bash
+bd create --title "Fix login redirect" --type bug --priority 1
+# → bd-abc123
+
+gt mail send greenplace/Toast -s "Work for you" --bead bd-abc123
+gt nudge greenplace/Toast --bead bd-abc123 -m "blocker — auth 500"
+```
+
+The body is built from the bead's current title/type/priority/status; the
+recipient is told to `bd show <id>` for authoritative state. An optional
+`-m` note (≤280 chars) may ride along. If your "note" is more than a
+sentence, you are re-encoding state — update the bead instead. Pass
+`--allow-prose` only for genuine one-off prose messages.
+
 ### Nudging Agents (Immediate Delivery)
 
 `gt nudge` sends a message directly to another agent's active session:
@@ -134,6 +164,26 @@ gt prime              # Full context reload
 gt hook               # Check for assigned work
 gt mail inbox         # Check for messages
 ```
+
+### Per-role MCP allowlists (tool surface)
+
+Each role's `.claude/settings.json` declares which MCP servers claude-code is
+allowed to load, via `enabledMcpjsonServers` + `enableAllProjectMcpServers=false`.
+The default policy is conservative — most roles get `firecrawl` and
+`intelli-verse-x` only — to keep the visible tool count under the ~20-tool
+threshold above which completion rates degrade (Vercel / Atlan, 2026).
+
+```bash
+gt mcp show auditor             # built-in default for a role
+gt mcp show audits/qa           # rig-qualified target
+gt mcp show audits/auditor --json
+```
+
+Extend a role's allowlist via on-disk override at
+`~/.gt/mcp-overrides/<rig>__<role>.json` (or unqualified `<role>.json`),
+unioned with the role default by `gt hooks sync`. To remove a server, list it
+in `disabledMcpjsonServers` in the override. Source of truth:
+`internal/hooks/mcp.go::DefaultMCPOverrides`.
 
 <!-- end-gastown-agent-instructions -->
 

@@ -30,6 +30,10 @@ ENV PATH="/app/gastown:/usr/local/go/bin:/home/agent/go/bin:${PATH}"
 RUN curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
 RUN curl -fsSL https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
 
+# Install Anthropic Claude Code CLI (required by `gt start` agent runner).
+# The base image already includes node; reinstall pinned to keep upgrades explicit.
+RUN npm install -g @anthropic-ai/claude-code
+
 # Set up directories
 RUN mkdir -p /app /gt /gt/.dolt-data && chown -R agent:agent /app /gt
 
@@ -40,6 +44,12 @@ RUN echo 'export COLORTERM="truecolor"' >> /etc/profile.d/colorterm.sh && \
     echo 'export COLORTERM="truecolor"' >> /etc/zsh/zshenv
 RUN echo 'export TERM="xterm-256color"' >> /etc/profile.d/term.sh && \
     echo 'export TERM="xterm-256color"' >> /etc/zsh/zshenv
+
+# Bake `firecrawl-cli` into the image so audit/remediation agents always have it
+# (the running pod has read-only npm-global, so a runtime npm -g install fails as
+# the unprivileged agent user). Installing here as root mirrors how the base
+# image bakes in `claude`.
+RUN npm install -g firecrawl-cli
 
 USER agent
 

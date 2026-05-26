@@ -258,6 +258,13 @@ func syncTarget(target hooks.Target, dryRun bool) (syncResult, error) {
 		return 0, fmt.Errorf("computing expected config: %w", err)
 	}
 
+	// Compute expected MCP allowlist for this target. nil is fine and means
+	// "no MCP policy applies" — leave the MCP fields in settings.json alone.
+	expectedMCP, err := hooks.ComputeExpectedMCP(target.Key)
+	if err != nil {
+		return 0, fmt.Errorf("computing expected mcp config: %w", err)
+	}
+
 	// Load existing settings (returns zero-value if file doesn't exist)
 	current, err := hooks.LoadSettings(target.Path)
 	if err != nil {
@@ -268,9 +275,13 @@ func syncTarget(target hooks.Target, dryRun bool) (syncResult, error) {
 	_, statErr := os.Stat(target.Path)
 	fileExists := statErr == nil
 
-	// Compare hooks sections and the Claude startup defaults. Existing settings
-	// from older versions may have current hooks but still miss prompt defaults.
-	if fileExists && hooks.HooksEqual(expected, &current.Hooks) && hooks.HasClaudePromptDefaults(current) {
+	// Compare hooks section, MCP allowlist, and the Claude startup defaults.
+	// Existing settings from older versions may have current hooks but still miss
+	// prompt defaults or MCP allowlist fields.
+	if fileExists &&
+		hooks.HooksEqual(expected, &current.Hooks) &&
+		hooks.HasClaudePromptDefaults(current) &&
+		hooks.HasExpectedMCP(current, expectedMCP) {
 		return syncUnchanged, nil
 	}
 
@@ -283,6 +294,12 @@ func syncTarget(target hooks.Target, dryRun bool) (syncResult, error) {
 
 	// Update hooks section, preserving all other fields (including unknown ones)
 	current.Hooks = *expected
+
+	// Apply MCP allowlist policy. Writes enabledMcpjsonServers /
+	// disabledMcpjsonServers / enableAllProjectMcpServers into current.Extra
+	// so claude-code gates the per-workspace MCP surface to the role's allowlist.
+	// See internal/hooks/mcp.go for the default per-role policy.
+	hooks.ApplyMCPToSettings(current, expectedMCP)
 
 	// Ensure enabledPlugins map exists with beads disabled (Gas Town standard)
 	if current.EnabledPlugins == nil {

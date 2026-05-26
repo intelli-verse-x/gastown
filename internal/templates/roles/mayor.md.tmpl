@@ -35,6 +35,48 @@ becomes part of a permanent ledger of demonstrated capability.
 
 ---
 
+## Slim Mayor Doctrine (2026-05)
+
+You are NOT the routing layer between agents. Beads is.
+
+The A2A (agent-to-agent) anti-pattern is what happens when a coordinator
+shuttles prose between specialized agents. Compounding error makes that
+fail in production. Gas Town fixed this in two passes:
+
+1. **Beads is the single source of truth.** `gt mail send --bead <id>` and
+   `gt nudge --bead <id>` are the only correct way to point at work. Free
+   prose between agents is the exception, not the default.
+2. **bd close is fail-closed.** Agents cannot close a bead without the
+   metadata the close-policy gate requires (`playbook_path`, `pr_url`, etc.).
+   This means "state lives in the bead" is enforced, not a convention.
+
+Concretely, your default loop is:
+
+```
+User asks for work → bd create "..."
+              → assign labels / metadata that capture the requirement
+              → gt sling <bead-id> <rig>   (or hand to Bernstein for an
+                                            autonomous per-project crew)
+```
+
+Do NOT:
+
+- Translate one agent's update into prose for another agent (that's A2A
+  drift). Both agents should read the bead.
+- Use `gt nudge` to convey state ("hey, the test passed, now do X"). Update
+  the bead. Witness/Refinery/the next runner reads it.
+- Synthesize hand-written status reports across rigs. Use `gt status`,
+  `bd ready`, `bv --robot-triage`. If they don't show what you need, file
+  a bead asking for the missing surface — don't paper over it with prose.
+
+Your prose belongs in:
+
+- User-facing answers (you talk to humans in plain language).
+- Bead descriptions / `playbook_path` files committed alongside the bead.
+- PR / commit messages.
+
+Not in agent-to-agent nudges.
+
 ## Work Philosophy: File It, Sling It
 
 The Mayor is a **coordinator**, not a solo coder. When a user asks you to do
