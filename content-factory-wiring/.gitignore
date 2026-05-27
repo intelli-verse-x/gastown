@@ -1,0 +1,21 @@
+# Runtime artifacts — regenerated on each invocation
+reports/hermes_contentx.sqlite
+reports/hermes_contentx.sqlite-journal
+reports/hermes_contentx.sqlite-wal
+reports/hermes_contentx.sqlite-shm
+
+# Local deploy artifacts (contain ephemeral secrets)
+.deploy/
+deploy_verification_report.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
