@@ -1,0 +1,159 @@
+# .gastown/convoys/content-factory.yaml
+# Convoy templates — instantiated per run by Mayor
+
+# ----------------------------------------------------------------------
+# Per-pipeline-kind convoy shapes
+# ----------------------------------------------------------------------
+
+viral_shorts:
+  type: mountain
+  rig: contentx-shorts
+  sla_hours: 2
+  stages:
+    - id: ideation
+      polecat_type: contentx-script/ideator
+      parallel: false
+    - id: script
+      polecat_type: contentx-script/writer
+      depends_on: ideation
+      gate: G_script_present
+    - id: director_brief
+      polecat_type: contentx-director/brief
+      depends_on: script
+    - id: reference_images
+      polecat_type: contentx-image/reference
+      depends_on: director_brief
+    - id: video_generation
+      polecat_type: contentx-video/generator
+      depends_on: reference_images
+      parallel: true              # scenes in parallel
+      max_concurrent: 4
+    - id: audio_master
+      polecat_type: contentx-audio/master
+      depends_on: video_generation
+      gate: G_audio_passed
+    - id: council_audit
+      polecat_type: contentx-council/audit
+      depends_on: audio_master
+      gate: G_council_applied
+    - id: delivery_gate
+      polecat_type: contentx-gates/delivery
+      depends_on: council_audit
+      gate: G_delivery_passed
+    - id: human_signoff
+      polecat_type: gateway/telegram
+      depends_on: delivery_gate
+      required_for_tier: ["aaa"]
+    - id: publish
+      polecat_type: contentx-publish/postiz
+      depends_on: [human_signoff, delivery_gate]
+    - id: engagement_capture
+      polecat_type: contentx-feedback/scraper
+      depends_on: publish
+      schedule_delays: [24, 72, 168]  # hours
+
+learning_series:
+  type: mountain
+  rig: contentx-edu
+  sla_hours: 24
+  parent_bead_pattern: "learning-{topic}-season-{n}"
+  child_convoys_per: episode    # 1 convoy per episode, parented to season-mountain
+  stages:
+    - id: curriculum
+      polecat_type: contentx-edu/curriculum-planner
+    - id: per_episode
+      polecat_type: contentx-edu/episode-runner
+      parallel: true
+      max_concurrent: 3
+      iterate_over: "curriculum.episodes"
+    - id: series_qa
+      polecat_type: contentx-edu/series-qa
+      depends_on: per_episode
+
+ad:
+  type: mountain
+  rig: contentx-ads
+  sla_hours: 4
+  stages:
+    - id: brand_brief
+      polecat_type: contentx-brand/brief-builder
+      gate: G_brand_compliance
+    - id: ab_variants
+      polecat_type: contentx-ads/variant-generator
+      parallel: true
+      max_concurrent: 8
+      iterate_over: "brief.variants"    # typically 5–8 creatives
+    - id: brand_audit_per_variant
+      polecat_type: contentx-brand/auditor
+      parallel: true
+      depends_on: ab_variants
+    - id: rights_check
+      polecat_type: contentx-legal/rights
+      gate: G_rights_manifest
+    - id: brand_owner_signoff
+      polecat_type: gateway/telegram
+      depends_on: [brand_audit_per_variant, rights_check]
+
+audiobook:
+  type: mountain
+  rig: contentx-audio
+  sla_hours: 48
+  stages:
+    - id: cast_voices
+      polecat_type: contentx-audio/voice-caster
+      output: voice_assignments.json
+    - id: per_chapter
+      polecat_type: contentx-audio/chapter-renderer
+      parallel: true
+      max_concurrent: 6
+      iterate_over: "book.chapters"
+    - id: master_each
+      polecat_type: contentx-audio/master
+      depends_on: per_chapter
+      gate: G_audio_passed
+    - id: book_qa
+      polecat_type: contentx-audio/book-qa
+
+# ----------------------------------------------------------------------
+# Universal "recovery" convoy spawned by Witness on F1/F4
+# ----------------------------------------------------------------------
+recovery_aborted_run:
+  type: linear
+  sla_minutes: 30
+  stages:
+    - id: load_checkpoint
+      polecat_type: contentx-shorts/resume
+    - id: diagnose
+      polecat_type: contentx-gates/diagnoser
+    - id: route
+      polecat_type: contentx-gates/router
+      branches:
+        - if: "diagnose.cause == 'rate_limit'"
+          spawn_convoy: viral_shorts
+          delay_minutes: 15
+        - if: "diagnose.cause == 'gate_failure'"
+          dispatch: contentx-redo
+        - else: "escalate:mayor"
+
+# ----------------------------------------------------------------------
+# Recurring scheduled convoys
+# ----------------------------------------------------------------------
+schedules:
+  - id: daily-shorts
+    cron: "0 6 * * *"
+    convoy: viral_shorts
+    args:
+      brand: "auto-from-yesterday-leaders"
+      tier: "aa"
+
+  - id: weekly-learning-episode
+    cron: "0 18 * * MON"
+    convoy: learning_series
+    args:
+      topic: "from-content-roadmap"
+
+  - id: engagement-rollup
+    cron: "0 */6 * * *"
+    convoy: engagement_capture_all
+    args:
+      lookback_hours: 168

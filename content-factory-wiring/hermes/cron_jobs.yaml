@@ -1,0 +1,108 @@
+# hermes/cron_jobs.yaml — register these with `hermes cron import cron_jobs.yaml`
+
+# ---------------------------------------------------------------------------
+# Run lifecycle audits — run every 30 min, escalate anything broken
+# ---------------------------------------------------------------------------
+- id: contentx-run-audit
+  schedule: "*/30 * * * *"
+  command: |
+    python /opt/contentx-wiring/tools/run_id_auditor.py \
+      --batch /var/lib/content-factory/working_dir/video \
+      --out /var/log/contentx/run_audit.json
+  on_completion:
+    - python /opt/contentx-wiring/tools/run_id_repairer.py \
+        /var/log/contentx/run_audit.json \
+        --emit-script /tmp/repair.sh
+    - bash /tmp/repair.sh
+
+# ---------------------------------------------------------------------------
+# Bootstrap + nightly reindex of Hermes memory
+# ---------------------------------------------------------------------------
+- id: contentx-hermes-indexer
+  schedule: "0 3 * * *"
+  command: |
+    python /opt/contentx-wiring/hermes/hermes_indexer.py \
+      --db /var/lib/hermes/contentx.sqlite \
+      --batch /var/lib/content-factory/working_dir \
+      --propose-skills --skill-threshold=3 \
+      --out-skills /var/lib/hermes/skills/contentx-auto/
+
+# ---------------------------------------------------------------------------
+# Engagement scrape — every 6 hours, looking for runs at +24h/+72h/+168h
+# ---------------------------------------------------------------------------
+- id: contentx-engagement-scrape
+  schedule: "0 */6 * * *"
+  command: |
+    python /opt/contentx-wiring/hermes/postiz_engagement_scraper.py \
+      --db /var/lib/hermes/contentx.sqlite \
+      --working-dir /var/lib/content-factory/working_dir \
+      --delays 24 72 168
+
+# ---------------------------------------------------------------------------
+# Daily content slate — generate tomorrow's viral_shorts plan from yesterday's KPIs
+# ---------------------------------------------------------------------------
+- id: contentx-daily-slate
+  schedule: "0 5 * * *"
+  command: |
+    hermes prompt --skill contentx-daily-slate-planner \
+      --input '{"db": "/var/lib/hermes/contentx.sqlite", "lookback_hours": 24}' \
+      --out /var/lib/content-factory/slates/$(date +%Y-%m-%d).json
+
+# ---------------------------------------------------------------------------
+# Auto-generate viral_shorts at 6am using best-of-yesterday brand
+# ---------------------------------------------------------------------------
+- id: contentx-daily-shorts
+  schedule: "0 6 * * *"
+  command: |
+    bd create --type=task --priority=2 \
+      --title="Daily viral_shorts batch" \
+      --labels=content-factory,daily
+    gt mountain start contentx-shorts-daily \
+      --slate /var/lib/content-factory/slates/$(date +%Y-%m-%d).json
+
+# ---------------------------------------------------------------------------
+# Weekly KPI rollup → Telegram digest to brand owner
+# ---------------------------------------------------------------------------
+- id: contentx-weekly-digest
+  schedule: "0 9 * * MON"
+  command: |
+    python /opt/contentx-wiring/tools/kpi_tracker.py \
+      --db /var/lib/hermes/contentx.sqlite --weekly \
+      --out /tmp/digest.md
+    hermes mail send --human \
+      -s "ContentX weekly digest — $(date +%Y-%m-%d)" \
+      --stdin < /tmp/digest.md
+
+# ---------------------------------------------------------------------------
+# Nightly Honcho persona refresh — rebuilds brand personas from yesterday's
+# engagement before the daily slate planner runs (5am UTC).
+# ---------------------------------------------------------------------------
+- id: contentx-persona-refresh
+  schedule: "30 4 * * *"
+  command: |
+    python /opt/contentx-wiring/hermes/honcho_brand_persona.py \
+      --content-factory-root /var/lib/content-factory \
+      --engagement-db /var/lib/hermes/contentx.sqlite \
+      --output-dir /var/lib/hermes/personas \
+      --refresh-from-engagement \
+      --lookback-hours 24
+
+# ---------------------------------------------------------------------------
+# Policy reload — pick up policies/*.toml changes every 5 min.
+# ---------------------------------------------------------------------------
+- id: contentx-policy-reload
+  schedule: "*/5 * * * *"
+  command: |
+    gt refinery reload --policies /opt/contentx-wiring/policies/ --quiet
+
+# ---------------------------------------------------------------------------
+# Engagement-bead reconciler — sweep up any engagement events whose post_id
+# did not match a run during webhook receipt (deferred mapping when
+# publish_metadata.json shows up later).
+# ---------------------------------------------------------------------------
+- id: contentx-engagement-reconciler
+  schedule: "15,45 * * * *"
+  command: |
+    python /opt/contentx-wiring/services/postiz_webhook/reconciler.py \
+      --working-dir /var/lib/content-factory/working_dir \
+      --max-age-hours 48

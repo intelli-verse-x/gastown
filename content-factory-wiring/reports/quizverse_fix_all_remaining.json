@@ -1,0 +1,1068 @@
+[
+  {
+    "char": "AUTOcurio",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 4
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 4
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "AUTOcurio",
+        "atlas": "/tmp/quizverse-audit/fixed/AUTOcurio/atlas/AUTOcurio_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/AUTOcurio/atlas/AUTOcurio_atlas.json",
+        "n_frames": 24,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "empty",
+            "needs_regen": true
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "empty",
+            "needs_regen": true
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2756818135579427
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.1298675537109375
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2878411610921224
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.32892926534016925
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Dog",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Dog",
+        "atlas": "/tmp/quizverse-audit/fixed/Dog/atlas/Dog_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Dog/atlas/Dog_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.30690765380859375
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3471171061197917
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.35864830017089844
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.21464856465657553
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2802906036376953
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3962586720784505
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Atlas",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Atlas",
+        "atlas": "/tmp/quizverse-audit/fixed/Atlas/atlas/Atlas_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Atlas/atlas/Atlas_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.29920323689778644
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2772960662841797
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.29850196838378906
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.28261693318684894
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2771485646565755
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2547620137532552
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Bear",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Bear",
+        "atlas": "/tmp/quizverse-audit/fixed/Bear/atlas/Bear_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Bear/atlas/Bear_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2950439453125
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.31703440348307294
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.35022735595703125
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.22568702697753906
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3650277455647786
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3400135040283203
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Duck",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Duck",
+        "atlas": "/tmp/quizverse-audit/fixed/Duck/atlas/Duck_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Duck/atlas/Duck_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.27756373087565106
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.31063270568847656
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.252108891805013
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.20149930318196616
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2409839630126953
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.25454266866048175
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Luna",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 3
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 3
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Luna",
+        "atlas": "/tmp/quizverse-audit/fixed/Luna/atlas/Luna_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Luna/atlas/Luna_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.26308568318684894
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2964795430501302
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2649860382080078
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2067394256591797
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2382939656575521
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.256533940633138
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "IX",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 5
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 5
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "IX",
+        "atlas": "/tmp/quizverse-audit/fixed/IX/atlas/IX_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/IX/atlas/IX_atlas.json",
+        "n_frames": 30,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.29736773173014325
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "empty",
+            "needs_regen": true
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.26643943786621094
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.22412745157877603
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.29294077555338544
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.26487096150716144
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Echo",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Echo",
+        "atlas": "/tmp/quizverse-audit/fixed/Echo/atlas/Echo_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Echo/atlas/Echo_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.27339744567871094
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.28650156656901044
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.21397272745768228
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.20871353149414062
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2825279235839844
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2767791748046875
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Nova",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 5
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 5
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Nova",
+        "atlas": "/tmp/quizverse-audit/fixed/Nova/atlas/Nova_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Nova/atlas/Nova_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.21019808451334634
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.22627385457356772
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2123711903889974
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.19127273559570312
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2203973134358724
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.22989972432454428
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Pixel",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Pixel",
+        "atlas": "/tmp/quizverse-audit/fixed/Pixel/atlas/Pixel_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Pixel/atlas/Pixel_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.31310145060221356
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.31111780802408856
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2828928629557292
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.20878918965657553
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3342660268147786
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.28957366943359375
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Professor",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Professor",
+        "atlas": "/tmp/quizverse-audit/fixed/Professor/atlas/Professor_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Professor/atlas/Professor_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.312008539835612
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3803215026855469
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.38230641682942706
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2742443084716797
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3891042073567708
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.4583600362141927
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Quizzy_v1",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 11
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 11
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Quizzy_v1",
+        "atlas": "/tmp/quizverse-audit/fixed/Quizzy_v1/atlas/Quizzy_v1_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Quizzy_v1/atlas/Quizzy_v1_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.22351773579915366
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.24562390645345053
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3250115712483724
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.21526209513346353
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.2564233144124349
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3754889170328776
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Sparky",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 6
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 6
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Sparky",
+        "atlas": "/tmp/quizverse-audit/fixed/Sparky/atlas/Sparky_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Sparky/atlas/Sparky_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.24779192606608072
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3472372690836589
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3108208974202474
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.15314229329427084
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.28827667236328125
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              3072,
+              512
+            ],
+            "opaque_ratio": 0.3146107991536458
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "char": "Quizzy_v2",
+    "steps": [
+      {
+        "name": "restore_transparency",
+        "n": 12
+      },
+      {
+        "name": "normalize_canvas",
+        "n": 12
+      },
+      {
+        "name": "master_atlas",
+        "status": "ok",
+        "char": "Quizzy_v2",
+        "atlas": "/tmp/quizverse-audit/fixed/Quizzy_v2/atlas/Quizzy_v2_atlas.png",
+        "spec": "/tmp/quizverse-audit/fixed/Quizzy_v2/atlas/Quizzy_v2_atlas.json",
+        "n_frames": 36,
+        "layouts": [
+          {
+            "file": "attack_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2928,
+              352
+            ],
+            "opaque_ratio": 0.21510377856433185
+          },
+          {
+            "file": "hurt_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2064,
+              512
+            ],
+            "opaque_ratio": 0.27626215025436046
+          },
+          {
+            "file": "idle_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2064,
+              512
+            ],
+            "opaque_ratio": 0.2531321917393411
+          },
+          {
+            "file": "jump_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2064,
+              512
+            ],
+            "opaque_ratio": 0.22681515715843023
+          },
+          {
+            "file": "run_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2928,
+              352
+            ],
+            "opaque_ratio": 0.2736470752608048
+          },
+          {
+            "file": "walk_spritesheet.png",
+            "status": "ok",
+            "size": [
+              2928,
+              352
+            ],
+            "opaque_ratio": 0.32337656793343267
+          }
+        ]
+      }
+    ]
+  }
+]

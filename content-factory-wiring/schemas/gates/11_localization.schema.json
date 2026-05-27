@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/11_localization.schema.json",
+  "title": "11_localization (G11)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G11"
+    },
+    "gate_name": {
+      "const": "localization"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "locales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

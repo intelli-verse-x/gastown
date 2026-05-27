@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/09_frame_qa.schema.json",
+  "title": "09_frame_qa (G9)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G9"
+    },
+    "gate_name": {
+      "const": "frame_qa"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "ssim_min": {
+          "type": "number"
+        },
+        "psnr_min": {
+          "type": "number"
+        },
+        "black_runs": {
+          "type": "integer"
+        },
+        "stuck_runs": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,176 @@
+# viral_shorts daily mountain — `gt formula run viral-shorts-daily`
+# Each variable can be overridden at invocation (`--brand=foo --tier=aa`).
+
+name: viral-shorts-daily
+label: viral_shorts
+mountain: true                       # enables Witness audit + skip-after-N-failures
+rig: contentx-shorts
+sla_hours: 2
+
+variables:
+  brand:
+    description: "Brand identifier; resolved against Hermes Honcho personas"
+    required: true
+  slate:
+    description: "Path to today's slate JSON (one entry per idea)"
+    required: true
+  tier:
+    description: "Refinery tier; controls which gates fire"
+    default: "aa"
+    enum: ["internal", "indie", "aa", "aaa"]
+  max_redos:
+    description: "Per-phase council redo budget"
+    default: 1
+
+# ---------------------------------------------------------------------------
+# DAG: one wave per stage. parallel:true means scenes fan out within the wave.
+# ---------------------------------------------------------------------------
+
+stages:
+  - id: pre_script_planner
+    sling: contentx-shorts/planner
+    inputs:
+      brand: "{{ brand }}"
+      slate: "{{ slate }}"
+      hermes_skills: ["contentx/tighten-hook", "contentx/fix-dead-spots", "contentx/inject-engagement"]
+    timeout_minutes: 5
+
+  - id: script
+    sling: contentx-shorts/scripter
+    depends_on: pre_script_planner
+    inputs:
+      planner_output: "{{ pre_script_planner.output }}"
+      honcho_persona: "contentx/{{ brand }}"
+    gate: G_script_present
+    timeout_minutes: 10
+
+  - id: director_brief
+    sling: contentx-shorts/director
+    depends_on: script
+    inputs:
+      script: "{{ script.output }}"
+      context_fields: ["aspect_ratio", "duration_seconds", "narrator_style", "mood", "visual_style"]
+    gate: G_no_blocker_gaps
+    timeout_minutes: 5
+
+  - id: reference_images
+    sling: contentx-shorts/ref-image
+    depends_on: director_brief
+    parallel: true
+    iterate_over: "director_brief.output.scenes"
+    max_concurrent: 4
+    mcp_tool: "contentx.replicate_image"
+    timeout_minutes: 15
+
+  - id: video_generation
+    sling: contentx-shorts/video
+    depends_on: reference_images
+    parallel: true
+    iterate_over: "director_brief.output.scenes"
+    max_concurrent: 4
+    mcp_tool: "contentx.veo_generate"
+    inputs:
+      previous_shot_url: "{{ video_generation[index-1].output.video_url if index > 0 else null }}"   # closes C2 continuity
+    timeout_minutes: 30
+
+  - id: voiceover
+    sling: contentx-shorts/vo
+    depends_on: script
+    parallel: true
+    iterate_over: "script.output.lines"
+    max_concurrent: 4
+    mcp_tool: "contentx.elevenlabs_tts"
+    inputs:
+      lufs_target: -14.0
+    timeout_minutes: 10
+
+  - id: assembly
+    sling: contentx-shorts/assembler
+    depends_on: [video_generation, voiceover]
+    timeout_minutes: 8
+
+  - id: caption_burn
+    sling: contentx-shorts/captioner
+    depends_on: assembly
+    description: "Generate .srt + burned-in subs (closes M11_caption_missing)"
+    timeout_minutes: 5
+
+  - id: audio_master
+    sling: contentx-shorts/audio-master
+    depends_on: caption_burn
+    mcp_tool: "contentx.audio_master"
+    inputs:
+      platform: "youtube_shorts"        # primary platform; others handled in publish step
+    gate: G_audio_passed
+    timeout_minutes: 5
+
+  - id: council_audit
+    sling: contentx-shorts/council
+    depends_on: audio_master
+    inputs:
+      max_redos: "{{ max_redos }}"
+      auto_pass_on_timeout: false       # NS-3a — kill the time-budget short-circuit
+    gate: G_council_applied
+    timeout_minutes: 12
+
+  - id: guard_run_all
+    sling: contentx-shorts/guard
+    depends_on: council_audit
+    description: "Wires QualityGuard.run_all() — closes F2b"
+    gate: G_guard_ran
+    timeout_minutes: 3
+
+  - id: social_publish_audit
+    sling: contentx-shorts/social-auditor
+    depends_on: guard_run_all
+    description: "Pre-publish CI gate (NS-6) — runs social_publish_auditor.py"
+    gate: G_delivery_passed
+    timeout_minutes: 5
+
+  - id: human_signoff
+    sling: gateway/telegram
+    depends_on: social_publish_audit
+    when: "tier in ['aaa', 'live-aaa']"
+    description: "Brand owner approves via Telegram with thumbnail + 5 directives"
+    timeout_hours: 24
+    on_timeout: "escalate:mayor"
+
+  - id: publish
+    sling: contentx-shorts/postiz
+    depends_on: [social_publish_audit, human_signoff?]
+    description: "Push to Postiz; on success, dispatch engagement_capture"
+    timeout_minutes: 5
+
+  - id: engagement_capture_24h
+    sling: contentx-shorts/engagement
+    depends_on: publish
+    schedule_after_minutes: 1440        # 24h post-publish
+    description: "Browser-provider scrape; closes F5"
+    timeout_minutes: 10
+
+  - id: engagement_capture_72h
+    sling: contentx-shorts/engagement
+    depends_on: engagement_capture_24h
+    schedule_after_minutes: 2880
+
+  - id: engagement_capture_7d
+    sling: contentx-shorts/engagement
+    depends_on: engagement_capture_72h
+    schedule_after_minutes: 7200
+
+# ---------------------------------------------------------------------------
+# Stall detection / skip policy (mountain mode)
+# ---------------------------------------------------------------------------
+skip_after_n_failures: 2
+stall_minutes: 30
+on_stall:
+  - escalate: deacon
+  - capture_snapshot: true
+
+# ---------------------------------------------------------------------------
+# Memory pre-load
+# ---------------------------------------------------------------------------
+hermes_context:
+  - "contentx/{{ brand }}.persona"            # Honcho brand persona
+  - "skills/contentx/*"                       # all auto-derived skills
+  - "fts5: pipeline_kind:viral_shorts grade:A limit:10"   # last 10 winners

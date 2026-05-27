@@ -1,0 +1,17 @@
+{
+  "gate_id": "G9",
+  "gate_name": "frame_qa",
+  "passed": true,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G9_no_video",
+      "severity": "low",
+      "message": "no final video \u2014 frame QA skipped",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.255020+00:00",
+  "signature": "555fe11654846d446637ab20f65310287a6d895db14ab4cccdb0c5eca327f453"
+}

@@ -1,0 +1,516 @@
+{
+  "batch": "/Users/devashishbadlani/dev/content-factory/.working_dir/video",
+  "runs": [
+    {
+      "run_id": "viral_shorts_20260420_020548_17fd4e4e",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_020548_17fd4e4e",
+      "audited_at": "2026-05-26T21:48:00.048845+00:00",
+      "n_videos": 4,
+      "platforms": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "findings": [
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: integrated -15.3 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -15.3,
+            "target": -14.0
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: true peak 0.32 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": 0.32
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: true peak 0.32 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": 0.32
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: integrated -15.4 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -15.45,
+            "target": -14.0
+          },
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: true peak -0.91 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": -0.91
+          },
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: true peak -0.91 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": -0.91
+          },
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: true peak 0.60 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": 0.6
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: integrated -13.3 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -13.27,
+            "target": -16.0
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: true peak 0.60 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": 0.6
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: integrated -18.5 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -18.51,
+            "target": -14.0
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: true peak -0.50 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": -0.5
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: integrated -18.5 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -18.51,
+            "target": -16.0
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: true peak -0.50 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": -0.5
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        }
+      ],
+      "summary": {
+        "by_code": {
+          "M1_loudness_target": 5,
+          "M2_loudness_peak": 8,
+          "M11_caption_missing": 8
+        },
+        "by_severity": {
+          "critical": 21
+        },
+        "n_findings": 21
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_032142_a9380cd7",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_032142_a9380cd7",
+      "audited_at": "2026-05-26T21:48:10.877860+00:00",
+      "n_videos": 4,
+      "platforms": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "findings": [
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: integrated -19.4 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -19.42,
+            "target": -14.0
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: integrated -19.4 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -19.42,
+            "target": -16.0
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: integrated -16.0 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -15.96,
+            "target": -14.0
+          },
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video_mastered.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: integrated -12.9 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -12.95,
+            "target": -14.0
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: true peak 0.13 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": 0.13
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: integrated -12.9 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -12.95,
+            "target": -16.0
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: true peak 0.13 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": 0.13
+          },
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video_mastered_mastered.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video_mastered_mastered.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: integrated -21.1 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -21.08,
+            "target": -14.0
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: true peak -0.49 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": -0.49
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: integrated -21.1 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -21.08,
+            "target": -16.0
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: true peak -0.49 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": -0.49
+          },
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/production/scenes/scene_0/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/production/scenes/scene_0/final_video.mp4"
+        }
+      ],
+      "summary": {
+        "by_code": {
+          "M1_loudness_target": 7,
+          "M11_caption_missing": 8,
+          "M2_loudness_peak": 4
+        },
+        "by_severity": {
+          "critical": 19
+        },
+        "n_findings": 19
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_224733_12854ae2",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_224733_12854ae2",
+      "audited_at": "2026-05-26T21:48:13.187163+00:00",
+      "n_videos": 1,
+      "platforms": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "findings": [
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: integrated -19.0 LUFS \u2260 -14.0\u00b11.0 target",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_i": -19.02,
+            "target": -14.0
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: true peak -0.10 dBTP > -1.0 dBTP ceiling",
+          "platform": "youtube_shorts",
+          "measurement": {
+            "input_tp": -0.1
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "youtube_shorts",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M1_loudness_target",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: integrated -19.0 LUFS \u2260 -16.0\u00b12.0 target",
+          "platform": "tiktok",
+          "measurement": {
+            "input_i": -19.02,
+            "target": -16.0
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M2_loudness_peak",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: true peak -0.10 dBTP > -1.0 dBTP ceiling",
+          "platform": "tiktok",
+          "measurement": {
+            "input_tp": -0.1
+          },
+          "video": "production/output/final_video.mp4"
+        },
+        {
+          "code": "M11_caption_missing",
+          "severity": "critical",
+          "message": "production/output/final_video.mp4: no caption file (.srt/.vtt) found \u2014 accessibility fail",
+          "platform": "tiktok",
+          "measurement": {},
+          "video": "production/output/final_video.mp4"
+        }
+      ],
+      "summary": {
+        "by_code": {
+          "M1_loudness_target": 2,
+          "M2_loudness_peak": 2,
+          "M11_caption_missing": 2
+        },
+        "by_severity": {
+          "critical": 6
+        },
+        "n_findings": 6
+      }
+    }
+  ],
+  "platforms": [
+    "youtube_shorts",
+    "tiktok"
+  ]
+}

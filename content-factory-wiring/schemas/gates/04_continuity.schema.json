@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/04_continuity.schema.json",
+  "title": "04_continuity (G4)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G4"
+    },
+    "gate_name": {
+      "const": "visual_continuity"
+    }
+  }
+}

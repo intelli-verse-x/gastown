@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/08_platform_cert.schema.json",
+  "title": "08_platform_cert (G8)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G8"
+    },
+    "gate_name": {
+      "const": "platform_cert"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "platforms": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

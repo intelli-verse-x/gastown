@@ -1,0 +1,27 @@
+{
+  "assets": {
+    "output/final_video.mp4": {
+      "type": "video",
+      "source": "fixture-placeholder",
+      "model": "n/a",
+      "seed": null,
+      "license": "AI-generated-proprietary",
+      "license_url": "https://contentx/fixture",
+      "consent": null,
+      "clearance_status": "cleared",
+      "expires_at": null
+    },
+    "output/final_video.srt": {
+      "type": "video",
+      "source": "fixture-placeholder",
+      "model": "n/a",
+      "seed": null,
+      "license": "AI-generated-proprietary",
+      "license_url": "https://contentx/fixture",
+      "consent": null,
+      "clearance_status": "cleared",
+      "expires_at": null
+    }
+  },
+  "_note": "Fixture rights for the placeholder output files."
+}

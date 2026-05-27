@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/06_rights_manifest.schema.json",
+  "title": "06_rights_manifest (G6)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G6"
+    },
+    "gate_name": {
+      "const": "rights_manifest"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "assets": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

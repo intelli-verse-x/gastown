@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/_common.schema.json",
+  "title": "common types",
+  "$defs": {
+    "tier": { "enum": ["internal", "indie", "aa", "aaa", "live-aaa"] },
+    "severity": { "enum": ["blocker", "critical", "high", "medium", "low", "major"] },
+    "hmac_sig": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "iso_dt": { "type": "string", "format": "date-time" },
+    "finding": {
+      "type": "object",
+      "required": ["code", "severity", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "message": { "type": "string" },
+        "measurement": { "type": "object" }
+      }
+    },
+    "gate_result": {
+      "type": "object",
+      "required": ["gate_id", "gate_name", "passed", "tier", "run_id", "evaluated_at", "signature"],
+      "properties": {
+        "gate_id": { "type": "string", "pattern": "^G(1[0-5]|[1-9])$" },
+        "gate_name": { "type": "string" },
+        "passed": { "type": "boolean" },
+        "tier": { "$ref": "#/$defs/tier" },
+        "run_id": { "type": "string", "minLength": 1 },
+        "evaluated_at": { "$ref": "#/$defs/iso_dt" },
+        "signature": { "$ref": "#/$defs/hmac_sig" },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } }
+      }
+    }
+  }
+}

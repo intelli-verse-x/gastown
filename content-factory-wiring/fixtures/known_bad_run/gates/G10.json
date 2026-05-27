@@ -1,0 +1,10 @@
+{
+  "gate_id": "G10",
+  "gate_name": "council_enforcer",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.255540+00:00",
+  "signature": "6e3e24d9a224a3836f66a1f9a1f6e1dbe59af34c5ccab774212ed2571ac05ca2"
+}

@@ -1,0 +1,139 @@
+# Pipeline-specific Refinery policy for viral_shorts.
+# Loaded after configs/refinery.toml, overrides the global tier table for this pipeline.
+#
+# Effective on:  rig=contentx-shorts, pipeline=viral_shorts
+# Default tier:  tier=indie (override per-run via run.json.tier_declared)
+
+[pipeline]
+name = "viral_shorts"
+rig = "contentx-shorts"
+default_tier = "indie"
+permitted_tiers = ["internal", "indie", "aa"]
+flagship_tier = "aa"    # hero channel runs declare this in run.json.tier_declared
+
+# ---------------------------------------------------------------------------
+# Tier policy — which gates fire and which block
+# Format: { gate_id, role ("required"|"advisory"), severity }
+# ---------------------------------------------------------------------------
+
+[[tier_policy]]
+tier = "internal"
+required_gates = ["G1", "G5", "G14"]
+advisory_gates = ["G3", "G10"]
+score_floor = { overall = 0.0 }
+
+[[tier_policy]]
+tier = "indie"
+required_gates = ["G1", "G3", "G5", "G6", "G10", "G14"]
+advisory_gates = ["G2", "G4", "G7", "G9"]
+score_floor = { overall = 6.0, hook = 5.0 }
+# audio_quality.passed = true is enforced by G5
+# council verdict in {APPROVED, PASS_WITH_NOTES} with directives applied is enforced by G10
+
+[[tier_policy]]
+tier = "aa"
+required_gates = ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G13", "G14"]
+advisory_gates = []
+score_floor = { overall = 7.0, hook = 6.5, retention_30s = 0.55 }
+# Tier AA viral_shorts MUST publish with no blocker, captions, no muddy audio,
+# council verdict either APPROVED or PASS_WITH_NOTES with redo_count satisfied.
+
+# ---------------------------------------------------------------------------
+# Per-gate ownership — who gets the bead on failure
+# ---------------------------------------------------------------------------
+
+[escalation_owners]
+G1  = { route = "polecat://contentx-director", severity = "BLOCKER" }
+G2  = { route = "polecat://contentx-canon",    severity = "BLOCKER" }
+G3  = { route = "polecat://contentx-writers",  severity = "BLOCKER" }
+G4  = { route = "polecat://contentx-continuity", severity = "CRITICAL" }
+G5  = { route = "polecat://contentx-audio",    severity = "BLOCKER" }
+G6  = { route = "human://legal",               severity = "BLOCKER" }    # legal-only override
+G7  = { route = "polecat://contentx-a11y",     severity = "BLOCKER" }
+G8  = { route = "polecat://contentx-platform", severity = "BLOCKER" }
+G9  = { route = "polecat://contentx-render",   severity = "BLOCKER" }
+G10 = { route = "polecat://contentx-redo",     severity = "BLOCKER" }
+G11 = { route = "polecat://contentx-loc",      severity = "BLOCKER" }
+G13 = { route = "human://creative-director,human://technical-director", severity = "BLOCKER" }
+G14 = { route = "deacon",                       severity = "BLOCKER" }
+
+# ---------------------------------------------------------------------------
+# Platforms — viral_shorts publishes to these
+# (G8 reads this list to know which platform cert checks to apply)
+# ---------------------------------------------------------------------------
+
+[[platform]]
+name = "youtube_shorts"
+aspect_ratio = "9:16"
+max_duration_s = 60
+loudness_lufs = -14
+max_title_chars = 100
+max_hashtags = 60
+content_id_check = true
+monetization_required = true
+
+[[platform]]
+name = "tiktok"
+aspect_ratio = "9:16"
+max_duration_s = 180
+loudness_lufs = -16
+max_title_chars = 2200
+max_hashtags = 100
+sound_id_check = true
+
+[[platform]]
+name = "instagram_reels"
+aspect_ratio = "9:16"
+max_duration_s = 90
+loudness_lufs = -14
+max_title_chars = 2200
+max_hashtags = 30
+
+# ---------------------------------------------------------------------------
+# Auto-redo behavior — when G10 fires
+# ---------------------------------------------------------------------------
+
+[auto_redo]
+enabled = true
+max_redos_per_directive = 1
+max_total_redos = 6
+escalate_on_exhaust_to = "polecat://contentx-director"
+parallel_subagents = true     # Hermes subagent fan-out
+trajectory_compression = true # reuse prior planner trajectories
+
+# ---------------------------------------------------------------------------
+# Witness — what to watch
+# ---------------------------------------------------------------------------
+
+[witness]
+stall_threshold_minutes = 12
+gate_stall_threshold_minutes = 30
+mtgc_target_minutes = 120        # mean time to gate clear (Tier AA target)
+mtgc_p95_minutes = 240
+
+# ---------------------------------------------------------------------------
+# Hermes integration
+# ---------------------------------------------------------------------------
+
+[hermes]
+sessiondb_index = "viral_shorts"
+context_token_cap = 1500
+skill_auto_create_threshold = 3
+honcho_persona_namespace = "brand"
+
+[hermes.crons]
+"engagement_24h" = "0 6 * * *"      # check yesterday's runs
+"engagement_72h" = "0 6 */3 * *"
+"engagement_7d"  = "0 6 * * 0"
+"daily_slate_prep" = "30 5 * * *"   # plans today's runs from yesterday's KPI
+
+# ---------------------------------------------------------------------------
+# Cert authority
+# ---------------------------------------------------------------------------
+
+[cert_authority]
+signing_key_source = "vault://contentx/cert-key"
+signing_algo = "hmac-sha256"
+retention_years = 7
+merkle_root_frequency = "daily"
+audit_archive_bucket = "s3://contentx-audit-cold/"

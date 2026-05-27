@@ -1,0 +1,73 @@
+# .gastown/convoys/quizverse-art-cert.yaml
+# Mountain convoy: 14 characters × 6 stages, parallel where safe.
+
+name: quizverse-art-cert-redelivery
+type: mountain
+parent_bead: qv-master
+sla_hours: 48
+stall_detection: enabled
+smart_skip: enabled
+total_units: 14  # excludes already-fixed Quizzy
+
+stages:
+  # Stage 1 — auto-audit all 14 (parallel, takes ~3 min total)
+  - id: audit_all
+    parallel: true
+    polecat_type: art-cert/auditor
+    units:
+      - dog
+      - professor
+      - sparky
+      - echo
+      - pixel
+      - luna
+      - atlas
+      - duck
+      - bear
+      - nova
+      - ix
+      - autocurio
+      - quizzy_v1
+      - quizzy_v2
+    artifact: reports/<unit>_audit.json
+    on_fail: escalate
+
+  # Stage 2 — apply Quizzy recipe in parallel (limited to 4 concurrent to respect API quotas)
+  - id: apply_fixes
+    parallel: true
+    max_concurrent: 4
+    depends_on: audit_all
+    polecat_type: art-cert/fixer
+    script: fix_character.py --recipe quizzy
+    artifact: fixed/<unit>/
+
+  # Stage 3 — re-audit each fixed character
+  - id: reaudit
+    parallel: true
+    depends_on: apply_fixes
+    polecat_type: art-cert/auditor
+    script: audit.py --target fixed/<unit>
+    pass_criteria: weighted_score_delta_pct >= 80
+
+  # Stage 4 — generate comparison images for human review
+  - id: build_comparisons
+    parallel: true
+    depends_on: reaudit
+    polecat_type: art-cert/visualizer
+    artifact: comparisons/<unit>_*.png
+
+  # Stage 5 — Telegram dispatch to art director for sign-off
+  - id: human_signoff
+    parallel: false   # one at a time for the human
+    depends_on: build_comparisons
+    polecat_type: gateway/telegram
+    target: art-director
+    timeout_hours: 24
+    fallback: escalate_to_mayor
+
+  # Stage 6 — sign cert files + republish to S3
+  - id: cert_and_publish
+    parallel: true
+    depends_on: human_signoff
+    polecat_type: refinery/cert-signer
+    artifact: agent-assets/games/quiz-verse/cert/<unit>/*.json.signed

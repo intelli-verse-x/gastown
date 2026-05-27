@@ -1,0 +1,10 @@
+{
+  "gate_id": "G15",
+  "gate_name": "character_identity",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:18:32.159355+00:00",
+  "signature": "1aee35d5cdd8506098b5bf1f0a039cce99f3efe844cbf4e528ad1fc6d7e235f3"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/01_concept_lock.schema.json",
+  "title": "01_concept_lock (G1)",
+  "type": "object",
+  "required": ["gate_id", "gate_name", "passed", "tier", "run_id", "evaluated_at", "signature"],
+  "properties": {
+    "gate_id": { "const": "G1" },
+    "gate_name": { "const": "concept_lock" },
+    "passed": { "type": "boolean" },
+    "tier": { "enum": ["internal", "indie", "aa", "aaa", "live-aaa"] },
+    "run_id": { "type": "string", "minLength": 1 },
+    "evaluated_at": { "type": "string", "format": "date-time" },
+    "signature": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": ["code", "severity", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "severity": { "enum": ["blocker", "critical", "high", "medium", "low", "major"] },
+        "message": { "type": "string" },
+        "measurement": { "type": "object" }
+      }
+    }
+  }
+}

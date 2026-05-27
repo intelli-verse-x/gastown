@@ -1,0 +1,303 @@
+# .gastown/refinery/content-factory.toml
+# Refinery = certification authority for content-factory deliverables.
+# Any pipeline trying to write `publish_metadata.json` or `distribution/*`
+# is blocked until every gate listed under the run's tier is satisfied.
+
+[rig]
+name = "content-factory"
+target_branch = "main"
+mode = "bors-bisecting"
+
+# ---------------------------------------------------------------------------
+# Per-pipeline-kind tier defaults (override at run launch with --tier=...)
+# ---------------------------------------------------------------------------
+[tier_defaults]
+viral_shorts      = "aa"
+short_video       = "aa"
+short_movie       = "aaa"
+movie             = "aaa"
+learning_series   = "aaa"
+tv_series         = "aaa"
+documentary       = "aaa"
+ad                = "aaa"        # ads must hit Tier-3
+ad_banners        = "aa"
+podcast_series    = "aa"
+audiobook         = "aaa"
+song              = "aa"
+music_video       = "aa"
+viral_shorts_test = "internal"
+
+# ---------------------------------------------------------------------------
+# Gate definitions — each maps a JSON contract to a polecat owner
+# ---------------------------------------------------------------------------
+
+[[gate]]
+id = "G_script_present"
+description = "Script artifact exists and is non-empty"
+auditor = "polecat://contentx-script/presence"
+checks = ["scripts/script.json", "scripts/viral_script.json", "scripts/story.txt"]
+require_any = true
+severity_on_fail = "BLOCKER"
+
+[[gate]]
+id = "G_no_blocker_gaps"
+description = "No gap_report has severity=blocker"
+auditor = "polecat://contentx-gates/gap-blocker"
+predicate = "gap_reports/**/*.gaps[?severity=='blocker'] | length(@) == 0"
+severity_on_fail = "BLOCKER"
+fixes_failure_mode = "F4"
+
+[[gate]]
+id = "G_audio_passed"
+description = "audio_quality.json.passed == true (LUFS + spectral + dialog)"
+auditor = "polecat://contentx-audio/master"
+predicate = "quality/audio_quality.json.passed == true"
+severity_on_fail = "BLOCKER"
+fixes_failure_mode = "F2"
+
+[[gate]]
+id = "G_guard_ran"
+description = "guard_summary.total_checks > 0 (guard actually executed)"
+auditor = "polecat://contentx-gates/guard-runner"
+predicate = "quality/guard_summary.json.total_checks > 0"
+severity_on_fail = "CRITICAL"
+fixes_failure_mode = "F2b"
+
+[[gate]]
+id = "G_delivery_passed"
+description = "delivery_gate.json.passed == true (aspect, safe-zone, loudness, duration)"
+auditor = "polecat://contentx-gates/delivery"
+predicate = "quality/delivery_gate.json.passed == true"
+severity_on_fail = "BLOCKER"
+
+[[gate]]
+id = "G_council_applied"
+description = "Every PASS_WITH_NOTES or FAIL council audit has applied_directives>=1 OR redo_count==max_redos"
+auditor = "polecat://contentx-gates/council-applied"
+predicate = "council_audits/**/*.json | all(verdict in ['PASS','APPROVED'] || redo_count > 0 || max_redos == 0)"
+severity_on_fail = "BLOCKER"
+fixes_failure_mode = "F3"
+
+[[gate]]
+id = "G_checkpoint_clean"
+description = "checkpoint.status in ['completed','partial'] and not 'aborted'/'failed'"
+auditor = "polecat://contentx-gates/checkpoint"
+predicate = "checkpoint.json.status in ['completed', 'partial']"
+severity_on_fail = "CRITICAL"
+fixes_failure_mode = "F1"
+
+[[gate]]
+id = "G_graph_state_valid"
+description = "graph_state.run_id != 'unknown' and current_phase != 'not_started'"
+auditor = "polecat://contentx-gates/graph-state"
+predicate = "graph_state.json.run_id != 'unknown' && graph_state.json.current_phase != 'not_started'"
+severity_on_fail = "CRITICAL"
+fixes_failure_mode = "F1"
+
+[[gate]]
+id = "G_no_nested_duplication"
+description = "No state files duplicated under production/production/scenes/*"
+auditor = "polecat://contentx-gates/dedup"
+predicate = "count(rglob('production/production/scenes/**/voice_registry.json')) == 0"
+severity_on_fail = "HIGH"
+fixes_failure_mode = "F6"
+
+[[gate]]
+id = "G_rights_manifest"
+description = "Every generated asset has a rights/license entry"
+auditor = "polecat://contentx-legal/rights"
+required_for = ["aa", "aaa"]
+severity_on_fail = "BLOCKER"
+
+[[gate]]
+id = "G_brand_compliance"
+description = "Brand voice + palette + banned-terms check passes"
+auditor = "polecat://contentx-brand/compliance"
+required_for = ["aa", "aaa"]
+severity_on_fail = "HIGH"
+
+[[gate]]
+id = "G_council_score_floor"
+description = "Tier-specific quality_score floor (aa>=7.0, aaa>=8.0)"
+auditor = "polecat://contentx-gates/score-floor"
+required_for = ["aa", "aaa"]
+score_floors = { aa = 7.0, aaa = 8.0, "live-aaa" = 8.0 }
+severity_on_fail = "BLOCKER"
+
+[[gate]]
+id = "G_human_signoff"
+description = "Brand owner approves via Telegram"
+auditor = "human:brand-owner"
+required_for = ["aaa", "live-aaa"]
+delivery = "telegram://brand-owner?attach=output/thumbnail.png,council_audits/video_audit.json"
+timeout_hours = 24
+fallback_on_timeout = "escalate_to_overseer"
+severity_on_fail = "BLOCKER"
+
+# ---------------------------------------------------------------------------
+# Tier policy — which gates are required at each tier
+# ---------------------------------------------------------------------------
+[tier_policy]
+internal = ["G_script_present", "G_checkpoint_clean"]
+indie    = ["G_script_present", "G_no_blocker_gaps", "G_audio_passed", "G_delivery_passed", "G_checkpoint_clean", "G_graph_state_valid"]
+aa       = ["G_script_present", "G_no_blocker_gaps", "G_audio_passed", "G_guard_ran", "G_delivery_passed", "G_council_applied", "G_checkpoint_clean", "G_graph_state_valid", "G_no_nested_duplication", "G_rights_manifest", "G_brand_compliance", "G_council_score_floor"]
+aaa      = ["*"]
+"live-aaa" = ["*", "G12_liveops_kpi_delta"]   # extra gate from prior turn
+
+# ---------------------------------------------------------------------------
+# Signing + retention
+# ---------------------------------------------------------------------------
+[signature]
+algo = "hmac-sha256"
+key_source = "vault://contentx/cert-signing-key"
+retention_years = 7
+written_to = "{run_path}/gates/{gate_id}.json.signed"
+
+# ---------------------------------------------------------------------------
+# Escalation routes — failure types → bead severity + owner
+# ---------------------------------------------------------------------------
+[escalation]
+F1_silent_abort        = { severity = "CRITICAL", route = "deacon", sla_minutes = 15 }
+F2_gate_fail_but_ship  = { severity = "BLOCKER",  route = "mayor",  sla_minutes = 30 }
+F2b_guard_not_run      = { severity = "CRITICAL", route = "mayor",  sla_minutes = 60 }
+F3_council_unapplied   = { severity = "HIGH",     route = "polecat://contentx-redo", sla_minutes = 120 }
+F4_blocker_silenced    = { severity = "BLOCKER",  route = "mayor",  sla_minutes = 30 }
+F5_open_feedback       = { severity = "MEDIUM",   route = "polecat://contentx-feedback", sla_hours = 168 }
+F6_nested_duplication  = { severity = "HIGH",     route = "polecat://contentx-cleanup", sla_hours = 24 }
+
+# ---------------------------------------------------------------------------
+# Studio-grade gates (G1–G15)
+# Each binds to the runnable enforcer at tools/studio_gates/<id>_<name>.py.
+# Exit code 0 = pass, !=0 = block. Refinery calls these in order, short-circuits
+# on first BLOCKER finding within a single gate.
+# ---------------------------------------------------------------------------
+[[studio_gate]]
+id = "G1"
+name = "concept_lock"
+binary = "python tools/studio_gates/g1_concept_lock.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "ideation_to_script"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G2"
+name = "canon_lock"
+binary = "python tools/studio_gates/g2_canon_lock.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "any_scene_write"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G3"
+name = "script_multi_read"
+binary = "python tools/studio_gates/g3_script_multi_read.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "script_to_storyboard"
+severity_on_fail = "BLOCKER"
+reads = ["R1_creative", "R2_brand", "R3_legal", "R4_cultural"]
+
+[[studio_gate]]
+id = "G4"
+name = "visual_continuity"
+binary = "python tools/studio_gates/g4_visual_continuity.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "final_assembly"
+severity_on_fail = "CRITICAL"
+
+[[studio_gate]]
+id = "G5"
+name = "audio_mix"
+binary = "python tools/social_publish_auditor.py"
+inputs_from = "quality/audio_quality.json + ffmpeg loudnorm scan"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G6"
+name = "rights_manifest"
+binary = "python tools/studio_gates/g6_rights_manifest.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G7"
+name = "accessibility"
+binary = "python tools/studio_gates/g7_accessibility.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G8"
+name = "platform_cert"
+binary = "python tools/social_publish_auditor.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G9"
+name = "frame_qa"
+binary = "python tools/studio_gates/g9_frame_qa.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "final_assembly"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G10"
+name = "council_enforcer"
+binary = "python tools/studio_gates/g10_council_enforcer.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G11"
+name = "localization"
+binary = "python tools/studio_gates/g11_localization.py"
+required_for = ["aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+
+[[studio_gate]]
+id = "G12"
+name = "live_ops_feedback"
+binary = "python tools/kpi_tracker.py"
+inputs_from = "engagement scraper + Hermes SessionDB"
+required_for = ["live-aaa"]
+blocks_at_phase = "post_publish_24h"
+severity_on_fail = "HIGH"
+
+[[studio_gate]]
+id = "G13"
+name = "dual_signoff"
+binary = "python tools/studio_gates/g13_dual_signoff.py"
+required_for = ["aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+signers = ["creative_director", "technical_director"]
+
+[[studio_gate]]
+id = "G14"
+name = "chain_of_custody"
+binary = "python tools/studio_gates/g14_chain_of_custody.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "publish"
+severity_on_fail = "BLOCKER"
+retention_years = 7
+
+[[studio_gate]]
+id = "G15"
+name = "character_identity"
+binary = "python tools/studio_gates/g15_character_identity.py"
+required_for = ["indie", "aa", "aaa", "live-aaa"]
+blocks_at_phase = "final_assembly"
+severity_on_fail = "BLOCKER"
+# Cross-pipeline: registry root is shared across viral_shorts, learning_series,
+# movies, ads, podcast — same Quizzy character must look like Quizzy everywhere.
+registry_root = "/var/lib/content-factory/character_registry"
+face_backend_preference = ["insightface", "face_recognition", "phash"]
+voice_backend_preference = ["resemblyzer", "mfcc"]
+multi_character_strict = true   # multi-char scenes must show ALL declared required chars

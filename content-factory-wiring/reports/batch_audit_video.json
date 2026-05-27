@@ -1,0 +1,2915 @@
+{
+  "audited_at": "2026-05-26T21:29:12.329447+00:00",
+  "batch_root": "/Users/devashishbadlani/dev/content-factory/.working_dir/video",
+  "total_runs": 9,
+  "runs": [
+    {
+      "run_id": "viral_shorts_20260420_161946_6d9585b4",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_161946_6d9585b4",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T18:44:38.208203 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T18:44:38.208203",
+            "phases_completed": 6,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_161946_6d9585b4",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_161946_6d9585b4`"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/ideation_audit.json verdict=PASS_WITH_NOTES with 4 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/ideation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 4,
+            "directives_preview": [
+              "Core riddle ('1=11, so 11=1') is a dated internet classic, predictable for trivia-savvy Gen Z who may roll eyes before t",
+              "Brain-rot execution skews Gen Alpha (hyper-chaotic, lowbrow) vs. target Gen Z (18-24), risking 'cringe' dismissal from o",
+              "Platform-agnostic UI animations (e.g., Like button vibration) will mismatch on TikTok/Reels/Shorts, shattering the hijac",
+              "Aggressive phrasing ('Illegal IQ Hijack', 'brain mush') could flag content filters or alienate casual viewers seeking fu"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.4
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 4 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 4,
+            "directives_preview": [
+              "Priming phase ('2+2? 4+4? 8+8? Pick a color!' with subliminal RED) is a recognizable old internet mind-reading trope tha",
+              "22-second duration risks retention dip during 3x-speed 'Sturdy' dance distraction if it exceeds 2s, as noted in self-aud",
+              "'99% MISSED THE HIDDEN CODE IN HIS EYES' neon banner feels like engagement-spam if motion graphics aren't premium, poten",
+              "'If you got it right, you're a liar' line is polarizing and could suppress shares from correct solvers who feel attacked"
+            ],
+            "max_redos": 1,
+            "quality_score": 9.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Abrupt transition from system error to 'priming phase' lacks narrative continuity \u2192 FIX: Add a 1.5s visual transition be",
+              "Incomplete question ('What\u2019s 2') creates confusion rather than engagement \u2192 FIX: Complete the question to 'What\u2019s 2 + 3?",
+              "Weak call-to-action - 'locking your screen' feels punitive not participatory \u2192 FIX: Replace 'locking your screen' with '",
+              "Over-reliance on abstract tech jargon without clear viewer benefit \u2192 FIX: Add a 3s payoff sequence showing 'RAM stabiliz",
+              "Hook score 7.5: Add text overlay question 'What\u2019s 2+3?' at 0:01 to activate cognitive curiosity"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Rapid cuts between elements create visual disorientation \u2192 FIX: Add 0.5s transition fades between scene elements (e.g. s",
+              "Emotional payoff lacks depth despite high-stakes threat \u2192 FIX: Extend the 'blue-screen' moment to 1.5s and add a 'buffer",
+              "Answer explanation feels rushed and underdeveloped \u2192 FIX: Slow the answer reveal to 2x speed with a 'RAM usage graph' vi",
+              "CTA 'YOU OWE ME A FOLLOW' is passive and unengaging \u2192 FIX: Replace 'YOU OWE ME A FOLLOW' with interactive CTA: 'Scan the",
+              "Hook score 7: Add explicit text 'Your Phone is Leaking RAM!' to 0:00-0:02"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.1
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 6 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 6,
+            "directives_preview": [
+              "Add a 0.5s visual breakdown showing '1=5' \u2192 '5=1' with a glowing 'EQUALS' symbol and 'BRAIN UNLOCKED' animation to clari",
+              "Insert a 0.3s close-up of Autocurio's face with a sly grin and text overlay 'I\u2019m not a bot... I\u2019m a *brain* bot' to add ",
+              "Dead spot >5s between 0:05-0:12: Insert kinetic text '3... 2... 1...' during the 3x speed dance to maintain urgency",
+              "Reward score <7: Add explicit CTA 'Comment your answer below!' before the QR code",
+              "No cliffhanger: End with Autocurio's eyes flickering with 'Next: Your phone's AI is watching' text"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Abrupt transition from screen glitch to character dialogue lacks narrative setup \u2192 FIX: Add 2-3 seconds of contextual se",
+              "Unclear purpose of 'logic-sync' mechanic for general audience \u2192 FIX: Replace 'logic-sync' with a more relatable concept ",
+              "No visible call-to-action or resolution in the preview \u2192 FIX: Insert a 1-second CTA at 0:10 ('Tap to survive') with a pu",
+              "Extreme face-forward framing may feel claustrophobic for some viewers \u2192 FIX: Alternate between face-forward shots and dy",
+              "Hold score < 8: Add visual progression during AUTOCURIO's dialogue (e.g. flickering UI elements matching speech rhythm)"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Shot 2's extreme Dutch angle risks viewer disorientation without clear visual anchor \u2192 FIX: Reduce shot 2's Dutch angle ",
+              "10-second shot 3 feels structurally heavy and could lose viewers \u2192 FIX: Split shot 3 into two 5-second segments with a v",
+              "The 'RED' subliminal flash (shot 1) lacks sufficient contrast to be effective \u2192 FIX: Increase the 'RED' subliminal flash",
+              "The QR code CTA in shot 4 is visually buried in the composition \u2192 FIX: Move the QR code to the lower third of the frame ",
+              "Hold score < 7: Shorten Scene 3 to 5s by cutting dance footage and adding rapid puzzle animations"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_161946_6d9585b4_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "3 state-file types duplicated across nested paths (8 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ],
+              "dialogue_history.json": [
+                "dialogue_history.json",
+                "production/dialogue_history.json",
+                "production/production/scenes/scene_0/dialogue_history.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 760
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 118,
+        "total_mb": 11.5
+      },
+      "audited_at": "2026-05-26T21:29:12.329653+00:00",
+      "summary": {
+        "total": 12,
+        "by_severity": {
+          "critical": 1,
+          "high": 8,
+          "blocker": 3
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F3_council_unapplied": 7,
+          "F4_blocker_silenced": 3,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 110,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_224733_12854ae2",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_224733_12854ae2",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T23:30:19.501291 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T23:30:19.501291",
+            "phases_completed": 10,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_224733_12854ae2",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_224733_12854ae2`"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "production/quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "production/quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "WHAT: Rewrite YouTube title to prioritize the 99-day streak conflict. HOW: Replace 'THE MINECRAFT GOD GLITCH' with 'I Al",
+              "WHAT: Adjust thumbnail color scheme to match Autocurio branding. HOW: Replace red/black with purple/electric blue as rec",
+              "WHAT: Shorten TikTok caption and remove #Shorts hashtag. HOW: Use 'My AI almost ruined my 99-day streak. First mob was H",
+              "WHAT: Add narrative summary to YouTube description. HOW: Replace current description with 'Watch as I battle an AI glitc",
+              "Dead spot >5s at 1:05-1:10 - Suggest inserting a quick visual transition or text overlay to maintain momentum"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/video_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/video_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "The 28-second runtime feels rushed, with critical plot beats (hidden 'VOID' option) needing more visual emphasis \u2192 FIX: ",
+              "The AR interaction sequence lacks clear spatial cues for mobile viewers \u2192 FIX: Insert a 0.3s 'glitch effect' (screen sha",
+              "The 'Intelli-God' transformation could be more visually distinct from the base character \u2192 FIX: Extend the 'Intelli-God'",
+              "Hook score < 6: Add a high-contrast text overlay with a provocative question within the first 2s",
+              "Dead spot > 5s: Cut 3s of static gameplay at 0:05-0:08 and replace with glitch animation"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/ideation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/ideation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Narrative clutter: Crams trivia question, UI wrestling, hidden option slip, and evolution twist into 28s, risking viewer",
+              "Audience mismatch risk: Gaslighting/irony tone skews 18-30 Gen Z, but internal audit flags potential kids 5-12 prompt or",
+              "Fake ad trap: Polished AR/UI/VFX could mimic intrusive mobile game ads, prompting immediate swipes. \u2192 FIX: Roughen ad-li",
+              "Ending dialogue slightly wordy: 'Your heart rate was too low!' (3s) slows payoff momentum. \u2192 FIX: Snap ending line: Chan",
+              "Hold score < 8: Cut 3s of slow-motion UI wrestling (0:12-0:15) and replace with quick cuts of Autocurio's facial express"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "40-second duration exceeds optimal TikTok retention window, risking drop-off during the 'Divinity Uploading' white-scree",
+              "Juggling buttons at 2x speed while maintaining dialogue creates visual clutter that may confuse viewers about the narrat",
+              "The 'Secret' answer isn't hinted at clearly enough for casual viewers, creating a niche barrier that could alienate non-",
+              "The 'VOID' icon's hidden nature may feel like a forced puzzle rather than an organic discovery \u2192 FIX: Adjust the 'Thanos",
+              "Dead spot at 0:22-0:24 - Add glitch effect + text overlay 'DIVINITY UPLOADING... 99%' during white screen"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Title lacks urgency and specific value proposition \u2192 FIX: Revise title to '8K Sapphire Lens Glitch: Autocurio's Shocking",
+              "Description has poor formatting with unstructured timestamps \u2192 FIX: Reformat description with bullet points: '\ud83d\udea8 00:00-00",
+              "Platform optimization fails to set public visibility \u2192 FIX: Change YouTube privacy status to 'Public' for discoverabilit",
+              "Retention risk in 30-second format without clear progression \u2192 FIX: Add 15-second midpoint hook: 'What happens when the ",
+              "CTA lacks specificity and urgency \u2192 FIX: Update CTA to 'Subscribe now for more glitch art experiments! (Link in bio)'"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Narrative lacks clear stakes explanation (why is the streak important?) \u2192 FIX: Add a 2-second voiceover/overlay: '99-day",
+              "Abrupt transition from glitch sequence to quiz UI \u2192 FIX: Insert a 0.5s transition effect (e.g. screen flicker) between t",
+              "Quiz question context is missing (what's the reward for answering?) \u2192 FIX: Overlay text before quiz: 'Answer correctly t",
+              "No clear call-to-action for viewers to engage with the quiz \u2192 FIX: Add a 'Tap to Answer' animation on the options with s",
+              "Hook score 7: Add dynamic text overlay 'STOP THE STREAK!' at 0:02 to amplify urgency"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Rapid cuts in Shot 3 risk losing narrative clarity \u2192 FIX: Add 0.5s of slow-mo on the 'VOID' icon appearance (at 18.5s) w",
+              "The split-screen transition at 27-30s lacks visual guidance \u2192 FIX: Insert a 0.3s text overlay during the split-screen tr",
+              "The 'Void' icon transition feels abrupt without setup \u2192 FIX: Extend Shot 4 to 22s with a 1.5s fade-in of the 'DIVINITY U",
+              "The final snap-loop lacks clear visual cues for viewers \u2192 FIX: Add a 0.2s 'glitch pulse' effect on the QR code at 28.5s ",
+              "Add kinetic text question at 0:01: 'Why is the AI trying to kill my streak?'"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/compliance_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/compliance_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Title uses technical jargon ('gaslighting') without emotional hooks \u2192 FIX: Replace title with 'What\u2019s Inside This $1000 ",
+              "Missing SEO metadata and video description \u2192 FIX: Add SEO description: 'Discover the hidden technology behind Autocurio'",
+              "Thumbnail concept lacks dynamic visual elements \u2192 FIX: Update thumbnail to: High-contrast close-up of lens with glowing ",
+              "Static 5s opening shot creates dead space \u2192 FIX: Cut 0:00-0:05 static shot and replace with 5s animation of lens rotatin",
+              "No explicit engagement triggers (CTAs, questions, or prompts) \u2192 FIX: Insert 'Comment your guess' prompt at 0:10 and CTA "
+            ],
+            "max_redos": 1,
+            "quality_score": 6.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Add a 1.5s close-up of the player's face (0-1.5s) showing frustration/panic to humanize the conflict. This creates emoti",
+              "Replace 'Beast Boy'/'Stevie' UI options with 'Pig'/'Creeper' (update 5-12s) for Minecraft authenticity. This clarifies g",
+              "Insert a 0.5s screen-crack transition between Shot 1 and Shot 2. This visually signals the shift from physical struggle ",
+              "Hold score < 8: Add 3s of rapid UI animations at 20-23s to maintain tension",
+              "Dead spot >5s: Replace 20-27s dialogue with 2x speed UI juggling sequence"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Abrupt transition between shots lacks visual continuity \u2192 FIX: Add a 1.5s fade-out transition between Shot 1 and Shot 2 ",
+              "Incomplete narrative setup (ends mid-sentence) \u2192 FIX: Extend the script to show the consequence of the streak being brok",
+              "No clear audio design cues specified \u2192 FIX: Specify audio cues: add a 350Hz sub-bass pulse during the eye glitch and a d",
+              "Unclear audience motivation for the 'streak' concept \u2192 FIX: Add a 2s establishing shot showing the player's face with a ",
+              "Reward score < 7: Add explicit CTA 'Subscribe for the full battle!' at 0:12"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Rapid cuts in Scene 2 (0.5s intervals) risk disorienting viewers \u2192 FIX: Slow Scene 2 cuts to 0.8s intervals and add tran",
+              "High-pitched digital siren in Scene 3 may trigger auditory discomfort \u2192 FIX: Replace high-pitched siren with a low-frequ",
+              "Abrupt transition to Scene 4 lacks visual continuity \u2192 FIX: Add a fading 'VOID' icon transition between Scene 3 and 4 wi",
+              "Final CTA (QR code) feels disconnected from the narrative \u2192 FIX: Animate the QR code to pulse rhythmically with the 'DIV",
+              "Dialogue in Scene 1 is muffled and unclear \u2192 FIX: Re-record Scene 1 dialogue with closer mic placement and add 3dB of lo"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_224733_12854ae2_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "9 state-file types duplicated across nested paths (20 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "brand_colors.json",
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "weather_state.json",
+              "clothing_state.json",
+              "character_aging.json",
+              "story_arc.json",
+              "visual_aid_style.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "brand_colors.json": [
+                "brand_colors.json",
+                "production/brand_colors.json"
+              ],
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 1304
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 304,
+        "total_mb": 480.3
+      },
+      "audited_at": "2026-05-26T21:29:12.329711+00:00",
+      "summary": {
+        "total": 20,
+        "by_severity": {
+          "critical": 3,
+          "high": 12,
+          "blocker": 3,
+          "medium": 2
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F2b_guard_not_run": 2,
+          "F3_council_unapplied": 11,
+          "F4_blocker_silenced": 3,
+          "F5_open_feedback": 2,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 154,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_014531_16937e50",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_014531_16937e50",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T04:20:45.261031 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T04:20:45.261031",
+            "phases_completed": 9,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_014531_16937e50",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_014531_16937e50`"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "production/quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "production/quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Elon Musk trivia question feels outdated and lacks Gen-Z authenticity \u2192 FIX: Replace 'Elon Musk' question with 'Who boug",
+              "Fake low battery alert creates unnecessary panic without clear purpose \u2192 FIX: Remove the 10% low battery overlay or repl",
+              "Instagram caption lacks explicit call-to-action despite being a short-form platform \u2192 FIX: Add 'Swipe to see the glitch!",
+              "Hook score 7 needs improvement - Add text overlay question at 0:01 to create immediate curiosity",
+              "Dead spots detected - Cut 5s from 0:00-0:05 and add animation to 0:15-0:25"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/video_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/video_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "The 'Elon Musk' trivia question feels outdated and lacks Gen-Z relevance \u2192 FIX: Replace the 'Elon Musk' question with a ",
+              "The fake 'Low Battery' overlay is too subtle to trigger the intended micro-panic response \u2192 FIX: Amplify the 'Low Batter",
+              "The call-to-action (CTA) lacks sufficient incentive for viewers to engage \u2192 FIX: Revise the CTA to 'Comment 'LIZARD' for",
+              "Hook score 7: Add dynamic visual (e.g. money explosion) at 0:02 to compete with scroll",
+              "Dead spots detected: Cut 2s static at 0:03-0:05, replace with glitch animation"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 5 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 5,
+            "directives_preview": [
+              "Elon Musk question feels dated/generic, risking 'ad-like' vibe that kills Gen-Z authenticity mid-beat. \u2192 FIX: Swap Elon ",
+              "Fake 'Low Battery' overlay at 0:14 triggers panic but risks real user frustration/scroll-away if mistaken for actual ale",
+              "Logic gap in register-to-eating transition skips food hand-off, breaking POV immersion during payoff. \u2192 FIX: Insert 0.2s",
+              "'Bass Boosted' slot sound at thumb-hit is headphone-hostile, potentially causing volume spike jump-scares. \u2192 FIX: Downgr",
+              "Refine loop ender to '...because the first question is IMPOSSIBLE unless...'\u2014match vocal inflection rising on 'unless' t"
+            ],
+            "max_redos": 1,
+            "quality_score": 9.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Title is slightly wordy - 'Burrito Glitch: $0.00 Secret at Chipotle' could be tightened to 'Chipotle Glitch: Get a Free ",
+              "Description lacks specific SEO keywords beyond what's in the tags \u2192 FIX: Add 2-3 targeted SEO keywords to description (e",
+              "Thumbnail could add a 'free food' visual element (like a dollar bill or empty plate) to reinforce the value proposition ",
+              "Engagement triggers (pinned comment, CTA) are generic rather than specific \u2192 FIX: Revise pinned comment to 'Try the PAY ",
+              "Hook score 7 meets baseline but could be stronger with a dynamic opener"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Narrative logic gap between 'not paying for lunch' and trivia app glitch \u2192 FIX: Add 1-sec voiceover: 'What if your trivi",
+              "Flash-cut transition lacks clear temporal indicator \u2192 FIX: Overlay a digital '2s ago' timestamp with pulse animation dur",
+              "Question/answer structure feels incomplete without resolution \u2192 FIX: Add 3-sec post-credits scene showing the app reward",
+              "Phone glow lighting creates unsafe exposure on face \u2192 FIX: Adjust phone glow to 45-degree angle from subject's right sid",
+              "Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Rapid cuts create jarring continuity issues between scenes \u2192 FIX: Replace 'Who bought a social platform for $44B?' with ",
+              "Elon Musk trivia question feels outdated and generic \u2192 FIX: Add a 0.3s fade-to-black transition between the '7x MULTIPLI",
+              "Neon green phone glow overwhelms facial details in close-ups \u2192 FIX: Reduce neon green saturation by 30% in close-ups to ",
+              "QR code CTA lacks visual hierarchy and urgency \u2192 FIX: Animate the QR code with a pulsing border and 'SCAN NOW' text over",
+              "Emotional payoff feels rushed despite high-stakes setup \u2192 FIX: Insert a 1.5s close-up of TINKER's face mid-burrito bite "
+            ],
+            "max_redos": 1,
+            "quality_score": 7.9
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/compliance_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/compliance_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Outdated 'Elon Musk' trivia question risks alienating Gen Z audiences \u2192 FIX: Replace 'Elon Musk' question with 'Who boug",
+              "Static 10-second thumbnail concept lacks visual hierarchy and intrigue \u2192 FIX: Redesign thumbnail with bold '16.45?' text",
+              "Dead spots in the first 20 seconds with shaky hand movements and no narrative progression \u2192 FIX: Insert 2s text overlay ",
+              "No SEO-optimized text or tags for discoverability \u2192 FIX: Add SEO description: 'Discover how a Chipotle receipt reveals a",
+              "Low engagement trigger density (only 1 explicit CTA in 24s) \u2192 FIX: Add second engagement trigger: 'Comment 'STREAK' if y"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Replace 'Elon Musk' trivia question with 'Who founded a meme coin with 100M+ followers?' (answer: 'Satoshi Nakamoto' or ",
+              "Revise QR code to animated 'DOWNLOAD NOW' button with pulsing animation and 24h countdown timer. WHY: Adds urgency and v",
+              "Slow montage from 12 cuts/3s to 8 cuts/4s, adding 0.5s text overlays ('MrBeast Challenge', 'NASA Trivia') and 0.2s pause",
+              "Hook score < 6: Add a text overlay question at 0:00 ('How would you hack this app?')",
+              "Dead spot at 0:12-0:15: Insert a visual of the phone screen flashing 'BONUS ROUND!'"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Script preview ends abruptly mid-sentence, creating uncertainty about the core conflict \u2192 FIX: Extend the script preview",
+              "No clear visual anchor in the frame (e.g. phone UI elements are described but not shown) \u2192 FIX: Add specific UI elements",
+              "Limited character expression - TINKER's motivation feels underdeveloped \u2192 FIX: Add physical comedy to TINKER's performan",
+              "Hook score < 6: Start with the digital whip-pan action instead of static register shot",
+              "Dead spot >5s: Add 3s of Tinker's frantic typing on phone at 0:05-0:08"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Elon Musk trivia question feels outdated for Gen Z audiences \u2192 FIX: Replace 'Who bought a social platform for $44B?' wit",
+              "QR code placement is too small and centered (reduces scan-ability) \u2192 FIX: Enlarge QR code to 40% of screen size and posi",
+              "Fake 'low battery' alert feels forced and unnecessary \u2192 FIX: Remove the 'low battery' overlay - replace with a 0.3s 'Sys",
+              "Loop cut lacks emotional punch to reinforce the 'glitch' concept \u2192 FIX: Add 1.5s of Tinker's face close-up with a mischi",
+              "Hook score 7.5: Improve the opening by adding a text overlay ('Free Lunch?') to the register screen to amplify curiosity"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_014531_16937e50_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "9 state-file types duplicated across nested paths (20 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "brand_colors.json",
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "weather_state.json",
+              "clothing_state.json",
+              "character_aging.json",
+              "story_arc.json",
+              "visual_aid_style.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "brand_colors.json": [
+                "brand_colors.json",
+                "production/brand_colors.json"
+              ],
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 1329
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 167,
+        "total_mb": 8.4
+      },
+      "audited_at": "2026-05-26T21:29:12.329759+00:00",
+      "summary": {
+        "total": 19,
+        "by_severity": {
+          "critical": 3,
+          "high": 11,
+          "blocker": 3,
+          "medium": 2
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F2b_guard_not_run": 2,
+          "F3_council_unapplied": 10,
+          "F4_blocker_silenced": 3,
+          "F5_open_feedback": 2,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 149,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_210715_6bf845b0",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_210715_6bf845b0",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/ideation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/ideation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Brand identity conflict: Mature psychological thriller tone (trembling user, cosmic void, forced scroll) clashes with im",
+              "High execution risk: Relies on flawless VFX for UI peeling, app deletions, and hand emergence; any cheap look (e.g., obv",
+              "Over-complexity: Packs 5+ elements (glitch, peeling, deletions, lesson answer, thumb grab, camera feed) into 22s, riskin",
+              "Weak retention in mid-section: 'Lesson answering' beat feels educational vs. thrilling, creating a dead spot amid high-s",
+              "Hook score 8.5 is strong but could be elevated by pairing the text hook with a visual 'screen peeling' animation (curren"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 5 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 5,
+            "directives_preview": [
+              "Estimated 45s duration exceeds Shorts sweet spot (15-30s), risking 50%+ drop-off after 25s as glitch novelty fades. \u2192 FI",
+              "'Red Planet' quiz is too basic (95% audience knows answer instantly), killing curiosity and screaming 'ad' instead of ho",
+              "Forced thumb interaction assumes perfect phone grip/angle; misalignment shatters immersion for 30%+ of viewers. \u2192 FIX: S",
+              "Streak Graveyard risks clutter on small screens\u2014vaporizing icons in 2-3s may blur into noise, diluting the 'deletion' pu",
+              "Tonal shift from cosmic horror peel to trivia quiz causes whiplash, confusing emotional arc from fear to boredom. \u2192 FIX:"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Lacks explicit narrative structure or clear visual progression \u2192 FIX: Add 3-5 key story beats: 1) UI vibration intensifi",
+              "Insufficient technical specifications for effects implementation \u2192 FIX: Define technical parameters: 'Use After Effects ",
+              "No defined call-to-action or engagement trigger for viewers \u2192 FIX: Insert CTA at 3.5s: 'Subscribe for the full IntelliVe",
+              "Ambiguous transition from 'tear' effect to IntelliVerse X reveal \u2192 FIX: Add visual continuity between tear and void: 'Sh",
+              "Improve hook by adding immediate visual shock (e.g., screen tear effect at 0:00)"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Overloaded with visual elements (glitch effects, scan lines, 3D QR code) that dilute focus \u2192 FIX: Trim 3D QR code sequen",
+              "Rushed transition from UI glitch to quiz mechanic lacks narrative build-up \u2192 FIX: Add 0.5s of slow-mo on the 'MARS' sele",
+              "Emotional payoff for 'streak protection' feels underdeveloped \u2192 FIX: Insert a 0.3s close-up of the 'Thousand-Yard Stare'",
+              "Internal Phone POV shot lacks clear compositional framing \u2192 FIX: Reframe Internal Phone POV shot to use a 45-degree angl",
+              "Add text overlay question at 0:01 to strengthen hook"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.4
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Add 2s transitional beats between UI glitch and void reveal: Show 'System Error' message on screen before the tear appea",
+              "Develop Autocurio's character with vocal/visual cues: Use 8-bit voice with metallic reverb and add 'I'm not here to harm",
+              "Hold score < 7: Add 2s of rapid-fire text prompts ('How many streaks have you lost?') during 0:08-0:10",
+              "Dead spot > 5s: Insert glitch transition effect at 0:12 to maintain momentum",
+              "Reward score < 8: Extend QR code sequence with voiceover 'Scan now for 10x entry' at 0:25"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 6 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 6,
+            "directives_preview": [
+              "Lack of narrative context for 'Streak Graveyard' concept \u2192 FIX: Add 2-3 seconds of voiceover explanation: 'What if every",
+              "Overloaded visual effects may overwhelm general audiences \u2192 FIX: Reduce chromatic aberration intensity by 30% and simpli",
+              "No clear engagement trigger beyond the initial hook \u2192 FIX: Insert CTA at 8s: 'Subscribe to uncover the truth behind the ",
+              "Add mid-video engagement hooks to prevent drop-offs",
+              "Shorten static VHS scan line sequence at 0:15-0:20"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Phase 2's 12-second duration feels sluggish for a 22s total runtime \u2192 FIX: Shorten Phase 2 to 8 seconds by trimming 4s f",
+              "Emotional tension lacks escalation in Phase 3's raffle CTA \u2192 FIX: Add a sudden jump scare in Phase 3: Flash 'BUT WAIT...",
+              "Phase 4's extreme close-up risks losing audience connection without context \u2192 FIX: Insert a 1s transitional shot in Phas",
+              "Audio-visual synchronization could be tighter in Phase 3 \u2192 FIX: Sync Phase 3's 'Ding' sound effect to the exact moment t",
+              "Hold score < 7: Add 3s of dynamic transitions between Scene 2 and Scene 3"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.4
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_210715_6bf845b0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "3 state-file types duplicated across nested paths (8 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ],
+              "dialogue_history.json": [
+                "dialogue_history.json",
+                "production/dialogue_history.json",
+                "production/production/scenes/scene_0/dialogue_history.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 835
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 152,
+        "total_mb": 62.2
+      },
+      "audited_at": "2026-05-26T21:29:12.329786+00:00",
+      "summary": {
+        "total": 11,
+        "by_severity": {
+          "high": 8,
+          "blocker": 3
+        },
+        "by_code": {
+          "F3_council_unapplied": 7,
+          "F4_blocker_silenced": 3,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 100,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_020548_17fd4e4e",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_020548_17fd4e4e",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T04:20:29.325111 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T04:20:29.325111",
+            "phases_completed": 9,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_020548_17fd4e4e",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_020548_17fd4e4e`"
+        },
+        {
+          "code": "F2_gate_fail_but_ship",
+          "severity": "blocker",
+          "message": "quality/audio_quality.json reports passed=false (3 issues) AND publish artifacts exist \u2014 failed asset shipped",
+          "evidence": {
+            "gate_file": "quality/audio_quality.json",
+            "issues": [
+              "True peak -0.9 dBTP \u2014 clipping risk",
+              "Muddy audio: low band (-17dB) dominates mid (-65dB) by 48dB",
+              "Harsh audio: high band (-40dB) dominates mid (-65dB) by 25dB"
+            ],
+            "publish_signals": [
+              "publish_metadata.json",
+              "production/publish_metadata.json",
+              "distribution",
+              "production/distribution",
+              "production/output/final_video.mp4"
+            ],
+            "shipped": true
+          },
+          "suggested_action": "Refinery refuses MR; route bead to audio/qc polecat with the failed gate"
+        },
+        {
+          "code": "F2_gate_fail_but_ship",
+          "severity": "blocker",
+          "message": "production/quality/audio_quality.json reports passed=false (4 issues) AND publish artifacts exist \u2014 failed asset shipped",
+          "evidence": {
+            "gate_file": "production/quality/audio_quality.json",
+            "issues": [
+              "Integrated loudness -13.3 LUFS outside target range (-14 to -24)",
+              "True peak 0.7 dBTP \u2014 clipping risk",
+              "Muddy audio: low band (-15dB) dominates mid (-63dB) by 48dB",
+              "Harsh audio: high band (-42dB) dominates mid (-63dB) by 22dB"
+            ],
+            "publish_signals": [
+              "publish_metadata.json",
+              "production/publish_metadata.json",
+              "distribution",
+              "production/distribution",
+              "production/output/final_video.mp4"
+            ],
+            "shipped": true
+          },
+          "suggested_action": "Refinery refuses MR; route bead to audio/qc polecat with the failed gate"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Replace YouTube title with 'AI Roasts Gen-Z? 2000 BEEF Quiz Show! #Shorts' (51 chars) to add urgency and keyword density",
+              "Add 2s 'player face reveal' animation during quiz to explain deadpan expression. WHY: Provides contextual clarity while ",
+              "Revise TikTok caption to 'What does 'rizz' mean? AI vs Gen-Z slang showdown! \ud83e\udd16\u2728 #viral #fyp #AI' (149 chars). WHY: Cuts ",
+              "End with AI whispering 'You're not as cool as you think' while screen glitches into 'Share to test your slang' graphic. ",
+              "Add dynamic text overlay 'What does AI think about your lingo?' in first 0.5s of video"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/video_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/video_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Hook lacks urgency - 'What does 'rizz' mean?' is curious but not provocative \u2192 FIX: Replace opening 1.5s glitch transiti",
+              "Niche Gen-Z references (e.g. '2000 BEEF') risk alienating non-target viewers \u2192 FIX: Insert 3s fail montage of AI misinte",
+              "QR code loop feels transactional rather than shareable \u2192 FIX: Replace QR code with animated 'Tag your Gen-Z friend' prom",
+              "Player's deadpan expression is confusing without contextual framing \u2192 FIX: Add 2s 'player face reveal' sequence showing ",
+              "AI's 'TRASH' to '10/10' transition lacks narrative progression \u2192 FIX: End with AI whispering 'You're not as cool as you "
+            ],
+            "max_redos": 1,
+            "quality_score": 7.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 11 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 11,
+            "directives_preview": [
+              "Hook verbal 'What does 'rizz' mean?!' lacks urgency and shock value\u2014rizz is mainstream slang now, so it feels predictabl",
+              "Gen-Z slang focus (rizz, vibes) creates niche appeal that alienates 40%+ of Shorts audience (25+ demographics), risking ",
+              "QR code loop feels like a hard sell ('Get roasted by AI') instead of organic replay bait, reducing rewatch loops \u2192 FIX: ",
+              "Player's 'deadpan' expression in beat 3 is vague and low-energy without exaggeration, creating a dead spot at ~5-7s \u2192 FI",
+              "TRASH to 10/10 transition has visual flash but no narrative escalation\u2014'Nice try, 0/10' to 'YES! 10/10' feels flat witho"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/video_production_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/video_production_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/final_assembly_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/final_assembly_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 6 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 6,
+            "directives_preview": [
+              "Niche reference to 'rizz' without contextual explanation \u2192 FIX: Add text overlay defining 'rizz' (e.g., 'Rizz = charm/ch",
+              "Lack of clear call-to-action or viewer engagement mechanism \u2192 FIX: Insert a 2-second CTA prompt after the '10/10' reward",
+              "Potential pacing issues in rapid scene transitions \u2192 FIX: Add 0.5s transition fades between scene cuts to smooth aggress",
+              "Add 0:01 text overlay 'What does RIZZ mean? (It's NOT what you think)' for stronger hook",
+              "Cut 3s dead space at 0:08-0:11 to maintain quiz show momentum"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Unclear narrative progression between abstract visual elements \u2192 FIX: Add 0.5s text overlay 'What does Rizz mean? Find O",
+              "Text overlays lack contextual hierarchy (e.g. 'Rizz? 2000 BEEF!' vs. 'Charisma?' vs. 'Get Roasted by AI') \u2192 FIX: Use 3D ",
+              "Emotional beats rely on visual cues alone without character expression guidance \u2192 FIX: Add 0.3s character expression cue",
+              "Final CTA lacks urgency or incentive framing \u2192 FIX: Replace 'Download QuizVerse' CTA with 'Answer & Win $1,000!' and add",
+              "Hook score <6: Replace chaotic text with direct question 'What does Rizz mean?' over glitch transition"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/audio_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/audio_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/compliance_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/compliance_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Lack of character motivation beyond surface-level traits (e.g., Tinker's 'glitch' motivation is unclear) \u2192 FIX: Add 2-3 ",
+              "Emotional beats rely on visual cues rather than character-driven moments \u2192 FIX: Insert a 1.5s close-up of Autocurio's fa",
+              "QR code CTA feels transactional rather than emotionally compelling \u2192 FIX: Replace QR code with animated 'Tag your Gen-Z ",
+              "Minimal dialogue limits character personality development \u2192 FIX: Add 0.5s of Tinker's internal monologue via text overla",
+              "Dead spot in 0:05-0:10: Add a quick text reveal 'Answer 3 questions to win $1000!' or insert a character reaction shot"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Rapid scene transitions (0.5s cuts) create narrative disorientation \u2192 FIX: Add 1-2 second establishing shots before rapi",
+              "Text overlays lack contextual framing (e.g. 'Rizz? 2000 BEEF!' has no setup) \u2192 FIX: Pair text overlays with visual metap",
+              "Emoji face/character animations feel disconnected from core message \u2192 FIX: Connect character animations to a unified nar",
+              "No clear narrative arc to sustain viewer curiosity \u2192 FIX: Insert a 3s payoff sequence after the QR code with a 'You're r",
+              "Dead spot in QR code loop (0:12-0:17) - Replace with 3s of dynamic text overlay 'Scan to get roasted!'"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Visual narrative lacks clear character motivation beyond 'quiz show' concept \u2192 FIX: Add 2s 'fail montage' sequence befor",
+              "Shot composition relies heavily on static close-ups without dynamic camera movement \u2192 FIX: Replace static close-ups with",
+              "Continuity issues between scenes (e.g. sudden shift from Autocurio to DotDot to Tinker without transition) \u2192 FIX: Insert",
+              "Pacing feels rushed in early scenes (1.5s per shot) but lags in final 24s \u2192 FIX: Shorten final 24s by splitting into 3x ",
+              "Emotional impact diluted by excessive visual noise (confetti, text overlays, sound effects) \u2192 FIX: Reduce text overlay d"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_020548_17fd4e4e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/production/scenes/scene_0/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/production/scenes/scene_0/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "9 state-file types duplicated across nested paths (26 copies, ~2 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "brand_colors.json",
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "weather_state.json",
+              "clothing_state.json",
+              "character_aging.json",
+              "story_arc.json",
+              "visual_aid_style.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "brand_colors.json": [
+                "brand_colors.json",
+                "production/brand_colors.json",
+                "production/production/scenes/scene_0/brand_colors.json"
+              ],
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 1747
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 330,
+        "total_mb": 475.7
+      },
+      "audited_at": "2026-05-26T21:29:12.329835+00:00",
+      "summary": {
+        "total": 24,
+        "by_severity": {
+          "critical": 2,
+          "blocker": 5,
+          "high": 14,
+          "medium": 3
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F2_gate_fail_but_ship": 2,
+          "F2b_guard_not_run": 1,
+          "F3_council_unapplied": 13,
+          "F4_blocker_silenced": 3,
+          "F5_open_feedback": 3,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 196,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_215138_644d0cd0",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_215138_644d0cd0",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T22:20:26.371160 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T22:20:26.371160",
+            "phases_completed": 10,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_215138_644d0cd0",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_215138_644d0cd0`"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "production/quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "production/quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 4 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 4,
+            "directives_preview": [
+              "Revise YouTube title to '0.2s to Beat Einstein? #Shorts' (38 chars): Shorter keyword-dense title improves SEO while main",
+              "Update thumbnail text overlay to '0.2 SEC IQ TEST' with 20-30% brighter Einstein face and simplified background: Address",
+              "Add payoff promise to all platform descriptions: 'Wait for the final frame-perfect answer flick.' (per openai's engageme",
+              "Trim Instagram hashtags to 7 core tags: #BrainRot #Einstein #TriviaChallenge #IQTest #ScienceShorts #ReelsChallenge #Bra"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/video_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/video_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Sensory overload from rapid visual transitions (4D hypercubes, DNA strands) may cause viewer fatigue \u2192 FIX: Reduce visua",
+              "Over-reliance on 'Skibidi Toilet' humor may alienate older demographics \u2192 FIX: Add 1-2 seconds of contextual setup for t",
+              "Insufficient setup for the 'Heisenberg Uncertainty Principle' answer (contextual gap) \u2192 FIX: Balance audio mix by loweri",
+              "Audio mix prioritizes bass over dialogue clarity in key moments \u2192 FIX: Replace 'Skibidi Toilet' reference with a more un",
+              "Hook score < 6: Replace opening 0:05 with a dynamic visual contrast (e.g., Einstein's portrait vs. 'brain-rot' abstract "
+            ],
+            "max_redos": 1,
+            "quality_score": 7.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/ideation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/ideation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "High risk of ad-fatigue swipe-away as it mimics mobile game ads with clutch mechanics and mascot evolution. \u2192 FIX: Count",
+              "Audience split: Gen Alpha loves 'Skibidi Toilet' bait, but Gen Z gamers (18-35) may dismiss as 'cringe brainrot'. \u2192 FIX:",
+              "Potential sensory overload from violent cursor shake, sweat close-up, and explosive effects risks 3-second drop-off. \u2192 F",
+              "Clutch trope saturation dilutes differentiation despite evolution twist. \u2192 FIX: Boost differentiation with micro-failure",
+              "Hook score 8.5 slightly below optimal for YouTube Shorts (needs 9+). Suggest: Replace eye close-up with '100-day streak'"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Estimated 32s duration exceeds optimal Shorts sweet spot (15-22s), risking 20s+ drop-off from fatigue in a high-stim 'br",
+              "Visual overload in 1.5s 'seizure-inducing' montage (beat 4) could trigger YouTube safety filters or cause instant scroll",
+              "'Type EINSTEIN with eyes closed' engagement bait is a low-effort clich\u00e9 that algorithms may downrank as spam. \u2192 FIX: Swa",
+              "Reward ('REALITY REWRITE AUTHORIZED' with 'Entry #001') feels vague and brand-dependent, disconnecting from Einstein bat",
+              "Niche 'Einstein vs Soyjak' trope risks saturation fatigue in Gen Alpha meme spaces. \u2192 FIX: Refresh trope: Swap Soyjak fo"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Title is overly long and unclear ('Extreme Macro: Sweating Forehead IQ 0 Rap') \u2192 FIX: Shorten title to 'Sweating Forehea",
+              "Description lacks specific value proposition beyond generic 'shocking visuals' \u2192 FIX: Add specific value proposition to ",
+              "Thumbnail could benefit from more dynamic composition (current version is static) \u2192 FIX: Enhance thumbnail with dynamic ",
+              "Platform optimization is generic - no platform-specific tweaks for TikTok/Reels \u2192 FIX: For TikTok/Reels: Add 15-sec vert",
+              "Hook score 7 needs improvement - Start with the IQ 0 counter dropping immediately instead of slow setup"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Vague execution details for datamoshing transitions and neon lighting \u2192 FIX: Add specific technical instructions: 'Use 3",
+              "Unclear narrative structure - jumps between elements without clear progression \u2192 FIX: Insert explicit narrative beats: '",
+              "Weak opening hook that fails to immediately establish stakes \u2192 FIX: Replace 0.2s silence with a punchy voiceover: 'What ",
+              "Incomplete ending - 'Frame-perfect FLICK' lacks resolution \u2192 FIX: Extend ending: 'Add 1.5s of blood-red screen with 'CRI",
+              "Hook score < 6: Add bold text overlay 'IQ: 0' with flashing neon effect at 0:00.5"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "The 1.5s seizure-inducing montage risks sensory overload and viewer drop-off \u2192 FIX: Reduce the 4D hypercube montage to 0",
+              "The QR code CTA lacks clear context about its purpose \u2192 FIX: Overlay text on the QR code: 'SCAN TO CLAIM YOUR INFINITE I",
+              "The 'Take the L' dance feels disconnected from the cyber-phonk aesthetic \u2192 FIX: Replace Einstein's 'Take the L' dance wi",
+              "The datamosh transition from 'SYSTEM FAILURE' to 'Heisenberg's Principle' lacks visual logic \u2192 FIX: Add a visual 'bridge",
+              "Dead spot >5s at 12-18s: Replace chaotic montage with a clear visual metaphor (e.g., Einstein's brain melting into code)"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/compliance_audit.json verdict=PASS_WITH_NOTES with 11 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/compliance_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 11,
+            "directives_preview": [
+              "Title exceeds optimal length (22 words) and lacks punch \u2192 FIX: Replace title with 'Sweating Forehead + IQ: 0 Counter = V",
+              "Dead spots in 0:00-0:05 (static macro shot) and 0:15-0:20 (repetitive rap lyrics) \u2192 FIX: Add 3s text overlay at 0:00: 'W",
+              "No explicit call-to-action or engagement prompts \u2192 FIX: Insert visual transition (zoom effect) on 'IQ: 0' counter at 0:0",
+              "Thumbnail concept lacks text overlay details and color scheme guidance \u2192 FIX: Add 2 CTAs: 'Comment your IQ level' and 'S",
+              "Hook score <6 due to weak opening curiosity driver \u2192 FIX: Design thumbnail with red text overlay: 'IQ: 0' + 'What happen"
+            ],
+            "max_redos": 1,
+            "quality_score": 5.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Lack of clear narrative progression - viewers may not understand the stakes of 'Einstein's win streak' \u2192 FIX: Add 1.5s o",
+              "Over-reliance on visual noise without emotional anchor points \u2192 FIX: Insert a 0.5s close-up of the 'BRAIN-ROT SLOP' butt",
+              "No explicit explanation of the 'Brain-Rot Slop' mechanic \u2192 FIX: Give Einstein a unique visual trait (e.g., a glowing 'L'",
+              "Einstein character lacks distinct personality beyond 'smug' and 'crying soyjak' tropes \u2192 FIX: Extend the 'Galaxy Gold' t",
+              "Reward payoff feels rushed - the 'Galaxy Gold' transformation needs more visual emphasis \u2192 FIX: Add a 0.3s pause at 18s "
+            ],
+            "max_redos": 1,
+            "quality_score": 7.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "The concept is so visually aggressive that it risks feeling chaotic rather than intentionally structured, especially for",
+              "The audience label says 'General,' but the creative language is niche, irony-heavy, and internet-native; many viewers wi",
+              "The script preview does not yet reveal a clear premise, payoff, or story progression beyond visual assault and mockery. ",
+              "The 'IQ: 0' framing can come off as needlessly insulting, which may reduce shareability and trigger instant swipes from ",
+              "Constant camera shake, datamoshing, and vibrating type across the full 30 seconds may create viewer fatigue and hurt ret"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.95
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Rapid scene transitions risk disorienting viewers during critical emotional beats \u2192 FIX: Replace the 0.5s datamosh trans",
+              "Overloaded visual elements may cause sensory fatigue in the 4-6 second range \u2192 FIX: Reduce neon saturation by 20% in sho",
+              "QR code reward feels abrupt without clear call-to-action context \u2192 FIX: Add 1.5s of 'Scan Complete' animation before QR ",
+              "Einstein's 'Crying Soyjak' transformation lacks emotional payoff \u2192 FIX: Extend Einstein's 'Take the L' dance by 0.8s and",
+              "Dead spot in Shot 2 (0:07-0:12) - Add a text overlay 'BRAIN-ROT SLOP' with a sound effect to maintain tension"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_215138_644d0cd0_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "9 state-file types duplicated across nested paths (20 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "brand_colors.json",
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "weather_state.json",
+              "clothing_state.json",
+              "character_aging.json",
+              "story_arc.json",
+              "visual_aid_style.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "brand_colors.json": [
+                "brand_colors.json",
+                "production/brand_colors.json"
+              ],
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 1328
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 198,
+        "total_mb": 33.5
+      },
+      "audited_at": "2026-05-26T21:29:12.329880+00:00",
+      "summary": {
+        "total": 20,
+        "by_severity": {
+          "critical": 3,
+          "high": 12,
+          "blocker": 3,
+          "medium": 2
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F2b_guard_not_run": 2,
+          "F3_council_unapplied": 11,
+          "F4_blocker_silenced": 3,
+          "F5_open_feedback": 2,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 154,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_124749_fbb22c2e",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_124749_fbb22c2e",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T13:30:20.813095 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T13:30:20.813095",
+            "phases_completed": 6,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_124749_fbb22c2e",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_124749_fbb22c2e`"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/ideation_audit.json verdict=PASS_WITH_NOTES with 4 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/ideation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 4,
+            "directives_preview": [
+              "Audience mismatch: Targets Gen Z 18-30 gamers with 'sweaty adult face' and 'unhinged' rage, but brand context is kids 5-",
+              "Ad-blindness trigger: Token rain, leaderboard #1, and Golden Ticket QR scream 'mobile game promo,' causing 40-60% drop-o",
+              "Cringe risk in celebration: 'Jumping on chair/victory slide' feels staged if not raw, eroding Gen Z trust in authenticit",
+              "QR code kills end-engagement: Overlay at 20s breaks immersion, reducing comments/shares by signaling 'sales pitch end.' "
+            ],
+            "max_redos": 1,
+            "quality_score": 7.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Title 'saved $1,000' mismatches the gambling-style payout/win scenario (balance ticking up), risking 20-30% early drop-o",
+              "High-production macro eye to 'raw handheld' payout transition could scream 'staged' if lighting/shake doesn't match, tri",
+              "Engagement bait 'what\u2019s the FIRST thing you\u2019re buying?' is a generic, overused trope that savvy Shorts viewers skip, low",
+              "Gambling-adjacent visuals (timer tap for cash, leaderboard #1, jackpot SFX) risk YouTube algorithm flags or demonetizati",
+              "Title mismatch: 'saved' vs. gamble payout creates cognitive dissonance. Suggested fix: Change title to 'POV: You just sn"
+            ],
+            "max_redos": 1,
+            "quality_score": 9.1
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "The narrative logic is unclear - why is the timer critical? What are the stakes? \u2192 FIX: Add a 2-second voiceover: 'This ",
+              "The transition from 'freeze' to 'impact' lacks explanatory context \u2192 FIX: Insert a 0.5s close-up of the thumb's tremblin",
+              "The general audience fit is questionable given the intense, horror-adjacent tone \u2192 FIX: Adjust color palette to include ",
+              "Technical execution details for 'vibrations' and 'black hole imploding' are unspecified \u2192 FIX: Specify vibrations as '3H",
+              "The reward payoff for watching is underdeveloped - what's the takeaway? \u2192 FIX: End with a 2s freeze frame of the screen'"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Replace static QR code with 'Scan to Claim' animation: Have the QuizVerse logo 'grow' from the screen like a digital vin",
+              "Revise player reaction sequence: Add 1.5s of authentic micro-expressions - show trembling hands, sweat beads, and wide-e",
+              "Hook score 7.5: Add a visual 'X' overlay on the timer for higher visual urgency",
+              "Dead spots detected: Cut 3s from 0:08-0:15 transition, replace with glitch effect",
+              "Engagement triggers: Add 2s 'Challenge' text at 0:12: 'Will you risk it?'"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.8
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "3-second silence at start risks losing viewer attention \u2192 FIX: Replace 3-second silence with a punchy question overlay (",
+              "Abrupt transition from macro eye shot to 'behind-the-glass' POV lacks narrative context \u2192 FIX: Add a 1-2 second transiti",
+              "Unclear audience targeting (general vs. gaming/tech niche) \u2192 FIX: Specify audience as 'gaming/tech enthusiasts' in the b",
+              "Limited visual variety in first 8 seconds \u2192 FIX: Insert a 2-second close-up of a glowing controller or circuit board bet",
+              "Dead spot >5s (0:02-0:08) - Add dynamic visuals/transition to maintain momentum"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.5
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Shot 3's holographic characters lack clear visual hierarchy, risking viewer confusion \u2192 FIX: Redesign Shot 3: Place Auto",
+              "Handheld footage in Shot 4 feels disconnected from the previous polished aesthetic \u2192 FIX: Enhance Shot 4: Add a brief 'g",
+              "QR code CTA appears too quickly (only 1.5s) to register effectively \u2192 FIX: Extend QR code display: Add 1.5s of animated ",
+              "Emotional payoff in Shot 4 lacks visual/musical crescendo to match the 'happy dance' intensity \u2192 FIX: Amplify Shot 4 cli",
+              "Add text overlay 'What's the catch?' at 0:05 to interrupt passive tension"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_124749_fbb22c2e_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "3 state-file types duplicated across nested paths (8 copies, ~1 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ],
+              "dialogue_history.json": [
+                "dialogue_history.json",
+                "production/dialogue_history.json",
+                "production/production/scenes/scene_0/dialogue_history.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 735
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 163,
+        "total_mb": 76.9
+      },
+      "audited_at": "2026-05-26T21:29:12.329913+00:00",
+      "summary": {
+        "total": 12,
+        "by_severity": {
+          "critical": 1,
+          "high": 8,
+          "blocker": 3
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F3_council_unapplied": 7,
+          "F4_blocker_silenced": 3,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 110,
+        "grade": "F"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_160612_1d46997e",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_160612_1d46997e",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T16:07:07.506098 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T16:07:07.506098",
+            "phases_completed": 2,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_160612_1d46997e",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_160612_1d46997e`"
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "2 state-file types duplicated across nested paths (4 copies, ~0 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "voiceover_memory.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json"
+              ],
+              "dialogue_history.json": [
+                "dialogue_history.json",
+                "production/dialogue_history.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 139
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 25,
+        "total_mb": 0.3
+      },
+      "audited_at": "2026-05-26T21:29:12.329921+00:00",
+      "summary": {
+        "total": 2,
+        "by_severity": {
+          "critical": 1,
+          "high": 1
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 15,
+        "grade": "D"
+      }
+    },
+    {
+      "run_id": "viral_shorts_20260420_032142_a9380cd7",
+      "run_path": "/Users/devashishbadlani/dev/content-factory/.working_dir/video/viral_shorts_20260420_032142_a9380cd7",
+      "pipeline_kind": "viral_shorts",
+      "findings": [
+        {
+          "code": "F1_silent_abort",
+          "severity": "critical",
+          "message": "checkpoint.status=aborted at 2026-04-20T04:20:05.503902 but no alert artifact emitted and graph_state ok",
+          "evidence": {
+            "checkpoint_status": "aborted",
+            "checkpoint_updated_at": "2026-04-20T04:20:05.503902",
+            "phases_completed": 9,
+            "graph_state_broken": false,
+            "graph_state_run_id": "viral_shorts_20260420_032142_a9380cd7",
+            "alert_artifacts": []
+          },
+          "suggested_action": "Dispatch resume polecat: `gt nudge contentx-shorts/resume --run-id=viral_shorts_20260420_032142_a9380cd7`"
+        },
+        {
+          "code": "F2_gate_fail_but_ship",
+          "severity": "blocker",
+          "message": "quality/audio_quality.json reports passed=false (2 issues) AND publish artifacts exist \u2014 failed asset shipped",
+          "evidence": {
+            "gate_file": "quality/audio_quality.json",
+            "issues": [
+              "Muddy audio: low band (-17dB) dominates mid (-64dB) by 46dB",
+              "Harsh audio: high band (-40dB) dominates mid (-64dB) by 23dB"
+            ],
+            "publish_signals": [
+              "publish_metadata.json",
+              "production/publish_metadata.json",
+              "distribution",
+              "production/distribution",
+              "production/output/final_video.mp4"
+            ],
+            "shipped": true
+          },
+          "suggested_action": "Refinery refuses MR; route bead to audio/qc polecat with the failed gate"
+        },
+        {
+          "code": "F2_gate_fail_but_ship",
+          "severity": "blocker",
+          "message": "production/quality/audio_quality.json reports passed=false (4 issues) AND publish artifacts exist \u2014 failed asset shipped",
+          "evidence": {
+            "gate_file": "production/quality/audio_quality.json",
+            "issues": [
+              "Integrated loudness -13.7 LUFS outside target range (-14 to -24)",
+              "True peak 0.5 dBTP \u2014 clipping risk",
+              "Muddy audio: low band (-14dB) dominates mid (-68dB) by 54dB",
+              "Harsh audio: high band (-38dB) dominates mid (-68dB) by 30dB"
+            ],
+            "publish_signals": [
+              "publish_metadata.json",
+              "production/publish_metadata.json",
+              "distribution",
+              "production/distribution",
+              "production/output/final_video.mp4"
+            ],
+            "shipped": true
+          },
+          "suggested_action": "Refinery refuses MR; route bead to audio/qc polecat with the failed gate"
+        },
+        {
+          "code": "F2b_guard_not_run",
+          "severity": "critical",
+          "message": "quality/guard_summary.json reports total_checks=0 \u2014 gate never executed",
+          "evidence": {
+            "file": "quality/guard_summary.json",
+            "contents": {
+              "total_checks": 0,
+              "passed": 0,
+              "failed": 0,
+              "total_cost_saved_usd": 0.0,
+              "by_level": {}
+            }
+          },
+          "suggested_action": "Wire guard invocation into the pipeline phase before delivery"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Replace YouTube title 'TRIVI-ATTACK! \ud83d\udca5' with 'Wrong Answer = TRIVI-DELETED? #Shorts' (58 chars) to clarify the trivia me",
+              "Rewrite YouTube description to front-load search terms: 'Fast-paced trivia challenge: guess before the timer ends! 10 to",
+              "Add TikTok title 'TRIVI-DELETED? Who survives? \ud83c\udfaf' (43 chars) and update thumbnail text overlay to 'WRONG = DELETED?' wit",
+              "Revise Instagram caption to 'Who survives the TRIVI-DELETED challenge? \ud83c\udfaf Tag your trivia enemy! #TriviaChallenge #Quiz' ",
+              "Add 3-5 niche tags to YouTube (e.g., 'triviaquiz', 'wronganswerchallenge', 'quizbattle') and TikTok (e.g., 'quiztok', 't"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/video_audit.json verdict=PASS_WITH_NOTES with 10 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/video_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 10,
+            "directives_preview": [
+              "Overloaded visual elements in the hook (confetti cannon + phone explosion) risk overwhelming viewers \u2192 FIX: Simplify hoo",
+              "Autocurio's 'TRIVI-DELETED' line feels forced compared to relatable 404 errors \u2192 FIX: Replace 'TRIVI-DELETED' with 'Doom",
+              "Rapid scene transitions (1-2-3-4) may lose audience comprehension in 15s format \u2192 FIX: Extend beat 1-2-3 to 4s each with",
+              "Pixelation effect during disintegration is visually jarring rather than aesthetically pleasing \u2192 FIX: Replace pixelation",
+              "QR code placement feels transactional vs. authentic engagement bait \u2192 FIX: Move QR code to bottom-center with animated '"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.2
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "council_audits/hook_writing_audit.json verdict=PASS_WITH_NOTES with 11 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "council_audits/hook_writing_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 11,
+            "directives_preview": [
+              "Hook visual overloaded with simultaneous confetti cannon and fireball, splitting viewer focus in first 2s \u2192 FIX: Revise ",
+              "'TRIVI-DELETED' pun feels forced and cringy, reducing emotional payload compared to relatable 404 error \u2192 FIX: Replace '",
+              "Rapid 5-beat transitions in 15s (split-screen to dance to disintegration) risk viewer confusion and drop-off \u2192 FIX: Slow",
+              "Disco dance by Autocurio lacks trivia theme relevance, feeling random after ERROR 404 \u2192 FIX: Swap disco dance in beat 3 ",
+              "QR code overlay feels transactional and salesy amid fun chaos, diluting authentic engagement \u2192 FIX: Reposition QR code t"
+            ],
+            "max_redos": 1,
+            "quality_score": 8.1
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/video_production_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/video_production_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/publish_metadata_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/publish_metadata_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/final_assembly_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/final_assembly_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 8 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 8,
+            "directives_preview": [
+              "Abrupt transition from phone explosion to Autocurio materialization \u2192 FIX: Add a 0.5s glitch transition effect between t",
+              "Unclear rules for the 'TRIVI-DELETED' mechanic \u2192 FIX: Insert a 2s text overlay explaining 'TRIVI-DELETED' rules: 'Answer",
+              "Limited visual variety in tracking shots/kinetic typography \u2192 FIX: Introduce a rotating camera shot during the token bet",
+              "Hook score 7: Add text overlay 'TRIVI-DELETED?' at 0:01 to create immediate mystery",
+              "Dead spots detected: Cut 3s between 0:08-0:11 or replace with token animation"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.1
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 5 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 5,
+            "directives_preview": [
+              "Time inconsistency: 10-second countdown vs. 30-second timer text \u2192 FIX: Adjust countdown to 30 seconds and remove confli",
+              "Overcrowded visuals with floating equations, coin, and text layers \u2192 FIX: Simplify visuals by removing floating '8x7' eq",
+              "Weak emotional payoff in final shot \u2192 FIX: Add a 2-second slow-mo shot of Autocurio's triumphant expression before logo ",
+              "Unclear connection between arena action and QuizVerse logo reveal \u2192 FIX: Transition to QuizVerse logo via a 'correct ans",
+              "Reward score < 6: Add a clear CTA like 'Subscribe for the next math battle!' and a cliffhanger ending with a 'Will Autoc"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/audio_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/audio_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/compliance_audit.json verdict=PASS_WITH_NOTES with 1 directives, redo_count=0/3, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/compliance_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 1,
+            "directives_preview": [
+              "Auto-passed: council time budget exhausted for this pipeline run"
+            ],
+            "max_redos": 3,
+            "quality_score": 7.0
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/council_audits/screenwriting_audit.json verdict=PASS_WITH_NOTES with 7 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/council_audits/screenwriting_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 7,
+            "directives_preview": [
+              "Overloaded visual elements in opening beat (glitch transition + eye close-up + text + confetti + logo + QR code) \u2192 FIX: ",
+              "Forced dialogue 'Rizz? 2000 BEEF!' lacks organic context for the quiz format \u2192 FIX: Reword 'Rizz? 2000 BEEF!' to 'What's",
+              "Rapid scene transitions (0.5s per beat) risk losing audience comprehension \u2192 FIX: Extend each beat to 1.5s with 0.5s tra",
+              "Pixelation effect during disintegration feels jarring rather than stylistic \u2192 FIX: Replace pixelation effect with a smoo",
+              "QR code placement appears transactional vs. integrated into the narrative \u2192 FIX: Move QR code to lower-right corner with"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.6
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/brief_validation_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Incomplete narrative setup - split-screen concept cut off mid-sentence \u2192 FIX: Expand split-screen description to show co",
+              "No explicit hook to grab viewer attention in first 2 seconds \u2192 FIX: Add 0.5s sound effect (e.g., 'ding' + 'whoosh') at s",
+              "Lack of clear call-to-action or engagement prompt \u2192 FIX: Insert CTA at 5s: 'Comment your guess before the clock hits 0!'",
+              "Technical elements (glitch effects, tracking shots) not anchored to specific scenes \u2192 FIX: Specify technical execution: ",
+              "Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity"
+            ],
+            "max_redos": 1,
+            "quality_score": 6.7
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F3_council_unapplied",
+          "severity": "high",
+          "message": "production/production/scenes/scene_0/council_audits/storyboard_audit.json verdict=PASS_WITH_NOTES with 9 directives, redo_count=0/1, approved_output=None",
+          "evidence": {
+            "audit_file": "production/production/scenes/scene_0/council_audits/storyboard_audit.json",
+            "verdict": "PASS_WITH_NOTES",
+            "n_directives": 9,
+            "directives_preview": [
+              "Scene 0's extreme close-up lacks contextual framing for the character's environment \u2192 FIX: Add a 0.5s establishing shot ",
+              "Rapid scene transitions risk confusing viewers in a 15s format \u2192 FIX: Insert 0.3s fade-to-black transitions between scen",
+              "QR code placement feels disconnected from the action in Scene 4 \u2192 FIX: Animate the QR code to pulse from the center of t",
+              "Autocurio's 'TRIVI-DELETED' phrase remains forced and unnatural \u2192 FIX: Replace 'TRIVI-DELETED' with 'Doomed to 404' duri",
+              "Token rain animation in Scene 2 may overwhelm the frame visually \u2192 FIX: Reduce token rain density by 40% and add a sligh"
+            ],
+            "max_redos": 1,
+            "quality_score": 7.3
+          },
+          "suggested_action": "Spawn 1 redo subagents, one bd per directive parented to run-bead"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F4_blocker_silenced",
+          "severity": "blocker",
+          "message": "blocker `missing_script` in production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json \u2014 Script artifact missing or empty.",
+          "evidence": {
+            "gap_file": "production/production/scenes/scene_0/gap_reports/viral_shorts_20260420_032142_a9380cd7_script_gap_report.json",
+            "blocker_code": "missing_script",
+            "blocker_phase": "script",
+            "blocker_message": "Script artifact missing or empty.",
+            "suggested_remediation": "Re-run script phase or unblock LLM call."
+          },
+          "suggested_action": "gt escalate --severity=CRITICAL --route=mayor 'gap_missing_script in script unaddressed'"
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F5_open_feedback",
+          "severity": "medium",
+          "message": "production/production/scenes/scene_0/run_feedback.json is an unclosed stub \u2014 no engagement metrics, no actions, no notes",
+          "evidence": {
+            "file": "production/production/scenes/scene_0/run_feedback.json",
+            "status": "needs_review"
+          },
+          "suggested_action": "Migrate to bead: `bd create --type=feedback --parent=<run-bead> --title='run_feedback for <run_id>' --status=open`. Update from Postiz webhook + browser_provider scrape at +24h/+72h/+7d."
+        },
+        {
+          "code": "F6_nested_duplication",
+          "severity": "high",
+          "message": "9 state-file types duplicated across nested paths (26 copies, ~2 KB wasted)",
+          "evidence": {
+            "duplicate_types": [
+              "brand_colors.json",
+              "voiceover_memory.json",
+              "studio_bible.json",
+              "weather_state.json",
+              "clothing_state.json",
+              "character_aging.json",
+              "story_arc.json",
+              "visual_aid_style.json",
+              "dialogue_history.json"
+            ],
+            "examples": {
+              "brand_colors.json": [
+                "brand_colors.json",
+                "production/brand_colors.json",
+                "production/production/scenes/scene_0/brand_colors.json"
+              ],
+              "voiceover_memory.json": [
+                "voiceover_memory.json",
+                "production/voiceover_memory.json",
+                "production/production/scenes/scene_0/voiceover_memory.json"
+              ],
+              "studio_bible.json": [
+                "production/metadata/studio_bible.json",
+                "production/production/scenes/scene_0/studio_bible.json"
+              ]
+            },
+            "nested_production_dirs": [
+              "production/production"
+            ],
+            "bytes_wasted_approx": 1771
+          },
+          "suggested_action": "Run `run_id_repairer.py --fix=F6 <run_path>` \u2014 canonicalize state files at root, symlink scene copies."
+        }
+      ],
+      "stats": {
+        "total_files": 338,
+        "total_mb": 490.3
+      },
+      "audited_at": "2026-05-26T21:29:12.329966+00:00",
+      "summary": {
+        "total": 24,
+        "by_severity": {
+          "critical": 2,
+          "blocker": 5,
+          "high": 14,
+          "medium": 3
+        },
+        "by_code": {
+          "F1_silent_abort": 1,
+          "F2_gate_fail_but_ship": 2,
+          "F2b_guard_not_run": 1,
+          "F3_council_unapplied": 13,
+          "F4_blocker_silenced": 3,
+          "F5_open_feedback": 3,
+          "F6_nested_duplication": 1
+        }
+      },
+      "health": {
+        "weighted_defect_score": 196,
+        "grade": "F"
+      }
+    }
+  ],
+  "aggregate": {
+    "by_code": {
+      "F3_council_unapplied": 79,
+      "F4_blocker_silenced": 24,
+      "F5_open_feedback": 12,
+      "F6_nested_duplication": 9,
+      "F1_silent_abort": 8,
+      "F2b_guard_not_run": 8,
+      "F2_gate_fail_but_ship": 4
+    },
+    "by_grade": {
+      "D": 1,
+      "F": 8
+    },
+    "runs_with_findings": 9
+  }
+}

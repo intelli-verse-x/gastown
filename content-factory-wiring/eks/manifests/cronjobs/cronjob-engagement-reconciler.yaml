@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: contentx-engagement-reconciler
+  namespace: content-factory
+spec:
+  schedule: "15,45 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: contentx-cron
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: reconciler
+              image: IMAGE_PLACEHOLDER
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - /opt/content-factory-wiring/services/postiz_webhook/reconciler.py
+                - --working-dir
+                - /var/lib/contentx/working_dir
+                - --max-age-hours
+                - "48"
+              envFrom:
+                - configMapRef: { name: contentx-webhook-config }
+                - secretRef:    { name: contentx-webhook-secrets }
+              resources:
+                requests: { cpu: 100m, memory: 128Mi }
+                limits:   { cpu: 500m, memory: 256Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: ["ALL"] }
+              volumeMounts:
+                - { name: working-dir, mountPath: /var/lib/contentx }
+          volumes:
+            - { name: working-dir, emptyDir: { sizeLimit: 1Gi } }

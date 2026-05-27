@@ -1,0 +1,91 @@
+{
+  "run_id": "known_good_run",
+  "tier": "indie",
+  "issued_at": "2026-05-26T23:17:27.171763+00:00",
+  "required_gates": [
+    "G1",
+    "G3",
+    "G5",
+    "G6",
+    "G10",
+    "G14",
+    "G15"
+  ],
+  "results": [
+    {
+      "gate_id": "G1",
+      "gate_name": "concept_lock",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.120671+00:00",
+      "signature": "b66db66e2ea4722fd69d2d4f5f5eaf5d757076e7c5089009f191397917ba7cb6"
+    },
+    {
+      "gate_id": "G3",
+      "gate_name": "script_multi_read",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.122708+00:00",
+      "signature": "3df918a895385145bfae6865837766b36bcaf0d1d033cf64edac9749fd1f8243"
+    },
+    {
+      "gate_id": "G5",
+      "gate_name": "audio_mix",
+      "passed": true,
+      "evaluated_at": "2026-05-26T23:17:27.122917+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G6",
+      "gate_name": "rights_manifest",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.129463+00:00",
+      "signature": "3ad45f0d15ef0b5a5ad958e4e91af8086e4b89a481f2d718a25d644de5373a6a"
+    },
+    {
+      "gate_id": "G10",
+      "gate_name": "council_enforcer",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.130094+00:00",
+      "signature": "644151a50204a8cb60117ec5bfc0da8cd988b3ba3db091295b1d017a32b01a99"
+    },
+    {
+      "gate_id": "G14",
+      "gate_name": "chain_of_custody",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.130425+00:00",
+      "signature": "6822097cb70227528f5148976033a300e8fd493f6d482ee632cb7455c9b6afe4"
+    },
+    {
+      "gate_id": "G15",
+      "gate_name": "character_identity",
+      "passed": true,
+      "tier": "indie",
+      "findings": [],
+      "run_id": "known_good_run",
+      "evaluated_at": "2026-05-26T23:17:27.171348+00:00",
+      "signature": "f1125a0df1ac934220c53458a02b5587c1f085a111cae642e48b55c6b5a5a109"
+    }
+  ],
+  "passed": true,
+  "summary": {
+    "passed_count": 7,
+    "failed_count": 0,
+    "total": 7
+  },
+  "signature": "66f255927935f8c49769b9a6e0d9b2c6d00f9ec2c38285a76983cf39a0f8870a",
+  "certificate_signature": "66f255927935f8c49769b9a6e0d9b2c6d00f9ec2c38285a76983cf39a0f8870a"
+}

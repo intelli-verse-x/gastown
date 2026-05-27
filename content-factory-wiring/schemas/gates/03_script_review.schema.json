@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/03_script_review.schema.json",
+  "title": "03_script_review (G3)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G3"
+    },
+    "gate_name": {
+      "const": "script_multi_read"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "reads": {
+          "type": "object",
+          "properties": {
+            "creative": {
+              "$ref": "_common.schema.json#/$defs/gate_result"
+            },
+            "brand": {
+              "$ref": "_common.schema.json#/$defs/gate_result"
+            },
+            "legal": {
+              "$ref": "_common.schema.json#/$defs/gate_result"
+            },
+            "cultural": {
+              "$ref": "_common.schema.json#/$defs/gate_result"
+            }
+          }
+        }
+      }
+    }
+  }
+}

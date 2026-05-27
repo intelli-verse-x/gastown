@@ -1,0 +1,10 @@
+{
+  "gate_id": "G2",
+  "gate_name": "canon_lock",
+  "passed": true,
+  "tier": "aa",
+  "findings": [],
+  "run_id": "known_good_run",
+  "evaluated_at": "2026-05-26T23:18:32.018631+00:00",
+  "signature": "b2d160c02a4ce6b60b9784136139c514d3ce44f315a39dbc1f634c81bf471415"
+}

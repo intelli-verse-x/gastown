@@ -1,0 +1,27 @@
+# KEDA scales the webhook based on request rate, with a floor of 2 replicas
+# (matches the Deployment baseline) and a ceiling of 10. Falls back to CPU-based
+# HPA if Prometheus isn't wired up yet — uncomment the CPU trigger below.
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: contentx-postiz-webhook
+  namespace: content-factory
+spec:
+  scaleTargetRef:
+    name: contentx-postiz-webhook
+  minReplicaCount: 2
+  maxReplicaCount: 10
+  pollingInterval: 30
+  cooldownPeriod: 300
+  triggers:
+    - type: cpu
+      metricType: Utilization
+      metadata:
+        value: "70"
+    # Uncomment once Prometheus is wired into the namespace:
+    # - type: prometheus
+    #   metadata:
+    #     serverAddress: http://prometheus.monitoring.svc:9090
+    #     metricName: postiz_webhook_received_total
+    #     threshold: "50"
+    #     query: sum(rate(postiz_webhook_received_total[1m]))

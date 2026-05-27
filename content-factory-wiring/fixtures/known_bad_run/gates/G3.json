@@ -1,0 +1,17 @@
+{
+  "gate_id": "G3",
+  "gate_name": "script_multi_read",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G3_R1_missing",
+      "severity": "blocker",
+      "message": "creative read (screenwriting_audit.json) missing",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.218926+00:00",
+  "signature": "f04a1184cbe84a21846010fc9c89a8d73929f257667d73d034b5fa9ee587fbdb"
+}

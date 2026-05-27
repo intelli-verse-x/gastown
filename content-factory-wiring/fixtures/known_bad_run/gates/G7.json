@@ -1,0 +1,17 @@
+{
+  "gate_id": "G7",
+  "gate_name": "accessibility",
+  "passed": true,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G7_no_video",
+      "severity": "low",
+      "message": "no final video found \u2014 accessibility checks skipped",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.254362+00:00",
+  "signature": "7d89de1465be90cdc2e2c2cccb2d53e1331b1b69f245715f5141c44949325a56"
+}

@@ -1,0 +1,52 @@
+# Override policy — who can issue `gt refinery override` and how it's counted.
+#
+# WHO OWNS THIS FILE: VP Engineering (with SRE/Ops input).
+# Every override is recorded in chain_of_custody.jsonl AND counted against the
+# rejection-rate SLO. If overrides exceed `slo_window_breach`, refinery enters
+# read-only mode and pages.
+
+[global]
+slo_window_days         = 30
+max_overrides_per_window = 5
+slo_window_breach       = 10      # at 10 overrides/30d → page on-call + freeze deploys
+
+[signing]
+# Every override requires an HMAC signature from someone in this group AND
+# their name must appear in policies/director_assignments.toml/override_signers.
+required_signers         = ["vp_eng", "head_of_content", "ciso"]
+require_two_signers_above = "aa"   # tier > aa needs two signers
+
+[reasons]
+# Free-text reasons must match one of these patterns or the override is rejected.
+accepted_patterns = [
+    "incident PAGER-\\d{4}-\\d{4}",     # e.g. PAGER-2026-0123
+    "ticket [A-Z]+-\\d+",                # e.g. FOO-123, JIRA-1234
+    "legal:[a-z_]+",                     # e.g. legal:emergency_takedown
+    "exec_request:[a-z_]+",              # e.g. exec_request:earnings_window
+]
+# Anything else → bead created with `policy-violation` label and ops pages.
+
+[killswitch]
+# Three escape hatches — see DEPLOY_RUNBOOK.md
+[killswitch.per_run_override]
+allowed = true
+logged  = true
+counts_against_slo = true
+
+[killswitch.tier_downgrade]
+max_duration_minutes = 60       # 1h max temporary downgrade
+allowed_downgrades   = [["aaa","aa"], ["aa","indie"], ["live_aaa","aaa"]]
+counts_against_slo   = false    # ops decision, not quality decision
+
+[killswitch.disable_all_gates]
+max_duration_minutes = 15       # hard cap
+auto_reenable        = true
+required_signers     = 2
+counts_against_slo   = true     # 1 use ≈ 5 individual overrides
+
+# Escalation matrix — what happens when an override is requested
+[escalation]
+indie    = { auto_approve_within = "20m", paged_if_exceeded = false }
+aa       = { auto_approve_within = "0m",  paged_if_exceeded = true,  requires = ["vp_eng OR head_of_content"] }
+aaa      = { auto_approve_within = "0m",  paged_if_exceeded = true,  requires = ["vp_eng AND head_of_content"] }
+live_aaa = { auto_approve_within = "0m",  paged_if_exceeded = true,  requires = ["vp_eng AND head_of_content AND ciso"] }

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/14_chain_of_custody.schema.json",
+  "title": "14_chain_of_custody (G14)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G14"
+    },
+    "gate_name": {
+      "const": "chain_of_custody"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "chain_length": {
+          "type": "integer"
+        },
+        "merkle_root": {
+          "type": "string"
+        },
+        "retention_years": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

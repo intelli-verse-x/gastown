@@ -1,0 +1,118 @@
+# .gastown/witness/content-factory.yaml
+# Witness watches every running content-factory pipeline as a polecat.
+# Detects: silent aborts, stuck phases, runaway runs, gate violations.
+
+name: contentx-witness
+patrol_interval_seconds: 30
+heartbeat_timeout_minutes: 5
+
+# Discover live runs from working_dir
+discovery:
+  - kind: filesystem
+    root: "/var/lib/content-factory/working_dir"
+    glob: "*/*"                       # pipeline_kind/run_id
+    state_file: "checkpoint.json"
+
+  - kind: s3
+    bucket: "contentx-runs"
+    prefix: "live/"
+    state_key: "checkpoint.json"
+
+# What to look for
+rules:
+  # F1 — silent abort
+  - id: silent_abort
+    when: "checkpoint.status in ['aborted', 'failed']"
+    age_minutes_max: null              # immediate
+    action:
+      - emit_alert: "alerts/silent_abort.json"
+      - escalate:
+          severity: CRITICAL
+          route: deacon
+          template: "run_silent_abort"
+      - nudge:
+          target: "contentx-{pipeline_kind}/resume"
+          message: "run {run_id} aborted at {checkpoint.updated_at} — please resume"
+
+  # Stuck phase (no checkpoint update in 30min)
+  - id: stuck_phase
+    when: "checkpoint.status == 'in_progress' AND age_minutes(checkpoint.updated_at) > 30"
+    action:
+      - escalate:
+          severity: HIGH
+          route: deacon
+      - nudge:
+          target: "contentx-{pipeline_kind}/{run_id}-polecat"
+          message: "phase {checkpoint.current_phase} stuck for >30min"
+
+  # Runaway (running >4h on a short)
+  - id: runaway_short
+    when: "pipeline_kind in ['viral_shorts', 'short_video'] AND age_minutes(checkpoint.created_at) > 240"
+    action:
+      - escalate:
+          severity: HIGH
+          route: deacon
+          template: "runaway"
+
+  # Graph state corruption (run_id == 'unknown')
+  - id: graph_corruption
+    when: "graph_state.run_id == 'unknown' OR graph_state.current_phase == 'not_started'"
+    when_also: "checkpoint.status != 'not_started'"
+    action:
+      - emit_alert: "alerts/graph_corruption.json"
+      - escalate:
+          severity: CRITICAL
+          route: mayor
+
+  # F2 — passed=false gate but publish artifacts exist
+  - id: failed_gate_but_ship
+    when: "quality.*.passed == false AND exists('publish_metadata.json')"
+    action:
+      - emit_alert: "alerts/gate_fail_but_ship.json"
+      - block_publish: true            # tells Refinery to reject
+      - escalate:
+          severity: BLOCKER
+          route: mayor
+
+  # F3 — council audits unapplied
+  - id: council_unapplied
+    when: "council_audits.*.final_verdict in ['FAIL','PASS_WITH_NOTES'] AND council_audits.*.redo_count == 0"
+    when_also: "len(council_audits.*.directives) >= 3"
+    cooldown_hours: 1                  # don't spam — once per hour per run
+    action:
+      - dispatch_polecat:
+          type: "contentx-redo"
+          inputs:
+            run_id: "{run_id}"
+            audit_file: "{matched_file}"
+            max_directives: "{council_audits[matched].max_redos}"
+
+# Recovery polecat templates
+polecat_templates:
+  - id: contentx-shorts/resume
+    image: "ghcr.io/contentx/pipeline-runner:latest"
+    cmd: "python -m pipelines.runner --run-id={run_id} --resume"
+    timeout_minutes: 60
+
+  - id: contentx-redo
+    image: "ghcr.io/contentx/pipeline-runner:latest"
+    cmd: "python -m pipelines.redo --run-id={run_id} --audit={audit_file} --max-redos={max_directives}"
+    timeout_minutes: 30
+
+  - id: contentx-cleanup
+    image: "ghcr.io/contentx/cleanup:latest"
+    cmd: "python -m tools.gastown_wiring.run_id_repairer reports/audit_{run_id}.json --apply-f6 --run-path={run_path}"
+    timeout_minutes: 10
+
+# Metrics
+metrics_export:
+  prometheus_port: 9119
+  fields:
+    - "runs_total"
+    - "runs_by_status"
+    - "runs_aborted_silently"
+    - "runs_with_failed_gate_shipped"
+    - "council_directives_ignored"
+    - "blocker_gaps_silenced"
+    - "mean_time_to_first_publish_minutes"
+    - "mean_time_to_gate_clear_minutes"

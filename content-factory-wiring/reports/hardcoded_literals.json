@@ -1,0 +1,2842 @@
+{
+  "root": "/Users/devashishbadlani/dev/content-factory",
+  "total_hits": 402,
+  "summary_by_category": {
+    "visual_style": {
+      "hits": 81,
+      "files": 23
+    },
+    "aspect_ratio": {
+      "hits": 137,
+      "files": 67
+    },
+    "duration_seconds": {
+      "hits": 103,
+      "files": 45
+    },
+    "mood": {
+      "hits": 72,
+      "files": 22
+    },
+    "narrator_style": {
+      "hits": 9,
+      "files": 4
+    }
+  },
+  "hits": [
+    {
+      "file": "monetize.py",
+      "line": 132,
+      "snippet": "\"visual_style\": \"bright, colorful, kid-friendly with animated characters and step-by-step visuals\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetize.py",
+      "line": 252,
+      "snippet": "\"visual_style\": \"clean, scientific, modern health aesthetic with data overlays\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetize.py",
+      "line": 370,
+      "snippet": "\"visual_style\": \"tech-forward, dark mode IDE aesthetic, code walkthroughs with neon accents\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetize.py",
+      "line": 488,
+      "snippet": "\"visual_style\": \"gaming aesthetic, neon accents, IDE screencasts with game previews\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetize.py",
+      "line": 606,
+      "snippet": "\"visual_style\": \"premium, elegant, dark luxury aesthetic with gold accents\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 173,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 328,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 635,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 1090,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 1245,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 1552,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 2007,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 2162,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 2469,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 2924,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 3079,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 3388,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 4000,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 4309,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 4921,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 5230,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 5842,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "quizverse_7day_plan.json",
+      "line": 6151,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "regenerate_additional_assets.py",
+      "line": 96,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "monetization_state.json",
+      "line": 71,
+      "snippet": "\"visual_style\": \"bright, colorful, kid-friendly with animated characters and step-by-step visuals\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetization_state.json",
+      "line": 461,
+      "snippet": "\"visual_style\": \"clean, scientific, modern health aesthetic with data overlays\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetization_state.json",
+      "line": 848,
+      "snippet": "\"visual_style\": \"tech-forward, dark mode IDE aesthetic, code walkthroughs with neon accents\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetization_state.json",
+      "line": 1236,
+      "snippet": "\"visual_style\": \"gaming aesthetic, neon accents, IDE screencasts with game previews\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "monetization_state.json",
+      "line": 1614,
+      "snippet": "\"visual_style\": \"premium, elegant, dark luxury aesthetic with gold accents\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "regenerate_all_sprites.py",
+      "line": 164,
+      "snippet": "\"aspect_ratio\": \"3:2\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "seed_channel_canvases.py",
+      "line": 67,
+      "snippet": "\"visual_style\": \"Vibrant high-contrast colors, subtle sci-fi glow, everyday objects made magical through lighting\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "tools/implement_extended_lyrics.py",
+      "line": 96,
+      "snippet": "aspect_ratio=\"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generate_videos_from_frames.py",
+      "line": 102,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generate_videos_from_frames.py",
+      "line": 103,
+      "snippet": "duration=8,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "examples/kieai_poc.py",
+      "line": 27,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/idea2song.yaml",
+      "line": 30,
+      "snippet": "aspect_ratio: \"1:1\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/idea2adbanners.yaml",
+      "line": 18,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/idea2ad.yaml",
+      "line": 16,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/dispatch_all_selfhosted.py",
+      "line": 58,
+      "snippet": "\"song\": {**COMMON, \"idea\": \"Upbeat electronic song about open-source AI\", \"genre\": \"electronic\", \"mood\": \"energetic\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/test_api_smoke.py",
+      "line": 138,
+      "snippet": "\"visual_style\": \"Playful\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/test_api_smoke.py",
+      "line": 162,
+      "snippet": "\"visual_style\": \"Cartoon\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/test_api_smoke.py",
+      "line": 250,
+      "snippet": "\"visual_style\": \"Playful\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/run_smoke_test.py",
+      "line": 23,
+      "snippet": "(\"music_video\", \"/pipelines/music_video\", {\"song_title\": \"Summer Road\", \"lyrics\": \"Verse: Driving down the coast.\\nChorus: Feel the wind.\", \"genre\": \"pop\", \"mood\": \"upbeat\", \"generate_storyboard_image",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_quizverse_canvas.py",
+      "line": 51,
+      "snippet": "\"mood\": \"energetic, playful, competitive, rewarding, viral\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_quizverse_canvas.py",
+      "line": 49,
+      "snippet": "\"visual_style\": \"3D cartoon with neon accents, bold gradients, game-UI overlays\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 50,
+      "snippet": "\"mood\": \"Energetic, fun, nostalgic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 195,
+      "snippet": "\"mood\": \"Cheerful, addictive, lighthearted\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 328,
+      "snippet": "\"mood\": \"Playful, satisfying, brain-tickling\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 461,
+      "snippet": "\"mood\": \"Curious, competitive, rewarding\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 607,
+      "snippet": "\"mood\": \"Intense, thrilling, futuristic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 739,
+      "snippet": "\"mood\": \"Intense, strategic, last-man-standing adrenaline\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 872,
+      "snippet": "\"mood\": \"Mesmerizing, satisfying, visually addictive\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1004,
+      "snippet": "\"mood\": \"Athletic, fast-paced, urban cool\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1137,
+      "snippet": "\"mood\": \"Satisfying, colorful, zen-like with bursts of action\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1269,
+      "snippet": "\"mood\": \"Futuristic, intense, hacker aesthetic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 49,
+      "snippet": "\"visual_style\": \"Retro-neon arcade with vibrant pixel accents\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 194,
+      "snippet": "\"visual_style\": \"Bright cartoon with parallax scrolling backgrounds\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 327,
+      "snippet": "\"visual_style\": \"Bright, candy-colored geometric shapes with smooth animations\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 460,
+      "snippet": "\"visual_style\": \"Clean, modern quiz UI with blurred/partial logo reveals\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 606,
+      "snippet": "\"visual_style\": \"Dark night sky, neon-lit valleys, glowing jet trails\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 738,
+      "snippet": "\"visual_style\": \"Dark, gritty battleground with explosive effects\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 871,
+      "snippet": "\"visual_style\": \"Neon glow on dark backgrounds, particle effects, vibrant trails\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1003,
+      "snippet": "\"visual_style\": \"Urban rooftops, sunset skylines, dynamic camera angles\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1136,
+      "snippet": "\"visual_style\": \"Colorful 3D towers, rotating platforms, smooth ball physics\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_all_canvases.py",
+      "line": 1268,
+      "snippet": "\"visual_style\": \"Cyberpunk terminal corridors, holographic obstacles, neon green trails\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse_7day_blitz.py",
+      "line": 342,
+      "snippet": "\"visual_style\": \"professional educational, clean, modern, vibrant\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/selfhosted_pipeline_runner.py",
+      "line": 85,
+      "snippet": "\"mood\": \"uplifting\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/selfhosted_pipeline_runner.py",
+      "line": 302,
+      "snippet": "\"mood\": \"energetic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/rerun_failed.py",
+      "line": 16,
+      "snippet": "(\"music_video\", \"/pipelines/music_video\", {\"song_title\": \"Summer Road\", \"lyrics\": \"Driving down the coast. Feel the wind.\", \"genre\": \"pop\", \"mood\": \"upbeat\", \"generate_storyboard_images\": False}),",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/verify_fixes.py",
+      "line": 18,
+      "snippet": "(\"music_video\", \"/pipelines/music_video\", {\"song_title\": \"Road\", \"lyrics\": \"Driving. Wind.\", \"genre\": \"pop\", \"mood\": \"upbeat\", \"generate_storyboard_images\": False}, 300),",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 71,
+      "snippet": "\"mood\": \"Playful, colorful, wonder-filled\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 190,
+      "snippet": "\"mood\": \"Scientific, futuristic, empowering\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 308,
+      "snippet": "\"mood\": \"Futuristic, dynamic, cutting-edge\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 426,
+      "snippet": "\"mood\": \"Electric, intense, immersive\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 544,
+      "snippet": "\"mood\": \"Opulent, exclusive, aspirational\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 69,
+      "snippet": "\"visual_style\": \"Vibrant high-contrast animated, subtle sci-fi glow, everyday objects made magical\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 188,
+      "snippet": "\"visual_style\": \"Clean wellness cinematic with data overlays and molecular aesthetics\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 306,
+      "snippet": "\"visual_style\": \"Modern tech cinematic with holographic accents and data visualizations\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 424,
+      "snippet": "\"visual_style\": \"Gaming neon cinematic with glitch effects and RGB aesthetics\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/seed_channel_canvases.py",
+      "line": 542,
+      "snippet": "\"visual_style\": \"Luxury premium cinematic with gold accents and dramatic lighting\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "data/benchmark_tasks.json",
+      "line": 49,
+      "snippet": "\"metadata\": {\"difficulty\": \"easy\", \"target_length_sec\": 15, \"aspect_ratio\": \"9:16\"}",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/council/prompts.py",
+      "line": 268,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/council/prompts.py",
+      "line": 297,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/council/prompts.py",
+      "line": 325,
+      "snippet": "\"aspect_ratio\": \"2:3\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/director/tools/replicate.py",
+      "line": 17,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/director/tools/replicate.py",
+      "line": 34,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/director/tools/videodb_tool.py",
+      "line": 373,
+      "snippet": "def generate_image(self, prompt, aspect_ratio=\"16:9\"):",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/director/agents/character_generator.py",
+      "line": 197,
+      "snippet": "aspect_ratio=\"1:1\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "services/director/agents/editing/agent.py",
+      "line": 700,
+      "snippet": "clip1 = Clip(asset=video1, duration=10)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/conftest.py",
+      "line": 104,
+      "snippet": "duration=4.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/conftest.py",
+      "line": 110,
+      "snippet": "transition_out=Transition(kind=TransitionType.FADE, duration=0.5),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/conftest.py",
+      "line": 116,
+      "snippet": "transition_in=Transition(kind=TransitionType.WHIP_PAN, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/conftest.py",
+      "line": 136,
+      "snippet": "duration=2.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 149,
+      "snippet": "transition_in=Transition(kind=TransitionType.FADE, duration=0.5),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 164,
+      "snippet": "transition_in=Transition(kind=TransitionType.FADE, duration=0.5),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 264,
+      "snippet": "transition_in=Transition(kind=TransitionType.FADE, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 265,
+      "snippet": "transition_out=Transition(kind=TransitionType.FADEBLACK, duration=0.6),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 284,
+      "snippet": "transition_in=Transition(kind=TransitionType.FADE, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 285,
+      "snippet": "transition_out=Transition(kind=TransitionType.FADE, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 302,
+      "snippet": "transition_in=Transition(kind=TransitionType.HARD_CUT, duration=0.0),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 303,
+      "snippet": "transition_out=Transition(kind=TransitionType.NONE, duration=0.0),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 319,
+      "snippet": "transition_in=Transition(kind=TransitionType.WHIP_PAN, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 320,
+      "snippet": "transition_out=Transition(kind=TransitionType.GLITCH, duration=0.4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 419,
+      "snippet": "duration=3.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 434,
+      "snippet": "q = QuizCard(question=\"Open ended?\", options=[], start=0.0, duration=2.0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 471,
+      "snippet": "duration=3.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 482,
+      "snippet": "ec = EndCard(headline=\"Hello\", cta_text=\"Tap\", duration=2.0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 488,
+      "snippet": "ec = EndCard(headline=\"Hi\", duration=1.0, background=\"#000000\")",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 494,
+      "snippet": "ec = EndCard(headline=\"Hi\", duration=10.0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_compositor.py",
+      "line": 734,
+      "snippet": "duration=12.5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 194,
+      "snippet": "EndCard(headline=\"x\", duration_seconds=2)  # type: ignore[call-arg]",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 333,
+      "snippet": "Clip(src=\"/x.mp4\", duration_seconds=3.0)  # type: ignore[call-arg]",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 431,
+      "snippet": "duration_seconds=12.5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 151,
+      "snippet": "duration=3.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 162,
+      "snippet": "QuizCard(question=\"x\", start=0.0, duration=0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 181,
+      "snippet": "duration=5.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 190,
+      "snippet": "EndCard(headline=\"x\", duration=0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 249,
+      "snippet": "t = Transition(kind=TransitionType.WHIP_PAN, duration=0.3, params={\"angle\": 45})",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 256,
+      "snippet": "Transition(duration=5.0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 264,
+      "snippet": "t = Transition(duration=0.0)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 314,
+      "snippet": "transition_in=Transition(kind=TransitionType.FADE, duration=0.5),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "services/hyperframes/tests/test_models.py",
+      "line": 315,
+      "snippet": "transition_out=Transition(kind=TransitionType.WHIP_PAN, duration=0.3),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "agno/workflows/final_cut_review.py",
+      "line": 114,
+      "snippet": "aspect_ratio=\"1.91:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agno/workflows/final_cut_review.py",
+      "line": 143,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agno/workflows/final_cut_review.py",
+      "line": 154,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agno/workflows/final_cut_review.py",
+      "line": 164,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agno/consistency/prompt_injector.py",
+      "line": 162,
+      "snippet": "visual_style=\"cinematic photorealistic\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "api/core/generators.py",
+      "line": 104,
+      "snippet": "\"visual_style\": \"Description of visual/artistic style\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "api/core/generators.py",
+      "line": 157,
+      "snippet": "\"visual_style\": \"Art style description\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/automation.py",
+      "line": 2540,
+      "snippet": "\"visual_style\": \"Vibrant high-contrast colors, subtle sci-fi glow, everyday objects made magical through lighting\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 469,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 516,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 565,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 595,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 652,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/ai_studio.py",
+      "line": 653,
+      "snippet": "duration=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "api/routes/pipelines.py",
+      "line": 2621,
+      "snippet": "\"song\": {\"idea\": \"Summer love anthem\", \"genre\": \"pop\", \"mood\": \"upbeat\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/PIL/GifImagePlugin.py",
+      "line": 1178,
+      "snippet": "e.g. ``getdata(im_frame, duration=1000)``",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/pydub/audio_segment.py",
+      "line": 462,
+      "snippet": "def silent(cls, duration=1000, frame_rate=11025):",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/pydub/generators.py",
+      "line": 29,
+      "snippet": "def to_audio_segment(self, duration=1000.0, volume=0.0):",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/imageio/plugins/_swf.py",
+      "line": 750,
+      "snippet": "def write_swf(filename, images, duration=0.1, repeat=True):  # pragma: no cover",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/imageio/plugins/pillowmulti.py",
+      "line": 255,
+      "snippet": "def getGraphicsControlExt(self, duration=0.1, dispose=2):",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "venv-rembg/lib/python3.14/site-packages/sympy/plotting/backends/base_backend.py",
+      "line": 207,
+      "snippet": "title=None, xlabel=None, ylabel=None, zlabel=None, aspect_ratio='auto',",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/cricket_asset_pipeline/cricketx_dynamic_generate.py",
+      "line": 209,
+      "snippet": "async def _call_image(self, prompt, aspect=\"16:9\", retries=3):",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_api_smoke.py",
+      "line": 138,
+      "snippet": "\"visual_style\": \"Playful\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_api_smoke.py",
+      "line": 162,
+      "snippet": "\"visual_style\": \"Cartoon\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_api_smoke.py",
+      "line": 250,
+      "snippet": "\"visual_style\": \"Playful\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/comprehensive_pipeline_validator.py",
+      "line": 416,
+      "snippet": "\"mood\": \"adventurous\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/comprehensive_pipeline_validator.py",
+      "line": 414,
+      "snippet": "\"visual_style\": \"Epic fantasy\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/comprehensive_pipeline_validator.py",
+      "line": 546,
+      "snippet": "\"visual_style\": \"modern and clean\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/run_pipeline_smoke.py",
+      "line": 210,
+      "snippet": "\"params\": {\"song_title\": \"Digital Dreams\", \"lyrics\": \"Dancing in the digital light\\nPixels painting through the night\", \"genre\": \"electronic\", \"mood\": \"upbeat\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_pipelines_workflow.py",
+      "line": 301,
+      "snippet": "mood=\"upbeat\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_pipelines_workflow.py",
+      "line": 51,
+      "snippet": "clip = ColorClip(size=(64, 64), color=(0, 0, 0), duration=0.2)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_gemini_key.py",
+      "line": 40,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_character_2d_integration.py",
+      "line": 69,
+      "snippet": "visual_style=\"chibi cel-shaded\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_character_2d_integration.py",
+      "line": 266,
+      "snippet": "game_ctx = GameContext(game_id=\"crystal-quest\", name=\"Crystal Quest\", visual_style=\"chibi cel-shaded\")",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/testing/test_character_2d_integration.py",
+      "line": 403,
+      "snippet": "GameContext(game_id=\"crystal-quest\", name=\"Crystal Quest\", visual_style=\"chibi cel-shaded\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/creator_economy/generator.py",
+      "line": 265,
+      "snippet": "url = await self._generate_image(prompt, key, aspect_ratio=\"3:2\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/game_asset_pipeline/generator.py",
+      "line": 290,
+      "snippet": "url = await self._generate_image(prompt, key, aspect_ratio=\"4:1\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/game_asset_pipeline/generator.py",
+      "line": 308,
+      "snippet": "url = await self._generate_image(prompt, key, aspect_ratio=\"3:2\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/game_asset_pipeline/generator.py",
+      "line": 360,
+      "snippet": "url = await self._generate_image(sheet_prompt, sheet_key, aspect_ratio=\"8:1\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/runs/run_learning_series_space.py",
+      "line": 48,
+      "snippet": "visual_style=\"clean, cinematic educational visuals with clear diagrams and friendly presenters\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/generator.py",
+      "line": 449,
+      "snippet": "url = await self._generate_image(prompt, key, aspect_ratio=\"3:2\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/generator.py",
+      "line": 512,
+      "snippet": "url = await self._generate_image(sheet_prompt, sprite_key, aspect_ratio=\"8:1\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/generator.py",
+      "line": 551,
+      "snippet": "url = await self._generate_image(sheet_prompt, sprite_key, aspect_ratio=\"8:1\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 190,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 209,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 227,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 253,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 277,
+      "snippet": "aspect_ratio=\"16:9\", duration=dur,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 303,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 319,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 335,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 351,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 367,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 382,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 397,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 412,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 190,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 209,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 227,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/quizverse/video_generator.py",
+      "line": 253,
+      "snippet": "aspect_ratio=\"16:9\", duration=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/fix_character_views.py",
+      "line": 67,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/generate_character_views.py",
+      "line": 76,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/complete_s3_characters_piapi.py",
+      "line": 99,
+      "snippet": "aspect_ratio=\"1:1\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/generate_character_views_with_reference.py",
+      "line": 86,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/fix_all_character_views.py",
+      "line": 174,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "scripts/maintenance/s3_characters/regenerate_character_sheets_from_reference.py",
+      "line": 272,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/quiz_shorts.yaml",
+      "line": 109,
+      "snippet": "aspect_ratio: \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/event_recap.yaml",
+      "line": 59,
+      "snippet": "aspect_ratio: \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/game_sound.yaml",
+      "line": 43,
+      "snippet": "#         \"mood\": \"adventurous\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/concept_to_mindmap.yaml",
+      "line": 27,
+      "snippet": "aspect_ratio: \"1:1\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/video_shorts.yaml",
+      "line": 130,
+      "snippet": "aspect_ratio: \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/concept_to_curriculum.yaml",
+      "line": 50,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/long_form_video.yaml",
+      "line": 67,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/podcast2video.yaml",
+      "line": 32,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/podcast2video.yaml",
+      "line": 31,
+      "snippet": "duration_seconds: 8",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/event_promo.yaml",
+      "line": 50,
+      "snippet": "aspect_ratio: \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/viral_lesson_short.yaml",
+      "line": 18,
+      "snippet": "aspect_ratio: \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/ad_banners.yaml",
+      "line": 21,
+      "snippet": "aspect_ratio: \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/pipelines/song.yaml",
+      "line": 31,
+      "snippet": "aspect_ratio: \"1:1\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "configs/templates/game_context_template.json",
+      "line": 9,
+      "snippet": "\"visual_style\": \"2D cartoon with bright colors and clean outlines\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "configs/templates/brand_entity_template.json",
+      "line": 24,
+      "snippet": "\"visual_style\": \"2D cartoon with bright colors and clean outlines\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "examples/series/main_idea2podcastseries.py",
+      "line": 29,
+      "snippet": "visual_style = \"futuristic podcast studio with neon accents, sleek and professional\"",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "examples/series/main_idea2learningseries.py",
+      "line": 66,
+      "snippet": "visual_style=\"modern educational animation style, vibrant purple and blue colors, friendly robot character Autocurio teaching, QuizVerse watermark centered with low opacity\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "examples/music/main_idea2lyrics.py",
+      "line": 30,
+      "snippet": "mood=\"Hopeful\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "examples/music/main_song2musicvideo.py",
+      "line": 43,
+      "snippet": "mood=\"Energetic, Euphoric\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/narration_style.py",
+      "line": 15,
+      "snippet": "Whitelist source: every distinct ``narrator_style=\"...\"`` literal currently",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 353,
+      "snippet": "\"primary_focal_length\": 40, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 362,
+      "snippet": "\"primary_focal_length\": 35, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 371,
+      "snippet": "\"primary_focal_length\": 24, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 380,
+      "snippet": "\"primary_focal_length\": 32, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 389,
+      "snippet": "\"primary_focal_length\": 40, \"aspect_ratio\": \"1.85:1\", \"film_stock\": \"Eastman 5254\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 398,
+      "snippet": "\"primary_focal_length\": 50, \"aspect_ratio\": \"1.43:1\", \"film_stock\": \"IMAX 500T\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 407,
+      "snippet": "\"primary_focal_length\": 40, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 416,
+      "snippet": "\"primary_focal_length\": 50, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 425,
+      "snippet": "\"primary_focal_length\": 27, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"Kodak Vision 500T 5279\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 434,
+      "snippet": "\"primary_focal_length\": 50, \"aspect_ratio\": \"1.85:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 443,
+      "snippet": "\"primary_focal_length\": 40, \"aspect_ratio\": \"1.85:1\", \"film_stock\": \"Kodak Double-X 5222\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 452,
+      "snippet": "\"primary_focal_length\": 35, \"aspect_ratio\": \"2.39:1\", \"film_stock\": \"\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/cinema_prompt.py",
+      "line": 461,
+      "snippet": "\"primary_focal_length\": 27, \"aspect_ratio\": \"1.85:1\", \"film_stock\": \"Kodak Vision3 500T 5219\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/voiceover_generator.py",
+      "line": 500,
+      "snippet": "duration = 2.0  # Default duration estimate",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/reference_image_generator.py",
+      "line": 21,
+      "snippet": "aspect_ratio=\"9:16\",   # shorts",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 516,
+      "snippet": "brand = _Brand(mood=\"energetic\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 959,
+      "snippet": "# mood=\"energetic\" to be valid. If we ever drop it from MOODS we",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1185,
+      "snippet": "brand = _Brand(mood=\"serene\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1215,
+      "snippet": "mood=\"not-a-real-mood\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1230,
+      "snippet": "mood=\"not-a-real-mood\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 528,
+      "snippet": "mood, color = infer_mood(brand={\"mood\": \"epic\"})",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 533,
+      "snippet": "brand = {\"mood\": \"cheerful\", \"color_tone\": \"sepia\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 539,
+      "snippet": "brand = {\"mood\": \"cheerful\", \"color_tone\": \"not_a_real_tone\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 546,
+      "snippet": "brand = {\"mood\": \"cheerful\", \"palette\": \"monochrome\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 552,
+      "snippet": "brand = {\"mood\": \"not_a_real_mood\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 559,
+      "snippet": "brand = {\"mood\": \"cheerful\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 663,
+      "snippet": "brand={\"mood\": \"cinematic\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 715,
+      "snippet": "d = infer_mood(brand={\"mood\": \"epic\"}, return_decision=True)",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1201,
+      "snippet": "brand = {\"mood\": \"serene\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 365,
+      "snippet": "brand = _Brand(visual_style=\"corporate\")",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 372,
+      "snippet": "brand = _Brand(visual_style=\"iridescent neo-baroque\")",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 478,
+      "snippet": "brand=_Brand(visual_style=\"corporate\"), return_decision=True",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1145,
+      "snippet": "brand = _Brand(visual_style=\"modern\")",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 338,
+      "snippet": "({\"visual_style\": \"playful kids show\"}, \"playful\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 339,
+      "snippet": "({\"visual_style\": \"corporate B2B SaaS\"}, \"corporate\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 340,
+      "snippet": "({\"visual_style\": \"academic research\"}, \"academic\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 341,
+      "snippet": "({\"visual_style\": \"modern minimal\"}, \"modern\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 354,
+      "snippet": "({\"visual_style\": \"kids program\"}, \"playful\"),",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_derivation_primitives.py",
+      "line": 1163,
+      "snippet": "brand = {\"visual_style\": \"modern\"}",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 51,
+      "snippet": "obs = PhaseObservation(phase=\"p\", duration_seconds=1.5, status=\"ok\")",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 71,
+      "snippet": "r.add(PhaseObservation(phase=\"a\", duration_seconds=2.0, status=\"ok\", cost_usd=0.10))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 72,
+      "snippet": "r.add(PhaseObservation(phase=\"b\", duration_seconds=5.0, status=\"warn\", cost_usd=0.20))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 73,
+      "snippet": "r.add(PhaseObservation(phase=\"c\", duration_seconds=1.0, status=\"over_budget\", cost_usd=0.05))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 82,
+      "snippet": "r.add(PhaseObservation(phase=\"a\", duration_seconds=2.555, status=\"ok\", cost_usd=0.123456))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 94,
+      "snippet": "r.add(PhaseObservation(phase=\"ok_p\", duration_seconds=1, status=\"ok\"))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 95,
+      "snippet": "r.add(PhaseObservation(phase=\"warn_p\", duration_seconds=1, status=\"warn\"))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 96,
+      "snippet": "r.add(PhaseObservation(phase=\"over_p\", duration_seconds=1, status=\"over_budget\"))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 97,
+      "snippet": "r.add(PhaseObservation(phase=\"kill_p\", duration_seconds=1, status=\"killed\"))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "utils/pipeline/tests/test_phase_budget.py",
+      "line": 98,
+      "snippet": "r.add(PhaseObservation(phase=\"err_p\", duration_seconds=1, status=\"error\", error=\"boom\"))",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/weekly.py",
+      "line": 749,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/weekly.py",
+      "line": 791,
+      "snippet": "intro_outro.generate_intro(title=series_title, output_path=Path(intro_path), duration_seconds=5, style=\"quick\"),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/weekly.py",
+      "line": 792,
+      "snippet": "intro_outro.generate_outro(output_path=Path(outro_path), duration_seconds=4),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/weekly.py",
+      "line": 832,
+      "snippet": "duration_seconds=15,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/podcast.py",
+      "line": 642,
+      "snippet": "duration_seconds=20,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/podcast.py",
+      "line": 755,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/guided_learning.py",
+      "line": 733,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/short_movie_series.py",
+      "line": 827,
+      "snippet": "duration_seconds=6,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/short_movie_series.py",
+      "line": 831,
+      "snippet": "duration_seconds=5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/short_movie_series.py",
+      "line": 1188,
+      "snippet": "duration_seconds=15,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/tv.py",
+      "line": 727,
+      "snippet": "intro_outro.generate_intro(title=script.title, output_path=Path(intro_path), duration_seconds=8),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/tv.py",
+      "line": 728,
+      "snippet": "intro_outro.generate_outro(output_path=Path(outro_path), duration_seconds=6),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/tv.py",
+      "line": 799,
+      "snippet": "duration_seconds=20,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 2482,
+      "snippet": "duration_seconds=6,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 2485,
+      "snippet": "intro_outro.generate_outro(output_path=Path(outro_path), duration_seconds=5),",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 2753,
+      "snippet": "duration_seconds=20,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 1929,
+      "snippet": "visual_style = \"modern\"  # Default",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 1933,
+      "snippet": "visual_style = \"playful\"",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 1935,
+      "snippet": "visual_style = \"corporate\"",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/series/learning.py",
+      "line": 1937,
+      "snippet": "visual_style = \"academic\"",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/ads/banners.py",
+      "line": 1249,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/ads/video.py",
+      "line": 1056,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/music/song_to_video.py",
+      "line": 810,
+      "snippet": "duration_seconds=240,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/music/video.py",
+      "line": 751,
+      "snippet": "lyrics_draft = LyricsDraft(title=idea[:30], lyrics=lyrics_text, genre=style, mood=\"dynamic\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/_flashcard_video.py",
+      "line": 125,
+      "snippet": "aspect=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/_flashcard_video.py",
+      "line": 135,
+      "snippet": "aspect=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/_flashcard_video.py",
+      "line": 145,
+      "snippet": "aspect=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/_flashcard_video.py",
+      "line": 155,
+      "snippet": "aspect=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/_flashcard_video.py",
+      "line": 165,
+      "snippet": "aspect=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/playable_flashcard_deck.py",
+      "line": 1166,
+      "snippet": "duration_seconds=1.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/recap.py",
+      "line": 226,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/learning/recap.py",
+      "line": 281,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/catalog/enricher.py",
+      "line": 636,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/catalog/enricher.py",
+      "line": 685,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/catalog/enricher.py",
+      "line": 686,
+      "snippet": "duration=6,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/animation/character_3d.py",
+      "line": 585,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/animation/character_2d.py",
+      "line": 895,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/content/blog.py",
+      "line": 524,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/content/blog.py",
+      "line": 555,
+      "snippet": "img_output = await image_gen.generate_single_image(prompt=prompt, aspect_ratio=\"16:9\")",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 449,
+      "snippet": "mood = \"energetic\"",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 451,
+      "snippet": "mood = \"uplifting\"",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 453,
+      "snippet": "mood = \"calm\"",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 1245,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 141,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 503,
+      "snippet": "duration_seconds=30,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/shorts.py",
+      "line": 1756,
+      "snippet": "duration_seconds=60,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 944,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 954,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 964,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 1760,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 1781,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 1802,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 1823,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/social/quality.py",
+      "line": 1840,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/standard.py",
+      "line": 586,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/standard.py",
+      "line": 627,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/standard.py",
+      "line": 1631,
+      "snippet": "opening_clip = credits_generator.generate_opening_credits(Path(opening_path), duration_seconds=8)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/standard.py",
+      "line": 1632,
+      "snippet": "closing_clip = credits_generator.generate_closing_credits(Path(closing_path), duration_seconds=12)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/novel.py",
+      "line": 897,
+      "snippet": "duration_seconds=0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/short_video.py",
+      "line": 1144,
+      "snippet": "opening_clip = credits_generator.generate_opening_credits(Path(opening_path), duration_seconds=5)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/short_video.py",
+      "line": 1145,
+      "snippet": "closing_clip = credits_generator.generate_closing_credits(Path(closing_path), duration_seconds=8)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/kids.py",
+      "line": 451,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/kids.py",
+      "line": 492,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/kids.py",
+      "line": 1310,
+      "snippet": "opening_clip = credits_generator.generate_opening_credits(Path(opening_path), duration_seconds=5)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/movies/kids.py",
+      "line": 1311,
+      "snippet": "closing_clip = credits_generator.generate_closing_credits(Path(closing_path), duration_seconds=8)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/story.py",
+      "line": 240,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/story.py",
+      "line": 254,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 70,
+      "snippet": "\"narrator_style\": \"teacher\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 76,
+      "snippet": "\"narrator_style\": \"professional\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 82,
+      "snippet": "\"narrator_style\": \"storytelling\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 88,
+      "snippet": "\"narrator_style\": \"conversational\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 94,
+      "snippet": "\"narrator_style\": \"helpful\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/interactive/avatar.py",
+      "line": 100,
+      "snippet": "\"narrator_style\": \"conversational\",",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/seedance_prompts.py",
+      "line": 20,
+      "snippet": "prompt = technique.build_prompt(product_name=\"PowerAde\", duration=15)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/hyperframes_mixin.py",
+      "line": 422,
+      "snippet": "headline=\"Learn more\", cta_text=\"Tap to learn more\", duration=2.5,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/drama_mixin.py",
+      "line": 476,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/drama_mixin.py",
+      "line": 499,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/drama_mixin.py",
+      "line": 575,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/drama_mixin.py",
+      "line": 593,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/base/drama_mixin.py",
+      "line": 625,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/drama/short_drama.py",
+      "line": 166,
+      "snippet": "\"time_of_day\": \"...\", \"mood\": \"...\", \"visual_prompt\": \"...\"",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/drama/short_drama.py",
+      "line": 229,
+      "snippet": "\"duration_seconds\": 4.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/games/v6/orchestrator.py",
+      "line": 158,
+      "snippet": "duration_s=duration_s, aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/games/v6/arena.py",
+      "line": 253,
+      "snippet": "aspect_ratio: \"9:16\" / \"16:9\" / \"1:1\".",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipelines/games/v5/orchestrator.py",
+      "line": 372,
+      "snippet": "duration=4.0, out_dir=polish_dir,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "agents/editing/agent.py",
+      "line": 60,
+      "snippet": "clip1 = Clip(asset=video1, duration=10)",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "agents/directors/visual/flashcard_video.py",
+      "line": 141,
+      "snippet": "aspect=\"9:16\", motion=\"fast_zoom\", motion_intensity=0.85,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/directors/visual/flashcard_video.py",
+      "line": 147,
+      "snippet": "aspect=\"9:16\", motion=\"slow_pan\", motion_intensity=0.55,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/directors/visual/flashcard_video.py",
+      "line": 153,
+      "snippet": "aspect=\"9:16\", motion=\"audio_react\", motion_intensity=0.95,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/directors/visual/flashcard_video.py",
+      "line": 159,
+      "snippet": "aspect=\"1:1\", motion=\"slow_pan\", motion_intensity=0.45,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/directors/visual/flashcard_video.py",
+      "line": 165,
+      "snippet": "aspect=\"16:9\", motion=\"static\", motion_intensity=0.20,",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/producers/visuals/character_sheet.py",
+      "line": 215,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "agents/producers/visuals/character_sheet.py",
+      "line": 394,
+      "snippet": "aspect_ratio=\"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_multi_pipeline_kinds.py",
+      "line": 395,
+      "snippet": "aspect_ratio=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_multi_pipeline_kinds.py",
+      "line": 189,
+      "snippet": "duration_seconds=42.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_multi_pipeline_kinds.py",
+      "line": 203,
+      "snippet": "duration_seconds=720.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_multi_pipeline_kinds.py",
+      "line": 394,
+      "snippet": "duration_seconds=58.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_playable_flashcard_video.py",
+      "line": 253,
+      "snippet": "aspect=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_playable_flashcard_video.py",
+      "line": 267,
+      "snippet": "aspect=\"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_playable_flashcard_video.py",
+      "line": 101,
+      "snippet": "duration_seconds=22.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tests/learning/test_playable_flashcard_deck.py",
+      "line": 458,
+      "snippet": "duration_seconds=45.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_ads_social_longs_context.py",
+      "line": 122,
+      "snippet": "Pre-wiring the file used a hardcoded ``narrator_style=\"documentary\"`` for",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_ads_social_longs_context.py",
+      "line": 159,
+      "snippet": "Pre-wiring used ``mood=\"energetic\"`` and ``color_tone=\"neutral_saturated\"``.",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_ads_social_longs_context.py",
+      "line": 159,
+      "snippet": "Pre-wiring used ``mood=\"energetic\"`` and ``color_tone=\"neutral_saturated\"``.",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 357,
+      "snippet": "Pre-fix behaviour: pipelines passed ``narrator_style=\"documentary\"`` as a",
+      "category": "narrator_style",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 23,
+      "snippet": "E-4  Trending sound API returns nothing for ``mood=\"energetic\"``. Fix:",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 143,
+      "snippet": "\"\"\"The headline E-1 case: empty bgm_prompt + mood='epic' must produce",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 439,
+      "snippet": "# E-4 \u2014 Trending sound API returns nothing for mood='energetic'",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 447,
+      "snippet": "sound API with ``mood=\"energetic\"``. When the API returned an empty list",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 564,
+      "snippet": "``build_cinema_config(mood=\"something_made_up\", color_tone=\"rainbow\")``",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 581,
+      "snippet": "cfg = build_cinema_config(mood=\"cinematic\", color_tone=\"neutral_saturated\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 598,
+      "snippet": "cfg = build_cinema_config(mood=\"not_a_real_mood\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 615,
+      "snippet": "cfg = build_cinema_config(mood=\"not_real\", color_tone=\"also_not_real\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 634,
+      "snippet": "mood=\"cinematic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 133,
+      "snippet": "\"mood\": \"epic\",  # would normally derive an orchestral score",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 147,
+      "snippet": "\"mood\": \"epic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 188,
+      "snippet": "{\"mood\": \"tense\", \"action\": \"running through the rain\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 234,
+      "snippet": "\"mood\": \"tense\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 537,
+      "snippet": "brand={\"mood\": \"energetic\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 817,
+      "snippet": "brand={\"mood\": \"fizzy-bright\"},",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 1097,
+      "snippet": "shot = {\"mood\": \"epic\", \"scene_type\": \"battle\", \"action\": \"running\"}",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 564,
+      "snippet": "``build_cinema_config(mood=\"something_made_up\", color_tone=\"rainbow\")``",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 581,
+      "snippet": "cfg = build_cinema_config(mood=\"cinematic\", color_tone=\"neutral_saturated\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 606,
+      "snippet": "cfg = build_cinema_config(color_tone=\"rainbow_pastel\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 615,
+      "snippet": "cfg = build_cinema_config(mood=\"not_real\", color_tone=\"also_not_real\")",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "tests/pipelines/test_context_edge_cases.py",
+      "line": 635,
+      "snippet": "color_tone=\"neutral_saturated\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": ".memory_venv/lib/python3.14/site-packages/PIL/GifImagePlugin.py",
+      "line": 1184,
+      "snippet": "e.g. ``getdata(im_frame, duration=1000)``",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "AvatarAnimator/service/config.py",
+      "line": 71,
+      "snippet": "\"aspect_ratio\": \"9:16\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "AvatarAnimator/service/config.py",
+      "line": 77,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "AvatarAnimator/service/config.py",
+      "line": 83,
+      "snippet": "\"aspect_ratio\": \"1:1\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "AvatarAnimator/service/youtube_publisher.py",
+      "line": 201,
+      "snippet": "aspect = \"9:16\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "AvatarAnimator/service/youtube_publisher.py",
+      "line": 210,
+      "snippet": "aspect = \"16:9\"",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipeline_viewer/ad_banners_20260408_014337_19234dec_assets/publish_metadata.json",
+      "line": 9,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipeline_viewer/ad_banners_20260408_014337_19234dec_assets/adbanners_output.json",
+      "line": 492,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "pipeline_viewer/ad_banners_20260408_014337_19234dec_assets/publish/thumbnail_prompt.json",
+      "line": 5,
+      "snippet": "\"aspect_ratio\": \"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "canvases/quizverse/app_canvas.json",
+      "line": 40,
+      "snippet": "\"mood\": \"energetic, smart, social, optimistic\",",
+      "category": "mood",
+      "severity": "high"
+    },
+    {
+      "file": "canvases/quizverse/app_canvas.json",
+      "line": 38,
+      "snippet": "\"visual_style\": \"playful 3D cartoon meets editorial \\u2014 bold typography, deep purple background, yellow accent for CTAs and achievement glow\",",
+      "category": "visual_style",
+      "severity": "high"
+    },
+    {
+      "file": "tools/motion/hymotion.py",
+      "line": 20,
+      "snippet": "duration=3.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tools/motion/motion_generator.py",
+      "line": 483,
+      "snippet": "duration=3.0,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/factory.py",
+      "line": 150,
+      "snippet": "async def generate_single_image(self, prompt: str, reference_image_paths=None, aspect_ratio=\"16:9\", timeout: float = 300, **kwargs):",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/factory.py",
+      "line": 727,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/factory.py",
+      "line": 728,
+      "snippet": "duration=8,",
+      "category": "duration_seconds",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/video/helios.py",
+      "line": 12,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/video/skyreels_v2.py",
+      "line": 11,
+      "snippet": "aspect_ratio=\"16:9\",",
+      "category": "aspect_ratio",
+      "severity": "high"
+    },
+    {
+      "file": "tools/generators/video/framepack.py",
+      "line": 30,
+      "snippet": "duration=30,",
+      "category": "duration_seconds",
+      "severity": "high"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/07_accessibility.schema.json",
+  "title": "07_accessibility (G7)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G7"
+    },
+    "gate_name": {
+      "const": "accessibility"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "photosensitivity_safe": {
+          "type": "boolean"
+        },
+        "wcag_aa": {
+          "type": "boolean"
+        },
+        "dub_locales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

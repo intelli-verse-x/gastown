@@ -1,0 +1,17 @@
+{
+  "gate_id": "G14",
+  "gate_name": "chain_of_custody",
+  "passed": true,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G14_no_retention_policy",
+      "severity": "critical",
+      "message": "retention.json missing \u2014 default 7y policy assumed",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.256284+00:00",
+  "signature": "44a6ec54d0c376ee1306ebdb2aea74b93588f08d55993fc57cd2cabd557417c9"
+}

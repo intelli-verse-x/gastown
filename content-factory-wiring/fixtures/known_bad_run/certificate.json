@@ -1,0 +1,226 @@
+{
+  "run_id": "known_bad_run",
+  "tier": "aa",
+  "issued_at": "2026-05-26T23:17:27.258649+00:00",
+  "required_gates": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "G10",
+    "G13",
+    "G14",
+    "G15"
+  ],
+  "results": [
+    {
+      "gate_id": "G1",
+      "gate_name": "concept_lock",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G1_no_pitch",
+          "severity": "blocker",
+          "message": "No pitch_deck.json found \u2014 concept must be locked before scripting.",
+          "measurement": {
+            "searched": "/Users/devashishbadlani/dev/gastown/content-factory-wiring/fixtures/known_bad_run"
+          }
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.217321+00:00",
+      "signature": "b2ebf2b65ec4f62ee3ec254b39341639d530d31ce78fc7ca9efa3e263813a2f6"
+    },
+    {
+      "gate_id": "G2",
+      "gate_name": "canon_lock",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G2_no_bible",
+          "severity": "blocker",
+          "message": "studio_bible.json missing \u2014 required for viral_shorts",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.218030+00:00",
+      "signature": "217e8dc56842c2a2e9d615b4b44c521ac0267e8de9cf4ed7d14d2de3eb6c2d7b"
+    },
+    {
+      "gate_id": "G3",
+      "gate_name": "script_multi_read",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G3_R1_missing",
+          "severity": "blocker",
+          "message": "creative read (screenwriting_audit.json) missing",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.218926+00:00",
+      "signature": "f04a1184cbe84a21846010fc9c89a8d73929f257667d73d034b5fa9ee587fbdb"
+    },
+    {
+      "gate_id": "G4",
+      "gate_name": "visual_continuity",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G4_too_few_shots",
+          "severity": "low",
+          "message": "only 0 shots \u2014 continuity not measurable",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.253152+00:00",
+      "signature": "148f8827728471c7d5e1748d390965830bb7f1f6847f14cf97358e3a1773145d"
+    },
+    {
+      "gate_id": "G5",
+      "gate_name": "audio_mix",
+      "passed": false,
+      "evaluated_at": "2026-05-26T23:17:27.253482+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G6",
+      "gate_name": "rights_manifest",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G6_no_manifest",
+          "severity": "blocker",
+          "message": "rights_manifest.json missing \u2014 required for any external publish",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.253754+00:00",
+      "signature": "53ad966e241b0ea3046a870a38a0e8e62dcc7c0ef854acdae92cb677aca5d49f"
+    },
+    {
+      "gate_id": "G7",
+      "gate_name": "accessibility",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G7_no_video",
+          "severity": "low",
+          "message": "no final video found \u2014 accessibility checks skipped",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.254362+00:00",
+      "signature": "7d89de1465be90cdc2e2c2cccb2d53e1331b1b69f245715f5141c44949325a56"
+    },
+    {
+      "gate_id": "G8",
+      "gate_name": "platform_cert",
+      "passed": false,
+      "evaluated_at": "2026-05-26T23:17:27.254632+00:00",
+      "external": "tools.social_publish_auditor"
+    },
+    {
+      "gate_id": "G9",
+      "gate_name": "frame_qa",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G9_no_video",
+          "severity": "low",
+          "message": "no final video \u2014 frame QA skipped",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.255020+00:00",
+      "signature": "555fe11654846d446637ab20f65310287a6d895db14ab4cccdb0c5eca327f453"
+    },
+    {
+      "gate_id": "G10",
+      "gate_name": "council_enforcer",
+      "passed": true,
+      "tier": "aa",
+      "findings": [],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.255540+00:00",
+      "signature": "6e3e24d9a224a3836f66a1f9a1f6e1dbe59af34c5ccab774212ed2571ac05ca2"
+    },
+    {
+      "gate_id": "G13",
+      "gate_name": "dual_signoff",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G13_no_approvals_dir",
+          "severity": "blocker",
+          "message": "approvals/ directory missing \u2014 no signatures recorded",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.255904+00:00",
+      "signature": "bd4729fc17e4493e94bd49c4b86eac7e3e54553bb29a51ba785ab1d96aff8222"
+    },
+    {
+      "gate_id": "G14",
+      "gate_name": "chain_of_custody",
+      "passed": true,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "G14_no_retention_policy",
+          "severity": "critical",
+          "message": "retention.json missing \u2014 default 7y policy assumed",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.256284+00:00",
+      "signature": "44a6ec54d0c376ee1306ebdb2aea74b93588f08d55993fc57cd2cabd557417c9"
+    },
+    {
+      "gate_id": "G15",
+      "gate_name": "character_identity",
+      "passed": false,
+      "tier": "aa",
+      "findings": [
+        {
+          "code": "CC1_cast_manifest_missing",
+          "severity": "blocker",
+          "message": "cast/cast_manifest.json not found \u2014 every pipeline must declare cast before render",
+          "measurement": {}
+        }
+      ],
+      "run_id": "known_bad_run",
+      "evaluated_at": "2026-05-26T23:17:27.258276+00:00",
+      "signature": "dd241a37c9fe53cdd6bd8d91fe6b139470b16193d9ed2c42c1ad256bfe083550"
+    }
+  ],
+  "passed": false,
+  "summary": {
+    "passed_count": 5,
+    "failed_count": 8,
+    "total": 13
+  },
+  "signature": "89abff424bd1ecf80c08e95a0194d72de1843b1b08b00a208400c9db3a8b658f",
+  "certificate_signature": "89abff424bd1ecf80c08e95a0194d72de1843b1b08b00a208400c9db3a8b658f"
+}

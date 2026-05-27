@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: contentx-webhook-config
+  namespace: content-factory
+data:
+  LOG_LEVEL: "INFO"
+  # Where the webhook scans for runs to map post_id -> run_id
+  CONTENTX_WORKING_DIR_ROOTS: "/var/lib/contentx/working_dir"
+  # Default registry root (overridden per pipeline via mount)
+  CONTENTX_CHARACTER_REGISTRY: "/var/lib/contentx/character_registry"

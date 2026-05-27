@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx.io/schemas/character_registry/cast_manifest.schema.json",
+  "title": "Per-Run Cast Manifest",
+  "description": "Declared character cast for every scene. Required input for G15.",
+  "type": "object",
+  "required": ["version", "scenes"],
+  "properties": {
+    "version":   { "const": "1.0" },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["scene_id", "characters"],
+        "properties": {
+          "scene_id":   { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+          "characters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["char_id"],
+              "properties": {
+                "char_id":         { "type": "string", "pattern": "^[a-z0-9_-]{2,32}$" },
+                "expected_outfit": { "type": "string" },
+                "expected_state":  { "type": "string" },
+                "voice_id":        { "type": ["string", "null"] },
+                "frame_share_min": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "signature": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

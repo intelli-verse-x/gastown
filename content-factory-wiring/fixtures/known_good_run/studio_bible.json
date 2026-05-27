@@ -1,0 +1,30 @@
+{
+  "characters": [
+    {
+      "id": "quizzy",
+      "name": "Quizzy",
+      "visor": true,
+      "voice": "warm-bright"
+    }
+  ],
+  "palette": [
+    "#7c4dff",
+    "#f3a712",
+    "#22d3ee"
+  ],
+  "props": [
+    "quiz_card",
+    "buzzer"
+  ],
+  "vocabulary": {
+    "banned": [],
+    "preferred": [
+      "did you know"
+    ]
+  },
+  "lock": {
+    "locked": true,
+    "content_hash": "ab4412ba7518c0d9810763d78146dc22a6ee3c037f55345b52417fa8611a00aa",
+    "frozen_at": "2026-05-26T23:17:27.001637+00:00"
+  }
+}

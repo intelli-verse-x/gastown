@@ -1,0 +1,122 @@
+# Character Consistency Policy — G15 enforcement parameters by tier.
+#
+# WHO OWNS THIS FILE: Head of Content (with Creative Director input).
+# WHO MAY EDIT: PR-only, signed by both Creative + Technical Director for any
+# change to face_distance_threshold or voice_distance_threshold.
+#
+# The numbers below are calibrated against LFW-style validation:
+#   - insightface buffalo_l on LFW: equal-error-rate ≈ 0.20
+#   - face_recognition (dlib ResNet) on LFW: EER ≈ 0.28
+#   - phash on 8x8: EER ≈ 0.39 (much weaker, advisory only)
+
+[global]
+registry_root          = "/var/lib/content-factory/character_registry"
+# Where pipelines write per-run cast manifests
+cast_manifest_path     = "cast/cast_manifest.json"
+# Sampling: how many frames per scene to sample for G15
+max_frames_per_scene   = 20
+# Auto-add new outfit states observed in flagship runs into the registry
+auto_propose_outfit_states = false   # human review required
+
+# ---------------------------------------------------------------------------
+# Per-tier thresholds — lower = stricter
+# ---------------------------------------------------------------------------
+
+[tier.internal]
+# Internal canary runs: registry consistency advisory only
+enforced                = false
+require_cast_manifest   = false
+face_distance_threshold = 0.40
+voice_distance_threshold = 0.50
+outfit_drift_threshold  = 0.55
+ghost_face_blocks       = false
+
+[tier.indie]
+enforced                = true
+require_cast_manifest   = true
+require_registry_lock   = false    # registry can be mutated during run
+face_distance_threshold = 0.39     # phash backend will commonly run at this tier
+voice_distance_threshold = 0.45
+outfit_drift_threshold  = 0.50
+ghost_face_blocks       = true     # any face must map to a declared char
+multi_character_strict  = false
+
+[tier.aa]
+enforced                = true
+require_cast_manifest   = true
+require_registry_lock   = true     # character bibles locked during shoot
+face_distance_threshold = 0.28     # face_recognition target
+voice_distance_threshold = 0.35
+outfit_drift_threshold  = 0.40
+ghost_face_blocks       = true
+multi_character_strict  = true
+
+[tier.aaa]
+enforced                = true
+require_cast_manifest   = true
+require_registry_lock   = true
+face_distance_threshold = 0.20     # insightface target
+voice_distance_threshold = 0.30
+outfit_drift_threshold  = 0.30
+ghost_face_blocks       = true
+multi_character_strict  = true
+require_voice_consistency = true   # every dialogue line must match canonical
+require_minimum_embeddings = 5     # ≥5 reference face embeddings per char
+
+[tier.live_aaa]
+enforced                = true
+require_cast_manifest   = true
+require_registry_lock   = true
+face_distance_threshold = 0.20
+voice_distance_threshold = 0.30
+outfit_drift_threshold  = 0.25
+ghost_face_blocks       = true
+multi_character_strict  = true
+require_voice_consistency = true
+require_minimum_embeddings = 10
+# Live tier additionally checks engagement-by-character: if Quizzy retention < threshold,
+# auto-create a bd issue to regenerate that character's reference embeddings.
+
+# ---------------------------------------------------------------------------
+# Per-pipeline-kind overrides
+# ---------------------------------------------------------------------------
+
+[pipeline.viral_shorts]
+# 30-90s clips, often one character on-camera; voice check optional
+require_voice_consistency = false
+
+[pipeline.learning_series]
+# Recurring instructor across multiple episodes — voice MUST match
+require_voice_consistency = true
+require_minimum_embeddings = 8
+
+[pipeline.movies]
+# Multi-character ensembles — strictest
+multi_character_strict  = true
+require_voice_consistency = true
+require_minimum_embeddings = 12
+# Pre-production canon lock REQUIRED before any rendering
+require_canon_locked_before_render = true
+
+[pipeline.ads]
+# Brand mascot/avatar must be pixel-consistent with brand guidelines
+outfit_drift_threshold = 0.20     # strictest outfit match
+require_minimum_embeddings = 10
+require_canon_locked_before_render = true
+
+[pipeline.podcast_series]
+# Voice-only; face checks N/A
+require_voice_consistency = true
+require_face_check = false
+
+# ---------------------------------------------------------------------------
+# Escalation — what to do when G15 fails
+# ---------------------------------------------------------------------------
+
+[escalation]
+ghost_face            = { owner = "polecat://contentx-renderer", auto_redo_max = 2 }
+identity_swap         = { owner = "polecat://contentx-renderer", auto_redo_max = 1 }
+outfit_drift          = { owner = "polecat://contentx-stylist",  auto_redo_max = 3 }
+voice_drift           = { owner = "polecat://contentx-tts",      auto_redo_max = 2 }
+cast_manifest_missing = { owner = "polecat://contentx-planner",  auto_redo_max = 0 }   # planner bug; halt
+unknown_character     = { owner = "polecat://contentx-registry", auto_redo_max = 0 }   # human registry add required

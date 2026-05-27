@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "brand": "intelli-verse-x",
+  "run_count": 8,
+  "preferred_palette": [],
+  "preferred_voices": [],
+  "recurring_directives": [
+    {
+      "directive": "Auto-passed: council time budget exhausted for this pipeline run",
+      "phase": "video_production",
+      "occurrence": 11
+    },
+    {
+      "directive": "Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity",
+      "phase": "brief_validation",
+      "occurrence": 2
+    },
+    {
+      "directive": "Fix dead spot: 0:08-0:12: 4s of static text overlay with no visual movement",
+      "phase": "video",
+      "occurrence": 2
+    },
+    {
+      "directive": "Zero engagement triggers: Insert a 'Comment your guess!' prompt at 0:25 with on-screen text",
+      "phase": "video",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Insert 'Comment your guess' prompt at 0:10 and CTA at 0:50",
+      "phase": "compliance",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Insert 'Comment your guess!' prompt at 0:09",
+      "phase": "brief_validation",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add mid-video teaser and end-screen CTA 'Subscribe for the final showdown!'",
+      "phase": "brief_validation",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add a 'Comment your score!' prompt at 0:25",
+      "phase": "screenwriting",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 3x 'Comment your theory!' prompts at 0:08/0:18/0:28",
+      "phase": "publish_metadata",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2x 'Comment your answer!' prompts with animated text",
+      "phase": "storyboard",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2x 'Comment your Rizz score!' prompts during character interactions",
+      "phase": "storyboard",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 specific prompts for comments/viewer interaction",
+      "phase": "compliance",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 specific prompts 'Comment your reaction' and 'Share if you need a brain reset'",
+      "phase": "compliance",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 specific hooks - text question at 0:05 and interactive QR code animation at 0:22",
+      "phase": "storyboard",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 specific hooks - 1) 'This UI is lying to you' text overlay at 0:08, 2) 'Share to prove you\u2019re not a bot' CTA at 0:20",
+      "phase": "brief_validation",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 specific engagement hooks: 1) 'Comment your favorite glitch' at 0:45, 2) 'Tag a friend who needs this' at 0:58",
+      "phase": "video",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 audience interaction prompts (e.g., 'Comment which one roasts harder?')",
+      "phase": "video",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 2 CTAs - one at 0:18 ('Tag a friend who needs this') and one at 0:45 ('Subscribe for daily trivia!')",
+      "phase": "video",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 'Comment your guess!' prompt at 0:15",
+      "phase": "brief_validation",
+      "occurrence": 1
+    },
+    {
+      "directive": "Zero engagement triggers: Add 'Comment your answer!' prompt at 0:05",
+      "phase": "brief_validation",
+      "occurrence": 1
+    }
+  ],
+  "engagement_baseline": {},
+  "honcho_dialectic_hints": [
+    "Brand 'intelli-verse-x' rejected these patterns in past runs (council directives, occurrence count in parentheses):",
+    "  - (11x) Auto-passed: council time budget exhausted for this pipeline run",
+    "  - (2x) Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity",
+    "  - (2x) Fix dead spot: 0:08-0:12: 4s of static text overlay with no visual movement",
+    "  - (1x) Zero engagement triggers: Insert a 'Comment your guess!' prompt at 0:25 with on-screen text",
+    "  - (1x) Zero engagement triggers: Insert 'Comment your guess' prompt at 0:10 and CTA at 0:50",
+    "  - (1x) Zero engagement triggers: Insert 'Comment your guess!' prompt at 0:09",
+    "  - (1x) Zero engagement triggers: Add mid-video teaser and end-screen CTA 'Subscribe for the final showdown!'",
+    "  - (1x) Zero engagement triggers: Add a 'Comment your score!' prompt at 0:25"
+  ],
+  "applies_to_phases": [
+    "ideation",
+    "script",
+    "director_brief",
+    "brand_audit",
+    "publish"
+  ]
+}

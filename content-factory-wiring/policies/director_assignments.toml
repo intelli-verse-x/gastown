@@ -1,0 +1,47 @@
+# Director assignments — required for tier ≥ AA.
+#
+# WHO OWNS THIS FILE: Brand owner per brand.
+# WHO MAY EDIT: PR-only; cannot self-assign; requires HR confirmation that the
+# named human (or polecat with named owner) actually consented.
+# REQUIRED FIELDS per brand:
+#   creative_director.{name, email, pgp_key_id}
+#   technical_director.{name, email, pgp_key_id}
+# OPTIONAL:
+#   on_call.escalation_path = ordered list of beadable identities
+#   override_signers       = list of names allowed to sign --override beads
+#
+# Empty values mean unfilled — those brands CANNOT run tier ≥ AA until populated.
+
+[brand.quizverse]
+creative_director.name      = ""
+creative_director.email     = ""
+creative_director.pgp_key_id = ""
+technical_director.name     = ""
+technical_director.email    = ""
+technical_director.pgp_key_id = ""
+on_call.escalation_path     = ["polecat:witness", "polecat:deacon"]
+override_signers            = []
+allowed_tiers               = ["internal", "indie"]  # raise once filled
+
+[brand.contentx_flagship]
+creative_director.name      = ""
+creative_director.email     = ""
+creative_director.pgp_key_id = ""
+technical_director.name     = ""
+technical_director.email    = ""
+technical_director.pgp_key_id = ""
+on_call.escalation_path     = ["polecat:witness", "polecat:deacon"]
+override_signers            = []
+allowed_tiers               = ["internal"]
+
+# Template — copy this block per new brand
+[brand._template]
+creative_director.name      = "Required: full legal name"
+creative_director.email     = "Required: corporate email"
+creative_director.pgp_key_id = "Required: HMAC key id from vault"
+technical_director.name     = "Required"
+technical_director.email    = "Required"
+technical_director.pgp_key_id = "Required"
+on_call.escalation_path     = ["polecat:witness", "polecat:deacon", "human:vp-eng"]
+override_signers            = ["Required: name of human who may sign overrides"]
+allowed_tiers               = ["internal", "indie", "aa", "aaa", "live_aaa"]

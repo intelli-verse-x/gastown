@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: contentx-hermes-indexer
+  namespace: content-factory
+spec:
+  schedule: "0 3 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: contentx-cron
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: indexer
+              image: IMAGE_PLACEHOLDER
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - /opt/content-factory-wiring/hermes/hermes_indexer.py
+                - --content-factory-root
+                - /var/lib/contentx
+                - --sessions-db
+                - /var/lib/hermes/sessions.db
+              resources:
+                requests: { cpu: 200m, memory: 512Mi }
+                limits:   { cpu: 1000m, memory: 1Gi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: ["ALL"] }
+              volumeMounts:
+                - { name: working-dir, mountPath: /var/lib/contentx }
+                - { name: hermes,      mountPath: /var/lib/hermes }
+          volumes:
+            - { name: working-dir, emptyDir: { sizeLimit: 4Gi } }
+            - { name: hermes,      emptyDir: { sizeLimit: 4Gi } }

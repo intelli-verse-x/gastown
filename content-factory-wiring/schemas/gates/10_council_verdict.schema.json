@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentx/gates/10_council_verdict.schema.json",
+  "title": "10_council_verdict (G10)",
+  "allOf": [
+    {
+      "$ref": "_common.schema.json#/$defs/gate_result"
+    }
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "G10"
+    },
+    "gate_name": {
+      "const": "council_enforcer"
+    },
+    "detail": {
+      "type": "object",
+      "properties": {
+        "audit_files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

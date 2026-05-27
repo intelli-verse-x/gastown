@@ -1,0 +1,30 @@
+[Unit]
+Description=ContentX Postiz Engagement Webhook
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=contentx
+WorkingDirectory=/opt/content-factory-wiring
+EnvironmentFile=/etc/contentx/webhook.env
+ExecStart=/usr/bin/uvicorn services.postiz_webhook.server:app \
+          --host 0.0.0.0 \
+          --port 8421 \
+          --workers 2 \
+          --proxy-headers \
+          --forwarded-allow-ips=127.0.0.1,10.0.0.0/8
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/var/log/postiz-webhook.log
+StandardError=append:/var/log/postiz-webhook.log
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/contentx /var/log/postiz-webhook.log
+
+[Install]
+WantedBy=multi-user.target

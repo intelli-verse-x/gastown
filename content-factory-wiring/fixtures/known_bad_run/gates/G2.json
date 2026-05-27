@@ -1,0 +1,17 @@
+{
+  "gate_id": "G2",
+  "gate_name": "canon_lock",
+  "passed": false,
+  "tier": "aa",
+  "findings": [
+    {
+      "code": "G2_no_bible",
+      "severity": "blocker",
+      "message": "studio_bible.json missing \u2014 required for viral_shorts",
+      "measurement": {}
+    }
+  ],
+  "run_id": "known_bad_run",
+  "evaluated_at": "2026-05-26T23:17:27.218030+00:00",
+  "signature": "217e8dc56842c2a2e9d615b4b44c521ac0267e8de9cf4ed7d14d2de3eb6c2d7b"
+}

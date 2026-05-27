@@ -1,0 +1,51 @@
+[
+  {
+    "skill_path": "~/.hermes/skills/contentx/audio-auto-passed--council-time-budget-exhaust.md",
+    "occurrence_count": 2,
+    "audit_phase": "audio",
+    "directive_template": "Auto-passed: council time budget exhausted for this pipeline run",
+    "body": "---\nname: contentx-audio-auto-passed--council-time-budget-exhaust\ndescription: 'Auto-derived from 2 occurrences of council directive in audio'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# audio directive\n\nRecurring council finding (2 runs):\n\n> Auto-passed: council time budget exhausted for this pipeline run\n\n## Recommended application\n\nBefore the audio phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/compliance-auto-passed--council-time-budget-exhaust.md",
+    "occurrence_count": 2,
+    "audit_phase": "compliance",
+    "directive_template": "Auto-passed: council time budget exhausted for this pipeline run",
+    "body": "---\nname: contentx-compliance-auto-passed--council-time-budget-exhaust\ndescription: 'Auto-derived from 2 occurrences of council directive in compliance'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# compliance directive\n\nRecurring council finding (2 runs):\n\n> Auto-passed: council time budget exhausted for this pipeline run\n\n## Recommended application\n\nBefore the compliance phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/final_assembly-auto-passed--council-time-budget-exhaust.md",
+    "occurrence_count": 2,
+    "audit_phase": "final_assembly",
+    "directive_template": "Auto-passed: council time budget exhausted for this pipeline run",
+    "body": "---\nname: contentx-final_assembly-auto-passed--council-time-budget-exhaust\ndescription: 'Auto-derived from 2 occurrences of council directive in final_assembly'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# final_assembly directive\n\nRecurring council finding (2 runs):\n\n> Auto-passed: council time budget exhausted for this pipeline run\n\n## Recommended application\n\nBefore the final_assembly phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/publish_metadata-auto-passed--council-time-budget-exhaust.md",
+    "occurrence_count": 2,
+    "audit_phase": "publish_metadata",
+    "directive_template": "Auto-passed: council time budget exhausted for this pipeline run",
+    "body": "---\nname: contentx-publish_metadata-auto-passed--council-time-budget-exhaust\ndescription: 'Auto-derived from 2 occurrences of council directive in publish_metadata'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# publish_metadata directive\n\nRecurring council finding (2 runs):\n\n> Auto-passed: council time budget exhausted for this pipeline run\n\n## Recommended application\n\nBefore the publish_metadata phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/video_production-auto-passed--council-time-budget-exhaust.md",
+    "occurrence_count": 2,
+    "audit_phase": "video_production",
+    "directive_template": "Auto-passed: council time budget exhausted for this pipeline run",
+    "body": "---\nname: contentx-video_production-auto-passed--council-time-budget-exhaust\ndescription: 'Auto-derived from 2 occurrences of council directive in video_production'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# video_production directive\n\nRecurring council finding (2 runs):\n\n> Auto-passed: council time budget exhausted for this pipeline run\n\n## Recommended application\n\nBefore the video_production phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/video-fix-dead-spot--0-08-0-12--4s-of-static-t.md",
+    "occurrence_count": 2,
+    "audit_phase": "video",
+    "directive_template": "Fix dead spot: 0:08-0:12: 4s of static text overlay with no visual movement",
+    "body": "---\nname: contentx-video-fix-dead-spot--0-08-0-12--4s-of-static-t\ndescription: 'Auto-derived from 2 occurrences of council directive in video'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# video directive\n\nRecurring council finding (2 runs):\n\n> Fix dead spot: 0:08-0:12: 4s of static text overlay with no visual movement\n\n## Recommended application\n\nBefore the video phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  },
+  {
+    "skill_path": "~/.hermes/skills/contentx/brief_validation-hook-score---6--add-text-overlay-questio.md",
+    "occurrence_count": 2,
+    "audit_phase": "brief_validation",
+    "directive_template": "Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity",
+    "body": "---\nname: contentx-brief_validation-hook-score---6--add-text-overlay-questio\ndescription: 'Auto-derived from 2 occurrences of council directive in brief_validation'\ntrigger: pipeline.kind in viral_shorts,short_video\n---\n\n# brief_validation directive\n\nRecurring council finding (2 runs):\n\n> Hook score < 6: Add text overlay question at 0:01 to create immediate curiosity\n\n## Recommended application\n\nBefore the brief_validation phase runs, consult this skill. If the planner's draft triggers this pattern, pre-emptively apply the fix."
+  }
+]

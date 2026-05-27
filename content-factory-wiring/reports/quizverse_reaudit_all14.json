@@ -1,0 +1,141 @@
+{
+  "chars": {
+    "AUTOcurio": {
+      "before_flaws": 11,
+      "before_score": 120,
+      "views_normalized": 4,
+      "remaining_flaws": 1,
+      "after_score": 20,
+      "delta_pct": 83.3,
+      "remaining_codes": [
+        "F11_empty_sprite"
+      ]
+    },
+    "Atlas": {
+      "before_flaws": 4,
+      "before_score": 35,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Bear": {
+      "before_flaws": 7,
+      "before_score": 60,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Dog": {
+      "before_flaws": 4,
+      "before_score": 35,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Duck": {
+      "before_flaws": 3,
+      "before_score": 30,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Echo": {
+      "before_flaws": 7,
+      "before_score": 60,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "IX": {
+      "before_flaws": 10,
+      "before_score": 110,
+      "views_normalized": 5,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Luna": {
+      "before_flaws": 4,
+      "before_score": 40,
+      "views_normalized": 3,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Nova": {
+      "before_flaws": 8,
+      "before_score": 65,
+      "views_normalized": 5,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Pixel": {
+      "before_flaws": 11,
+      "before_score": 90,
+      "views_normalized": 6,
+      "remaining_flaws": 1,
+      "after_score": 20,
+      "delta_pct": 77.8,
+      "remaining_codes": [
+        "F11_empty_sprite"
+      ]
+    },
+    "Professor": {
+      "before_flaws": 5,
+      "before_score": 45,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Quizzy_v1": {
+      "before_flaws": 21,
+      "before_score": 295,
+      "views_normalized": 11,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Quizzy_v2": {
+      "before_flaws": 35,
+      "before_score": 420,
+      "views_normalized": 12,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    },
+    "Sparky": {
+      "before_flaws": 7,
+      "before_score": 65,
+      "views_normalized": 6,
+      "remaining_flaws": 0,
+      "after_score": 0,
+      "delta_pct": 100.0,
+      "remaining_codes": []
+    }
+  },
+  "deltas": {},
+  "totals": {
+    "before_score": 1470,
+    "after_score": 40,
+    "delta_pct": 97.3,
+    "characters_fixed": 14
+  }
+}
