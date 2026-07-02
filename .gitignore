@@ -99,3 +99,5 @@ docs/fork-info/
 
 # Local MCP server config — may contain bearer tokens / file paths
 .cursor/mcp.json
+config.bat
+node_modules
