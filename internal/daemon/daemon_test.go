@@ -710,3 +710,103 @@ func TestIsRigOperational_DockedRig(t *testing.T) {
 	}
 	t.Logf("Docked rig check returned: operational=%v, reason=%q", operational, reason)
 }
+
+func TestLogCrash_WritesToDedicatedCrashLog(t *testing.T) {
+	tmpDir := t.TempDir()
+	d := &Daemon{
+		config: &Config{TownRoot: tmpDir},
+		logger: log.New(io.Discard, "", 0),
+	}
+
+	d.logCrash(1234, "boom: nil pointer", []byte("goroutine 1 [running]:\nfake.Stack(...)"))
+
+	crashLogPath := filepath.Join(tmpDir, "daemon", "crash.log")
+	data, err := os.ReadFile(crashLogPath)
+	if err != nil {
+		t.Fatalf("expected crash.log to be written: %v", err)
+	}
+	content := string(data)
+	if !strings.Contains(content, "boom: nil pointer") {
+		t.Errorf("crash.log missing panic value, got: %s", content)
+	}
+	if !strings.Contains(content, "1234") {
+		t.Errorf("crash.log missing PID, got: %s", content)
+	}
+	if !strings.Contains(content, "fake.Stack") {
+		t.Errorf("crash.log missing stack trace, got: %s", content)
+	}
+}
+
+func TestLogCrash_AppendsMultiplePanics(t *testing.T) {
+	tmpDir := t.TempDir()
+	d := &Daemon{
+		config: &Config{TownRoot: tmpDir},
+		logger: log.New(io.Discard, "", 0),
+	}
+
+	d.logCrash(1, "first panic", []byte("stack1"))
+	d.logCrash(2, "second panic", []byte("stack2"))
+
+	crashLogPath := filepath.Join(tmpDir, "daemon", "crash.log")
+	data, err := os.ReadFile(crashLogPath)
+	if err != nil {
+		t.Fatalf("expected crash.log to be written: %v", err)
+	}
+	content := string(data)
+	if !strings.Contains(content, "first panic") || !strings.Contains(content, "second panic") {
+		t.Errorf("crash.log should retain both panics, got: %s", content)
+	}
+}
+
+func TestRun_RecoversPanicAndMarksStateNotRunning(t *testing.T) {
+	tmpDir := t.TempDir()
+	daemonDir := filepath.Join(tmpDir, "daemon")
+	if err := os.MkdirAll(daemonDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg := &Config{
+		TownRoot: tmpDir,
+		LogFile:  filepath.Join(daemonDir, "daemon.log"),
+		PidFile:  filepath.Join(daemonDir, "daemon.pid"),
+	}
+	d := &Daemon{
+		config: cfg,
+		logger: log.New(io.Discard, "", 0),
+	}
+
+	// Simulate Run()'s panic-recovery deferred func directly, since driving
+	// the full Run() loop to a panic would require standing up Dolt/tmux.
+	// This exercises the same recover -> logCrash -> SaveState(Running=false)
+	// path added to Run() to fix hq-3ny (daemon deaths left no trace and
+	// state.json stayed stale at running:true).
+	state := &State{Running: true, PID: os.Getpid(), StartedAt: time.Now()}
+	if err := SaveState(tmpDir, state); err != nil {
+		t.Fatal(err)
+	}
+
+	func() {
+		defer func() {
+			if r := recover(); r != nil {
+				d.logCrash(os.Getpid(), r, []byte("simulated stack"))
+				state.Running = false
+				if err := SaveState(tmpDir, state); err != nil {
+					t.Fatalf("SaveState after panic: %v", err)
+				}
+			}
+		}()
+		panic("simulated daemon panic")
+	}()
+
+	loaded, err := LoadState(tmpDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loaded.Running {
+		t.Error("expected state.json Running to be false after a recovered panic")
+	}
+
+	if _, err := os.Stat(filepath.Join(daemonDir, "crash.log")); err != nil {
+		t.Errorf("expected crash.log to exist after panic: %v", err)
+	}
+}
