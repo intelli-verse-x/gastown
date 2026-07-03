@@ -8,6 +8,7 @@ import (
 
 	"github.com/steveyegge/gastown/internal/beads"
 	"github.com/steveyegge/gastown/internal/cli"
+	"github.com/steveyegge/gastown/internal/constants"
 	"github.com/steveyegge/gastown/internal/style"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -51,7 +52,9 @@ func findActivePatrol(cfg PatrolConfig) (patrolID, patrolLine string, found bool
 		b = beads.New(cfg.BeadsDir)
 	}
 
-	// Find hooked patrol beads for this agent
+	// Find hooked patrol beads for this agent.
+	// For backward compatibility during the transition to canonical assignee forms,
+	// we query for both the canonical form and the legacy form (if different).
 	hookedBeads, listErr := b.List(beads.ListOptions{
 		Status:   beads.StatusHooked,
 		Assignee: cfg.Assignee,
@@ -59,6 +62,22 @@ func findActivePatrol(cfg PatrolConfig) (patrolID, patrolLine string, found bool
 	})
 	if listErr != nil {
 		return "", "", false, fmt.Errorf("listing hooked beads: %w", listErr)
+	}
+
+	// For Deacon role, also check for legacy "deacon" assignee form to maintain
+	// backward compatibility with existing wisps created before normalization.
+	// Prioritize the canonical form, but fall back to legacy if no canonical patrol is active.
+	if cfg.Assignee != constants.DeaconAssigneeLegacy {
+		legacyBeads, legacyErr := b.List(beads.ListOptions{
+			Status:   beads.StatusHooked,
+			Assignee: constants.DeaconAssigneeLegacy,
+			Priority: -1,
+		})
+		if legacyErr == nil && len(legacyBeads) > 0 {
+			// Append legacy beads to the list so they're considered after canonical beads.
+			// This ensures we prioritize canonical "deacon/" but still find legacy "deacon" if needed.
+			hookedBeads = append(hookedBeads, legacyBeads...)
+		}
 	}
 
 	// Identify active patrol and collect stale ones for cleanup.

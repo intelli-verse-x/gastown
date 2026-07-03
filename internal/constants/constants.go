@@ -283,6 +283,21 @@ const (
 	EmojiBoot = "🐾"
 )
 
+// Agent role assignee identities (canonical forms with trailing slash for town-level agents).
+// These constants ensure consistency across patrol creation, lookup, and hook discovery.
+// The trailing slash is required for town-level roles (Deacon, Mayor) to align with
+// canonicalAssigneeAddress() and mail identity conventions used by `gt hook` and `gt mol status`.
+const (
+	// DeaconAssigneeCanonical is the canonical assignee form for town-level Deacon patrol wisps.
+	// It must match the form used by gt hook, canonicalAssigneeAddress(), and resolveSelfTarget().
+	DeaconAssigneeCanonical = "deacon/"
+
+	// DeaconAssigneeLegacy is the legacy (pre-normalization) form, kept for backward compatibility
+	// during the transition. Existing wisps with this assignee will continue to be discovered
+	// by findActivePatrol() until they are naturally closed/replaced.
+	DeaconAssigneeLegacy = "deacon"
+)
+
 // Molecule formula names for patrol and dog workflows.
 // These are used as formula identifiers in `bd mol wisp <name>` commands
 // and to match active patrol wisps by title prefix.
