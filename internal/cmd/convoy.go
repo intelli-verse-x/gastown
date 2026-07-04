@@ -2,10 +2,14 @@ package cmd
 
 import (
 	"bytes"
+	"context"
 	"crypto/rand"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -449,8 +453,27 @@ func getTownBeadsDir() (string, error) {
 // "exit status 1". BEADS_DIR is stripped from the subprocess environment to
 // prevent stale overrides from interfering with bd's workspace detection.
 func runBdJSON(dir string, args ...string) ([]byte, error) {
+	return runBdJSONWithOptions(dir, false, false, args...)
+}
+
+func runBdJSONAllowStale(dir string, args ...string) ([]byte, error) {
+	return runBdJSONWithOptions(dir, true, false, args...)
+}
+
+func runBdJSONWithAutoCommit(dir string, args ...string) ([]byte, error) {
+	return runBdJSONWithOptions(dir, false, true, args...)
+}
+
+func runBdJSONWithOptions(dir string, allowStale, autoCommit bool, args ...string) ([]byte, error) {
 	var stdout, stderr bytes.Buffer
-	cmd := BdCmd(args...).Dir(dir).StripBeadsDir().Stderr(&stderr).Build()
+	bdc := BdCmd(args...).Dir(dir).StripBeadsDir().Stderr(&stderr)
+	if allowStale {
+		bdc.AllowStale()
+	}
+	if autoCommit {
+		bdc.WithAutoCommit()
+	}
+	cmd := bdc.Build()
 	cmd.Dir = dir
 	cmd.Stdout = &stdout
 
@@ -474,54 +497,155 @@ func runBdJSON(dir string, args ...string) ([]byte, error) {
 //
 // Returns deduplicated, unwrapped issue IDs (external:prefix:id → id).
 func bdDepListRawIDs(dir, issueID, direction, depType string) ([]string, error) {
-	// Determine query columns based on direction.
-	// "down": issueID depends on targets → SELECT depends_on_id WHERE issue_id = ?
-	// "up":   issueID is depended on → SELECT issue_id WHERE depends_on_id = ?
-	var selectCol, whereCol string
-	if direction == "up" {
-		selectCol = "issue_id"
-		whereCol = "depends_on_id"
-	} else {
-		selectCol = "depends_on_id"
-		whereCol = "issue_id"
-	}
-
-	// Build SQL query. Bead IDs are system-generated alphanumeric strings
-	// with hyphens and dots — validate to prevent injection.
+	// Bead IDs are system-generated alphanumeric strings with hyphens, dots,
+	// and underscores — validate to prevent injection before interpolating below.
 	if !isValidBeadID(issueID) {
 		return nil, fmt.Errorf("invalid bead ID: %q", issueID)
 	}
 
-	query := fmt.Sprintf("SELECT %s FROM dependencies WHERE %s = '%s'", selectCol, whereCol, issueID)
-	if depType != "" {
-		if !isValidBeadID(depType) {
-			return nil, fmt.Errorf("invalid dep type: %q", depType)
+	var parseKey string
+	if direction == "up" {
+		parseKey = "issue_id"
+	} else {
+		parseKey = "depends_on_id"
+	}
+	if depType != "" && !isValidBeadID(depType) {
+		return nil, fmt.Errorf("invalid dep type: %q", depType)
+	}
+
+	if ids, err := bdDepListRawIDsViaDolt(dir, issueID, direction, depType); err == nil {
+		return ids, nil
+	}
+
+	var lastErr error
+	for _, legacy := range []bool{false, true} {
+		query := rawDepSQLLiteral(issueID, direction, depType, legacy)
+		out, err := runBdJSONWithAutoCommit(dir, "sql", query, "--json")
+		if err != nil {
+			lastErr = err
+			continue
 		}
-		query += fmt.Sprintf(" AND type = '%s'", depType)
+		ids, err := parseRawDepRows(out, parseKey)
+		if err != nil {
+			return nil, fmt.Errorf("parsing dep sql for %s: %w", issueID, err)
+		}
+		return ids, nil
 	}
+	return nil, fmt.Errorf("bd sql for deps of %s: %w", issueID, lastErr)
+}
 
-	out, err := runBdJSON(dir, "sql", query, "--json")
+func bdDepListRawIDsViaDolt(dir, issueID, direction, depType string) ([]string, error) {
+	beadsDir := beads.ResolveBeadsDir(dir)
+	cfg, ok := readBeadsRuntimeConfig(beadsDir)
+	if !ok || cfg.Database == "" || cfg.Port == 0 {
+		return nil, fmt.Errorf("missing server metadata for %s", beadsDir)
+	}
+	host := cfg.Host
+	if host == "" {
+		host = "127.0.0.1"
+	}
+	dsn := fmt.Sprintf("root@tcp(%s)/%s?parseTime=true", net.JoinHostPort(host, strconv.Itoa(cfg.Port)), url.PathEscape(cfg.Database))
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, fmt.Errorf("bd sql for deps of %s: %w", issueID, err)
+		return nil, err
 	}
+	defer db.Close()
 
-	// Parse JSON array of single-column rows
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	typedQuery, typedArgs := rawDepSQLArgs(issueID, direction, depType, false)
+	ids, err := queryRawDepIDs(ctx, db, typedQuery, typedArgs)
+	if err == nil {
+		return ids, nil
+	}
+	legacyQuery, legacyArgs := rawDepSQLArgs(issueID, direction, depType, true)
+	return queryRawDepIDs(ctx, db, legacyQuery, legacyArgs)
+}
+
+func rawDepSQLArgs(issueID, direction, depType string, legacy bool) (string, []any) {
+	var query string
+	var args []any
+	if direction == "up" {
+		if legacy {
+			query = "SELECT issue_id FROM dependencies WHERE depends_on_id = ?"
+			args = append(args, issueID)
+		} else {
+			query = "SELECT issue_id FROM dependencies WHERE (depends_on_issue_id = ? OR depends_on_wisp_id = ? OR depends_on_external LIKE ? ESCAPE '!')"
+			args = append(args, issueID, issueID, "%:"+strings.ReplaceAll(issueID, "_", "!_"))
+		}
+	} else if legacy {
+		query = "SELECT depends_on_id FROM dependencies WHERE issue_id = ?"
+		args = append(args, issueID)
+	} else {
+		query = "SELECT COALESCE(depends_on_issue_id, depends_on_wisp_id, depends_on_external) AS depends_on_id FROM dependencies WHERE issue_id = ?"
+		args = append(args, issueID)
+	}
+	if depType != "" {
+		query += " AND type = ?"
+		args = append(args, depType)
+	}
+	return query, args
+}
+
+func rawDepSQLLiteral(issueID, direction, depType string, legacy bool) string {
+	query, args := rawDepSQLArgs(issueID, direction, depType, legacy)
+	for _, arg := range args {
+		query = strings.Replace(query, "?", "'"+arg.(string)+"'", 1)
+	}
+	return query
+}
+
+func queryRawDepIDs(ctx context.Context, db *sql.DB, query string, args []any) ([]string, error) {
+	rows, err := db.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	seen := make(map[string]bool)
+	var ids []string
+	for rows.Next() {
+		var rawID sql.NullString
+		if err := rows.Scan(&rawID); err != nil {
+			return nil, err
+		}
+		if !rawID.Valid {
+			continue
+		}
+		id := beads.ExtractIssueID(rawID.String)
+		if id != "" && !seen[id] {
+			seen[id] = true
+			ids = append(ids, id)
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return ids, nil
+}
+
+func parseRawDepRows(out []byte, parseKey string) ([]string, error) {
 	var rows []map[string]string
 	if err := json.Unmarshal(out, &rows); err != nil {
-		return nil, fmt.Errorf("parsing dep sql for %s: %w", issueID, err)
+		return nil, err
 	}
-
 	seen := make(map[string]bool, len(rows))
 	var ids []string
 	for _, row := range rows {
-		rawID := row[selectCol]
-		id := beads.ExtractIssueID(rawID)
+		id := beads.ExtractIssueID(row[parseKey])
 		if id != "" && !seen[id] {
 			seen[id] = true
 			ids = append(ids, id)
 		}
 	}
 	return ids, nil
+}
+
+func sqlExternalDepTargetClause(issueID string) string {
+	// Use an escape character that is not valid in bead IDs so underscores stay literal.
+	escapedID := strings.ReplaceAll(issueID, "_", "!_")
+	return fmt.Sprintf("depends_on_external LIKE '%%:%s' ESCAPE '!'", escapedID)
 }
 
 // isValidBeadID checks that a string is safe for SQL interpolation in dep queries.
@@ -777,11 +901,12 @@ func runConvoyAdd(cmd *cobra.Command, args []string) error {
 	}
 
 	var convoys []struct {
-		ID     string   `json:"id"`
-		Title  string   `json:"title"`
-		Status string   `json:"status"`
-		Type   string   `json:"issue_type"`
-		Labels []string `json:"labels"`
+		ID          string   `json:"id"`
+		Title       string   `json:"title"`
+		Status      string   `json:"status"`
+		Type        string   `json:"issue_type"`
+		Description string   `json:"description"`
+		Labels      []string `json:"labels"`
 	}
 	if err := json.Unmarshal(showOut, &convoys); err != nil {
 		return fmt.Errorf("parsing convoy data: %w", err)
@@ -811,6 +936,19 @@ func runConvoyAdd(cmd *cobra.Command, args []string) error {
 			WithAutoCommit().
 			Run(); err != nil {
 			return fmt.Errorf("couldn't reopen convoy: %w", err)
+		}
+		if fields := beads.ParseConvoyFields(&beads.Issue{Description: convoy.Description}); fields != nil && fields.CompletionNotifiedAt != "" {
+			fields.CompletionNotifiedAt = ""
+			newDesc := beads.SetConvoyFields(&beads.Issue{Description: convoy.Description}, fields)
+			if err := BdCmd("update", convoyID, "--description="+newDesc).
+				Dir(townBeads).
+				WithAutoCommit().
+				Run(); err != nil {
+				return fmt.Errorf("couldn't clear convoy completion notification state: %w", err)
+			}
+		}
+		if err := persistTownBeadsJSONL(townBeads); err != nil {
+			return fmt.Errorf("couldn't persist reopened convoy to JSONL: %w", err)
 		}
 		reopened = true
 		fmt.Printf("%s Reopened convoy %s\n", style.Bold.Render("↺"), convoyID)
@@ -922,7 +1060,7 @@ func closeConvoyIfComplete(townBeads, convoyID, title string, tracked []trackedI
 
 	reason := "All tracked issues completed"
 	closeArgs := []string{"close", convoyID, "-r", reason}
-	if err := BdCmd(closeArgs...).Dir(townBeads).WithAutoCommit().Run(); err != nil {
+	if err := runTownMutationAndExport(townBeads, closeArgs...); err != nil {
 		return false, fmt.Errorf("closing convoy: %w", err)
 	}
 
@@ -967,7 +1105,7 @@ func checkSingleConvoy(townBeads, convoyID string, dryRun bool) error {
 	// Check if convoy is already closed
 	if normalizeConvoyStatus(convoy.Status) == convoyStatusClosed {
 		fmt.Printf("%s Convoy %s is already closed\n", style.Dim.Render("○"), convoyID)
-		return nil
+		return persistAndNotifyConvoyCompletion(townBeads, convoyID, convoy.Title)
 	}
 
 	// Get tracked issues
@@ -1022,7 +1160,7 @@ func runConvoyClose(cmd *cobra.Command, args []string) error {
 	// Idempotent: if already closed, just report it
 	if normalizeConvoyStatus(convoy.Status) == convoyStatusClosed {
 		fmt.Printf("%s Convoy %s is already closed\n", style.Dim.Render("○"), convoyID)
-		return nil
+		return persistAndNotifyConvoyCompletion(townBeads, convoyID, convoy.Title)
 	}
 	if err := validateConvoyStatusTransition(convoy.Status, convoyStatusClosed); err != nil {
 		return fmt.Errorf("can't close convoy '%s': %w", convoyID, err)
@@ -1072,7 +1210,7 @@ func runConvoyClose(cmd *cobra.Command, args []string) error {
 
 	// Close the convoy
 	closeArgs := []string{"close", convoyID, "-r", reason}
-	if err := BdCmd(closeArgs...).Dir(townBeads).WithAutoCommit().Run(); err != nil {
+	if err := runTownMutationAndExport(townBeads, closeArgs...); err != nil {
 		return fmt.Errorf("closing convoy: %w", err)
 	}
 
@@ -1178,7 +1316,7 @@ func runConvoyLand(cmd *cobra.Command, args []string) error {
 	}
 	if normalizeConvoyStatus(convoy.Status) == convoyStatusClosed {
 		fmt.Printf("%s Convoy %s is already closed\n", style.Dim.Render("○"), convoyID)
-		return nil
+		return persistAndNotifyConvoyCompletion(townBeads, convoyID, convoy.Title)
 	}
 
 	// Get tracked issues
@@ -1245,7 +1383,7 @@ func runConvoyLand(cmd *cobra.Command, args []string) error {
 	// Phase 2: Close the convoy
 	reason := "Landed by owner"
 	closeArgs := []string{"close", convoyID, "-r", reason}
-	if err := BdCmd(closeArgs...).Dir(townBeads).WithAutoCommit().Run(); err != nil {
+	if err := runTownMutationAndExport(townBeads, closeArgs...); err != nil {
 		return fmt.Errorf("closing convoy: %w", err)
 	}
 
@@ -1547,8 +1685,15 @@ func findStrandedConvoys(townBeads string) ([]strandedConvoyInfo, error) {
 // - AND not blocked (cross-rig-aware from issue details)
 // scheduledSet is a pre-computed set of bead IDs with open sling contexts (from areScheduled).
 func isReadyIssue(t trackedIssueInfo, scheduledSet map[string]bool) bool {
+	status := strings.TrimSpace(t.Status)
+
+	// Unresolved issues are not safe to dispatch.
+	if status == "" || status == trackedStatusUnknown {
+		return false
+	}
+
 	// Closed issues are never ready
-	if t.Status == "closed" || t.Status == "tombstone" {
+	if status == "closed" || status == "tombstone" {
 		return false
 	}
 
@@ -1563,7 +1708,7 @@ func isReadyIssue(t trackedIssueInfo, scheduledSet map[string]bool) bool {
 	}
 
 	// Open issues with no assignee are trivially ready
-	if t.Status == "open" && t.Assignee == "" {
+	if status == "open" && t.Assignee == "" {
 		return true
 	}
 
@@ -1640,6 +1785,34 @@ func checkAndCloseCompletedConvoys(townBeads string, dryRun bool) ([]struct{ ID,
 	return closed, nil
 }
 
+// persistTownBeadsJSONL writes the current town Beads state to the JSONL file
+// used by bd's fallback import path. Convoy close/check suppresses bd's implicit
+// auto-export for normal command hygiene, but close state must survive a later
+// Dolt rebuild from .beads/issues.jsonl.
+func persistTownBeadsJSONL(townBeads string) error {
+	beadsDir := beads.ResolveBeadsDir(townBeads)
+	if beadsDir == "" {
+		return fmt.Errorf("could not resolve town .beads directory")
+	}
+	issuesPath := filepath.Join(beadsDir, "issues.jsonl")
+	return BdCmd("export", "-o", issuesPath).Dir(townBeads).Run()
+}
+
+func runTownMutationAndExport(townBeads string, args ...string) error {
+	if err := BdCmd(args...).Dir(townBeads).WithAutoCommit().Run(); err != nil {
+		return err
+	}
+	return persistTownBeadsJSONL(townBeads)
+}
+
+func persistAndNotifyConvoyCompletion(townBeads, convoyID, title string) error {
+	if err := persistTownBeadsJSONL(townBeads); err != nil {
+		return fmt.Errorf("persisting convoy close to JSONL: %w", err)
+	}
+	notifyConvoyCompletion(townBeads, convoyID, title)
+	return nil
+}
+
 // notifyConvoyCompletion sends notifications to owner, any notify addresses, and mayor/.
 func notifyConvoyCompletion(townBeads, convoyID, title string) {
 	stdout, err := runBdJSON(townBeads, "show", convoyID, "--json")
@@ -1657,6 +1830,12 @@ func notifyConvoyCompletion(townBeads, convoyID, title string) {
 
 	// ZFC: Use typed accessor instead of parsing description text
 	fields := beads.ParseConvoyFields(&beads.Issue{Description: convoys[0].Description})
+	if fields == nil {
+		fields = &beads.ConvoyFields{}
+	}
+	if fields.CompletionNotifiedAt != "" {
+		return
+	}
 
 	// Compute duration since convoy was created.
 	var durationStr string
@@ -1717,6 +1896,13 @@ func notifyConvoyCompletion(townBeads, convoyID, title string) {
 
 	// Push notification to active Mayor session if configured.
 	notifyMayorSession(townBeads, convoyID, title)
+
+	fields.CompletionNotifiedAt = time.Now().UTC().Format(time.RFC3339)
+	newDesc := beads.SetConvoyFields(&beads.Issue{Description: convoys[0].Description}, fields)
+	if err := runTownMutationAndExport(townBeads, "update", convoyID, "--description="+newDesc); err != nil {
+		style.PrintWarning("could not record convoy completion notification state for %s: %v", convoyID, err)
+		return
+	}
 }
 
 // notifyMayorSession pushes a convoy completion notification into the active
@@ -2217,7 +2403,10 @@ type trackedDependency struct {
 }
 
 func applyFreshIssueDetails(dep *trackedDependency, details *issueDetails) {
-	dep.Status = details.Status
+	dep.Status = strings.TrimSpace(details.Status)
+	if dep.Status == "" {
+		dep.Status = trackedStatusUnknown
+	}
 	dep.Blocked = details.IsBlocked()
 	if dep.Title == "" {
 		dep.Title = details.Title
@@ -2333,7 +2522,7 @@ func getTrackedIssues(townBeads, convoyID string) ([]trackedIssueInfo, error) {
 // bdShowBead) — without it, a jsonl write that straddles a second boundary causes
 // "database out of sync" errors in CI and fast-turnaround production workflows.
 func bdDepListTracked(dir, convoyID string) ([]string, error) {
-	out, err := runBdJSON(dir, "dep", "list", convoyID, "--direction=down", "--type=tracks", "--allow-stale", "--json")
+	out, err := runBdJSONAllowStale(dir, "dep", "list", convoyID, "--direction=down", "--type=tracks", "--json")
 	if err != nil {
 		return nil, err
 	}
@@ -2397,64 +2586,6 @@ type issueDependency struct {
 	DependencyType string `json:"dependency_type"`
 }
 
-type issueDetailsJSON struct {
-	ID             string            `json:"id"`
-	Title          string            `json:"title"`
-	Status         string            `json:"status"`
-	IssueType      string            `json:"issue_type"`
-	Assignee       string            `json:"assignee"`
-	Labels         []string          `json:"labels"`
-	BlockedBy      []string          `json:"blocked_by"`
-	BlockedByCount int               `json:"blocked_by_count"`
-	Dependencies   []issueDependency `json:"dependencies"`
-}
-
-func (issue issueDetailsJSON) toIssueDetails() *issueDetails {
-	return &issueDetails{
-		ID:             issue.ID,
-		Title:          issue.Title,
-		Status:         issue.Status,
-		IssueType:      issue.IssueType,
-		Assignee:       issue.Assignee,
-		Labels:         issue.Labels,
-		BlockedBy:      issue.BlockedBy,
-		BlockedByCount: issue.BlockedByCount,
-		Dependencies:   issue.Dependencies,
-	}
-}
-
-// getExternalIssueDetails fetches issue details from an external rig database.
-// townBeads: path to town .beads directory
-// rigName: name of the rig (e.g., "claycantrell")
-// issueID: the issue ID to look up
-func getExternalIssueDetails(townBeads, rigName, issueID string) *issueDetails {
-	// Resolve rig directory path: townBeads is the town root
-	rigDir := filepath.Join(townBeads, rigName)
-
-	// Check if rig directory exists
-	if _, err := os.Stat(rigDir); os.IsNotExist(err) {
-		return nil
-	}
-
-	out, err := BdCmd("show", issueID, "--json").Dir(rigDir).StripBeadsDir().Stderr(io.Discard).Output()
-	if err != nil {
-		return nil
-	}
-	if len(out) == 0 {
-		return nil
-	}
-
-	var issues []issueDetailsJSON
-	if err := json.Unmarshal(out, &issues); err != nil {
-		return nil
-	}
-	if len(issues) == 0 {
-		return nil
-	}
-
-	return issues[0].toIssueDetails()
-}
-
 // issueDetails holds basic issue info.
 type issueDetails struct {
 	ID             string
@@ -2483,76 +2614,93 @@ func (d issueDetails) IsBlocked() bool {
 	return false
 }
 
-// getIssueDetailsBatch fetches details for multiple issues in a single bd show call.
+// getIssueDetailsBatch fetches details through the central routed beads lookup.
 // Returns a map from issue ID to details. Missing/invalid issues are omitted from the map.
 func getIssueDetailsBatch(issueIDs []string) map[string]*issueDetails {
-	result := make(map[string]*issueDetails)
+	result := make(map[string]*issueDetails, len(issueIDs))
 	if len(issueIDs) == 0 {
 		return result
 	}
 
-	// Build args: bd show id1 id2 id3 ... --json
-	args := append([]string{"show"}, issueIDs...)
-	args = append(args, "--json")
-
-	// Run from town root so bd's prefix routing (routes.jsonl) can dispatch
-	// to the correct rig database for cross-rig bead lookups. (GH#2960)
-	townRoot, _ := workspace.FindFromCwdOrError()
-	bdc := BdCmd(args...).Stderr(io.Discard)
-	if townRoot != "" {
-		bdc.Dir(townRoot).WithRouting()
+	client := convoyIssueClient()
+	if client == nil {
+		return result
 	}
-	out, err := bdc.Output()
-	if err != nil {
-		// Batch failed - fall back to individual lookups for robustness
-		// This handles cases where some IDs are invalid/missing
-		for _, id := range issueIDs {
-			if details := getIssueDetails(id); details != nil {
-				result[id] = details
-			}
+
+	issues, err := client.ShowMultiple(issueIDs)
+	for id, issue := range issues {
+		if details := issueToDetails(issue); details != nil {
+			result[id] = details
 		}
+	}
+	if err == nil {
 		return result
 	}
 
-	var issues []issueDetailsJSON
-	if err := json.Unmarshal(out, &issues); err != nil {
-		return result
-	}
-
-	for _, issue := range issues {
-		result[issue.ID] = issue.toIssueDetails()
+	// If a grouped batch fails because one ID is missing or stale, keep the
+	// previous best-effort behavior and recover any IDs that still resolve.
+	for _, id := range issueIDs {
+		if result[id] != nil {
+			continue
+		}
+		if details := getIssueDetailsWithClient(client, id); details != nil {
+			result[id] = details
+		}
 	}
 
 	return result
 }
 
-// getIssueDetails fetches issue details by trying to show it via bd.
-// Prefer getIssueDetailsBatch for multiple issues to avoid N+1 subprocess calls.
+// getIssueDetails fetches issue details through the central routed beads lookup.
 func getIssueDetails(issueID string) *issueDetails {
-	// Use bd show with routing - resolve from town root so bd's prefix
-	// routing (routes.jsonl) can dispatch to the correct rig database.
-	// Without Dir + StripBeadsDir, bd inherits CWD/BEADS_DIR which may
-	// point to a rig that doesn't contain the target bead. (GH#2960)
-	townRoot, _ := workspace.FindFromCwdOrError()
-	bdc := BdCmd("show", issueID, "--json").Stderr(io.Discard)
-	if townRoot != "" {
-		bdc.Dir(townRoot).WithRouting()
+	client := convoyIssueClient()
+	if client == nil {
+		return nil
 	}
-	out, err := bdc.Output()
+	return getIssueDetailsWithClient(client, issueID)
+}
+
+func convoyIssueClient() *beads.Beads {
+	townRoot, err := workspace.FindFromCwdOrError()
 	if err != nil {
 		return nil
 	}
-	// Handle bd exit 0 bug: empty stdout means not found
-	if len(out) == 0 {
+	return beads.New(townRoot)
+}
+
+func getIssueDetailsWithClient(client *beads.Beads, issueID string) *issueDetails {
+	issue, err := client.Show(issueID)
+	if err != nil {
+		return nil
+	}
+	return issueToDetails(issue)
+}
+
+func issueToDetails(issue *beads.Issue) *issueDetails {
+	if issue == nil {
 		return nil
 	}
 
-	var issues []issueDetailsJSON
-	if err := json.Unmarshal(out, &issues); err != nil || len(issues) == 0 {
-		return nil
+	deps := make([]issueDependency, 0, len(issue.Dependencies))
+	for _, dep := range issue.Dependencies {
+		deps = append(deps, issueDependency{
+			ID:             dep.ID,
+			Status:         dep.Status,
+			DependencyType: dep.DependencyType,
+		})
 	}
 
-	return issues[0].toIssueDetails()
+	return &issueDetails{
+		ID:             issue.ID,
+		Title:          issue.Title,
+		Status:         issue.Status,
+		IssueType:      issue.Type,
+		Assignee:       issue.Assignee,
+		Labels:         issue.Labels,
+		BlockedBy:      issue.BlockedBy,
+		BlockedByCount: issue.BlockedByCount,
+		Dependencies:   deps,
+	}
 }
 
 // workerInfo holds info about a worker assigned to an issue.

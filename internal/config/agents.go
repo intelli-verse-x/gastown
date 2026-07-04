@@ -160,9 +160,9 @@ type AgentPresetInfo struct {
 
 	// EscapeCancelsRequest indicates that sending an Escape keystroke to this
 	// agent cancels its in-flight generation. NudgeSession normally sends
-	// Escape (step 5) to exit vim INSERT mode — harmless for bash/Claude Code,
-	// but destructive for agents like Gemini CLI where Escape aborts the
-	// active request. When true, NudgeSessionWithOpts skips the Escape
+	// Escape (step 5) to exit vim INSERT mode — harmless for bash, but
+	// destructive for agents where Escape aborts the active request. When true,
+	// NudgeSessionWithOpts skips the Escape
 	// keystroke and the 600ms readline timeout that follows it.
 	EscapeCancelsRequest bool `json:"escape_cancels_request,omitempty"`
 
@@ -279,7 +279,7 @@ var builtinPresets = map[AgentPreset]*AgentPresetInfo{
 	AgentCodex: {
 		Name:                AgentCodex,
 		Command:             "codex",
-		Args:                []string{"--dangerously-bypass-approvals-and-sandbox"},
+		Args:                []string{"-c", codexUpdateCheckConfig, "--dangerously-bypass-approvals-and-sandbox"},
 		ProcessNames:        []string{"codex"}, // Codex CLI binary
 		SessionIDEnv:        "",                // Codex captures from JSONL output
 		ResumeFlag:          "resume",
@@ -291,7 +291,7 @@ var builtinPresets = map[AgentPreset]*AgentPresetInfo{
 			OutputFlag: "--json",
 		},
 		// Runtime defaults
-		PromptMode:        "none",
+		PromptMode:        "arg",
 		ReadyPromptPrefix: "› ",
 		ReadyDelayMs:      3000,
 		InstructionsFile:  "AGENTS.md",
@@ -357,7 +357,8 @@ var builtinPresets = map[AgentPreset]*AgentPresetInfo{
 		Args:    []string{}, // No CLI flags needed, YOLO via OPENCODE_PERMISSION env
 		Env: map[string]string{
 			// Auto-approve all tool calls (equivalent to --dangerously-skip-permissions)
-			"OPENCODE_PERMISSION": `{"*":"allow"}`,
+			"OPENCODE_PERMISSION":     `{"*":"allow"}`,
+			"OPENCODE_CONFIG_CONTENT": `{"lsp":true}`,
 		},
 		ProcessNames:        []string{"opencode", "node", "bun"}, // Runs as Node.js or Bun
 		SessionIDEnv:        "",                                  // OpenCode manages sessions internally

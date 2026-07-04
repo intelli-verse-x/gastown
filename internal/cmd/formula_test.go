@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -321,128 +320,176 @@ func TestAttachmentFormulaVarsPrefersAttachedVars(t *testing.T) {
 	}
 }
 
-func TestFormulaConvoyIDUsesTownConvoyPrefix(t *testing.T) {
+func TestAttachmentFormulaVarsRoundTripsPersistedVars(t *testing.T) {
 	t.Parallel()
 
-	got := formulaConvoyID("abc123")
-	want := "hq-cv-abc123"
-	if got != want {
-		t.Fatalf("formulaConvoyID() = %q, want %q", got, want)
+	desc := beads.SetAttachmentFields(&beads.Issue{Description: "Body"}, &beads.AttachmentFields{
+		AttachedFormula: "mol-polecat-work",
+		AttachedVars:    []string{"feature=Attached Feature"},
+		FormulaVars:     "feature=Persisted Feature\nissue=gt-123\nbase_branch=main",
+	})
+	attachment := beads.ParseAttachmentFields(&beads.Issue{Description: desc})
+	got := attachmentFormulaVars(attachment)
+	want := []string{"feature=Attached Feature", "issue=gt-123", "base_branch=main"}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("attachmentFormulaVars() = %#v, want %#v\nDescription:\n%s", got, want, desc)
 	}
 }
 
-func TestExecuteConvoyFormulaCreatesTownConvoyAndRigLegs(t *testing.T) {
-	if runtime.GOOS == "windows" {
-		t.Skip("shell stubs are unix-only")
+func TestApplyFormulaVarsUsesWorkflowBareSyntax(t *testing.T) {
+	t.Parallel()
+
+	got := applyFormulaVars("bd show {{issue}}\nkeep {{.issue}}", map[string]string{"issue": "gt-123"})
+	want := "bd show gt-123\nkeep {{.issue}}"
+	if got != want {
+		t.Fatalf("applyFormulaVars() = %q, want %q", got, want)
+	}
+}
+
+func TestRenderTemplateUsesGoDotSyntax(t *testing.T) {
+	t.Parallel()
+
+	ctx := map[string]interface{}{"issue": "gt-123"}
+	got, err := renderTemplate("bd show {{.issue}}", ctx)
+	if err != nil {
+		t.Fatalf("renderTemplate() dotted syntax error: %v", err)
+	}
+	if got != "bd show gt-123" {
+		t.Fatalf("renderTemplate() = %q, want %q", got, "bd show gt-123")
 	}
 
-	townRoot := t.TempDir()
-	townBeads := filepath.Join(townRoot, ".beads")
-	rigDir := filepath.Join(townRoot, "gastown", "mayor", "rig")
-	rigBeads := filepath.Join(rigDir, ".beads")
-	for _, dir := range []string{filepath.Join(townRoot, "mayor", "rig"), townBeads, rigDir, rigBeads} {
-		if err := os.MkdirAll(dir, 0o755); err != nil {
-			t.Fatalf("mkdir %s: %v", dir, err)
+	if _, err := renderTemplate("bd show {{issue}}", ctx); err == nil {
+		t.Fatal("renderTemplate() with bare syntax succeeded; want Go template error")
+	}
+}
+
+func TestDesignFormulaOutputUsesReviewID(t *testing.T) {
+	t.Parallel()
+
+	content, err := formula.GetEmbeddedFormulaContent("design")
+	if err != nil {
+		t.Fatalf("GetEmbeddedFormulaContent(design): %v", err)
+	}
+	f, err := formula.Parse(content)
+	if err != nil {
+		t.Fatalf("Parse(design): %v", err)
+	}
+	if f.Output == nil {
+		t.Fatal("design formula missing output config")
+	}
+
+	got, err := renderTemplate(f.Output.Directory, map[string]interface{}{"review_id": "abc123"})
+	if err != nil {
+		t.Fatalf("render output directory: %v", err)
+	}
+	if got != ".designs/abc123" {
+		t.Fatalf("output directory = %q, want %q", got, ".designs/abc123")
+	}
+}
+
+func TestSynthesisDescriptionRendersOutputContext(t *testing.T) {
+	t.Parallel()
+
+	for _, name := range []string{"design", "mol-prd-review", "mol-plan-review", "code-review"} {
+		name := name
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			content, err := formula.GetEmbeddedFormulaContent(name)
+			if err != nil {
+				t.Fatalf("GetEmbeddedFormulaContent(%s): %v", name, err)
+			}
+			f, err := formula.Parse(content)
+			if err != nil {
+				t.Fatalf("Parse(%s): %v", name, err)
+			}
+			if f.Synthesis == nil || f.Output == nil {
+				t.Fatalf("%s missing synthesis or output config", name)
+			}
+
+			ctx := formulaTemplateContext(name, "local files", "abc123", 0, "", nil, nil,
+				map[string]interface{}{
+					"context":    "extra context",
+					"plan":       "test plan",
+					"prd_review": "prd-review.md",
+					"problem":    "test problem",
+					"scope":      "test scope",
+				})
+			addOutputTemplateContext(ctx, ".out/abc123", f.Output.Synthesis)
+
+			got, err := renderTemplate(f.Synthesis.Description, ctx)
+			if err != nil {
+				t.Fatalf("render synthesis description: %v", err)
+			}
+			if strings.Contains(got, "{{.") || strings.Contains(got, "<no value>") {
+				t.Fatalf("synthesis description left template placeholders unrendered: %q", got)
+			}
+			if !strings.Contains(got, ".out/abc123") {
+				t.Fatalf("synthesis description missing rendered output directory: %q", got)
+			}
+			if name == "design" {
+				for _, want := range []string{
+					"All dimension analyses from: .out/abc123/",
+					"A synthesized design at: .out/abc123/design-doc.md",
+					"# Design: test problem",
+				} {
+					if !strings.Contains(got, want) {
+						t.Fatalf("synthesis description missing %q", want)
+					}
+				}
+			}
+		})
+	}
+}
+
+func TestFormulaRunExamplesUseSetVars(t *testing.T) {
+	t.Parallel()
+
+	for _, name := range []string{"design", "mol-idea-to-plan"} {
+		name := name
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			content, err := formula.GetEmbeddedFormulaContent(name)
+			if err != nil {
+				t.Fatalf("GetEmbeddedFormulaContent(%s): %v", name, err)
+			}
+			text := string(content)
+			for _, bad := range []string{"--problem=", "--context=", "--plan="} {
+				if strings.Contains(text, bad) {
+					t.Fatalf("%s still contains invalid gt formula run flag %q", name, bad)
+				}
+			}
+		})
+	}
+
+	idea, err := formula.GetEmbeddedFormulaContent("mol-idea-to-plan")
+	if err != nil {
+		t.Fatalf("GetEmbeddedFormulaContent(mol-idea-to-plan): %v", err)
+	}
+	ideaText := string(idea)
+	if strings.Contains(ideaText, "<design-id>") {
+		t.Fatal("mol-idea-to-plan still references stale <design-id> output paths")
+	}
+	if strings.Contains(ideaText, ".designs/<review-id>") {
+		t.Fatal("mol-idea-to-plan conflates design output ID with PRD review ID")
+	}
+	for _, want := range []string{
+		"--set problem=\"{{problem}}\"",
+		"--set context=\"See .prd-reviews/{{review_id}}/prd-draft.md. {{context}}\"",
+		"--set context=\"PRD with clarifications: .prd-reviews/{{review_id}}/prd-draft.md. {{context}}\"",
+		".designs/<design-review-id>/design-doc.md",
+	} {
+		if !strings.Contains(ideaText, want) {
+			t.Fatalf("mol-idea-to-plan missing %q", want)
 		}
 	}
-	routes := strings.Join([]string{
-		`{"prefix":"gt-","path":"gastown/mayor/rig"}`,
-		`{"prefix":"hq-","path":"."}`,
-		`{"prefix":"hq-cv-","path":"."}`,
-		"",
-	}, "\n")
-	if err := os.WriteFile(filepath.Join(townBeads, "routes.jsonl"), []byte(routes), 0o644); err != nil {
-		t.Fatalf("write routes: %v", err)
-	}
 
-	binDir := filepath.Join(townRoot, "bin")
-	if err := os.MkdirAll(binDir, 0o755); err != nil {
-		t.Fatalf("mkdir binDir: %v", err)
-	}
-	logPath := filepath.Join(townRoot, "bd.log")
-	bdScript := `#!/bin/sh
-set -e
-printf '%s|%s|%s\n' "$(pwd)" "${BEADS_DIR:-}" "$*" >> "${BD_LOG}"
-exit 0
-`
-	_ = writeBDStub(t, binDir, bdScript, "")
-	gtPath := filepath.Join(binDir, "gt")
-	gtScript := `#!/bin/sh
-set -e
-printf 'gt|%s|%s\n' "$(pwd)" "$*" >> "${GT_LOG}"
-exit 0
-`
-	if err := os.WriteFile(gtPath, []byte(gtScript), 0o755); err != nil {
-		t.Fatalf("write gt stub: %v", err)
-	}
-	t.Setenv("BD_LOG", logPath)
-	t.Setenv("GT_LOG", filepath.Join(townRoot, "gt.log"))
-	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
-	t.Setenv("BEADS_DIR", filepath.Join(townRoot, "wrong", ".beads"))
-
-	oldAddTracking := addTrackingRelationFn
-	oldPR := formulaRunPR
-	oldSet := formulaRunSet
-	oldFiles := formulaRunFiles
-	oldAgent := formulaRunAgent
-	t.Cleanup(func() {
-		addTrackingRelationFn = oldAddTracking
-		formulaRunPR = oldPR
-		formulaRunSet = oldSet
-		formulaRunFiles = oldFiles
-		formulaRunAgent = oldAgent
-	})
-	var trackedTownRoot, trackedConvoyID, trackedIssueID string
-	addTrackingRelationFn = func(townRootArg, convoyID, issueID string) error {
-		trackedTownRoot = townRootArg
-		trackedConvoyID = convoyID
-		trackedIssueID = issueID
-		return nil
-	}
-	formulaRunPR = 0
-	formulaRunSet = nil
-	formulaRunFiles = nil
-	formulaRunAgent = ""
-
-	cwd, err := os.Getwd()
+	design, err := formula.GetEmbeddedFormulaContent("design")
 	if err != nil {
-		t.Fatalf("getwd: %v", err)
+		t.Fatalf("GetEmbeddedFormulaContent(design): %v", err)
 	}
-	t.Cleanup(func() { _ = os.Chdir(cwd) })
-	if err := os.Chdir(filepath.Join(townRoot, "mayor", "rig")); err != nil {
-		t.Fatalf("chdir: %v", err)
-	}
-
-	f := &formula.Formula{
-		Description: "routing convoy",
-		Legs: []formula.Leg{{
-			ID:          "one",
-			Title:       "Leg one",
-			Description: "Do one thing",
-		}},
-	}
-	if err := executeConvoyFormula(f, "routing-fan", "gastown"); err != nil {
-		t.Fatalf("executeConvoyFormula: %v", err)
-	}
-
-	logBytes, err := os.ReadFile(logPath)
-	if err != nil {
-		t.Fatalf("read bd log: %v", err)
-	}
-	logText := string(logBytes)
-	if strings.Contains(logText, "--id=gt-cv-") {
-		t.Fatalf("formula convoy created rig-prefixed convoy in town log:\n%s", logText)
-	}
-	if !strings.Contains(logText, townBeads+"|"+townBeads+"|create ") || !strings.Contains(logText, "--id=hq-cv-") {
-		t.Fatalf("formula convoy create did not target town beads with hq-cv id:\n%s", logText)
-	}
-	if !strings.Contains(logText, rigBeads+"|"+rigBeads+"|create ") || !strings.Contains(logText, "--id=gt-leg-") {
-		t.Fatalf("formula leg create did not target rig beads with gt-leg id:\n%s", logText)
-	}
-	if trackedTownRoot != townRoot {
-		t.Fatalf("tracking townRoot = %q, want %q", trackedTownRoot, townRoot)
-	}
-	if !strings.HasPrefix(trackedConvoyID, "hq-cv-") || !strings.HasPrefix(trackedIssueID, "gt-leg-") {
-		t.Fatalf("tracking relation = (%q, %q), want hq-cv to gt-leg", trackedConvoyID, trackedIssueID)
+	if !strings.Contains(string(design), "gt formula run design --set problem=") {
+		t.Fatal("design usage examples do not mention --set problem=")
 	}
 }

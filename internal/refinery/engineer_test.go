@@ -40,6 +40,83 @@ func TestDefaultMergeQueueConfig(t *testing.T) {
 	}
 }
 
+func TestIsConflictTaskForMR(t *testing.T) {
+	task := &beads.Issue{Description: `Resolve merge conflicts for branch polecat/nux/gt-real
+
+## Metadata
+- Original MR: gt-mr1
+- Branch: polecat/nux/gt-real
+- Conflict with: main@abc123
+- Original issue: gt-real
+- Retry count: 1`}
+
+	if !isConflictTaskForMR(task, "gt-mr1", "gt-real") {
+		t.Fatal("expected task metadata to verify")
+	}
+	if isConflictTaskForMR(task, "gt-other", "gt-real") {
+		t.Fatal("task verified for wrong MR")
+	}
+	if isConflictTaskForMR(task, "gt-mr1", "gt-other") {
+		t.Fatal("task verified for wrong source issue")
+	}
+	if isConflictTaskForMR(task, "gt-mr", "gt-real") {
+		t.Fatal("task verified for MR prefix")
+	}
+	if isConflictTaskForMR(task, "gt-mr1", "gt-rea") {
+		t.Fatal("task verified for source issue prefix")
+	}
+}
+
+func TestEngineerFirstOpenBlockerUsesDependencySemantics(t *testing.T) {
+	e := &Engineer{}
+	tests := []struct {
+		name  string
+		issue *beads.Issue
+		want  string
+	}{
+		{
+			name:  "open blocking dependency blocks",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "gt-blocker", Status: "open", DependencyType: "blocks"}}},
+			want:  "gt-blocker",
+		},
+		{
+			name:  "external blocker ID is normalized",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "external:gt:gt-blocker", Status: "open", DependencyType: "waits-for"}}},
+			want:  "gt-blocker",
+		},
+		{
+			name:  "closed blocking dependency is resolved",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "gt-closed", Status: "closed", DependencyType: "blocks"}}},
+		},
+		{
+			name:  "tombstone blocking dependency is resolved",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "gt-tombstone", Status: "tombstone", DependencyType: "blocks"}}},
+		},
+		{
+			name:  "closed merge-block without merge reason still blocks",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "gt-closed-only", Status: "closed", DependencyType: "merge-blocks"}}},
+			want:  "gt-closed-only",
+		},
+		{
+			name:  "merged merge-block is resolved",
+			issue: &beads.Issue{Dependencies: []beads.IssueDep{{ID: "gt-merged", Status: "closed", DependencyType: "merge-blocks", CloseReason: "Merged in gt-wisp"}}},
+		},
+		{
+			name:  "raw blocked_by fallback uses shared normalization",
+			issue: &beads.Issue{BlockedBy: []string{"external:gt:gt-raw-blocker"}},
+			want:  "gt-raw-blocker",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := e.firstOpenBlocker(tt.issue); got != tt.want {
+				t.Fatalf("firstOpenBlocker() = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestEngineerClearAgentActiveMRUsesTownBeadsDir(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.Skip("test uses Unix shell script mock for bd")
@@ -123,7 +200,7 @@ esac
 	if strings.Contains(logOutput, "env="+rigBeadsDir) {
 		t.Fatalf("refinery active_mr cleanup used rig BEADS_DIR; log:\n%s", logOutput)
 	}
-	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, " show") || !strings.Contains(logOutput, " update") {
+	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, "args=show") || !strings.Contains(logOutput, "args=update") {
 		t.Fatalf("refinery active_mr cleanup did not use town BEADS_DIR; log:\n%s", logOutput)
 	}
 }
@@ -1108,6 +1185,83 @@ func TestNotifyConvoyCompletionParsing(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestEngineerNotifyConvoyCompletion_StampsAndSkipsDuplicate(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("skipping on windows - shell stubs")
+	}
+
+	tmpDir := t.TempDir()
+	townRoot := filepath.Join(tmpDir, "town")
+	rigDir := filepath.Join(townRoot, "testrig")
+	townBeads := filepath.Join(townRoot, ".beads")
+	if err := os.MkdirAll(townBeads, 0755); err != nil {
+		t.Fatalf("mkdir town beads: %v", err)
+	}
+	if err := os.MkdirAll(rigDir, 0755); err != nil {
+		t.Fatalf("mkdir rig: %v", err)
+	}
+
+	binDir := t.TempDir()
+	statePath := filepath.Join(binDir, "notified.state")
+	mailLogPath := filepath.Join(binDir, "mail.log")
+	bdPath := filepath.Join(binDir, "bd")
+	gtPath := filepath.Join(binDir, "gt")
+
+	bdScript := `#!/bin/sh
+STATE="` + statePath + `"
+if [ "$1" = "--allow-stale" ]; then
+  shift
+fi
+case "$1" in
+  version)
+    exit 0
+    ;;
+  show)
+    if [ -f "$STATE" ]; then
+      printf '%s\n' '[{"id":"hq-cv-ref","description":"Owner: mayor/\ncompletion_notified_at: 2026-05-25T02:30:00Z"}]'
+    else
+      printf '%s\n' '[{"id":"hq-cv-ref","description":"Owner: mayor/"}]'
+    fi
+    exit 0
+    ;;
+  update)
+    touch "$STATE"
+    exit 0
+    ;;
+esac
+exit 0
+`
+	if err := os.WriteFile(bdPath, []byte(bdScript), 0755); err != nil {
+		t.Fatalf("write bd stub: %v", err)
+	}
+
+	gtScript := `#!/bin/sh
+if [ "$1" = "mail" ] && [ "$2" = "send" ]; then
+  echo "$@" >> "` + mailLogPath + `"
+fi
+exit 0
+`
+	if err := os.WriteFile(gtPath, []byte(gtScript), 0755); err != nil {
+		t.Fatalf("write gt stub: %v", err)
+	}
+	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+
+	e := NewEngineer(&rig.Rig{Name: "testrig", Path: rigDir})
+	e.notifyConvoyCompletion(townRoot, "hq-cv-ref", "Refinery Duplicate Guard", "Owner: mayor/")
+	e.notifyConvoyCompletion(townRoot, "hq-cv-ref", "Refinery Duplicate Guard", "Owner: mayor/")
+
+	data, err := os.ReadFile(mailLogPath)
+	if err != nil {
+		t.Fatalf("read mail log: %v", err)
+	}
+	if got := strings.Count(string(data), "mail send"); got != 1 {
+		t.Fatalf("mail sends = %d, want 1; log:\n%s", got, string(data))
+	}
+	if _, err := os.Stat(statePath); err != nil {
+		t.Fatalf("completion notification state was not recorded: %v", err)
 	}
 }
 

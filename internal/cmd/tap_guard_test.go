@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -66,15 +65,6 @@ func initTapGuardGitRepo(t *testing.T, origin string) string {
 	runGit(t, dir, "init")
 	runGit(t, dir, "remote", "add", "origin", origin)
 	return dir
-}
-
-func runGit(t *testing.T, dir string, args ...string) {
-	t.Helper()
-	cmd := exec.Command("git", args...)
-	cmd.Dir = dir
-	if out, err := cmd.CombinedOutput(); err != nil {
-		t.Fatalf("git %v failed: %v\n%s", args, err, out)
-	}
 }
 
 func withTapGuardCwd(t *testing.T, dir string) {

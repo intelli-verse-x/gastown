@@ -2962,7 +2962,7 @@ func TestFillRuntimeDefaults(t *testing.T) {
 			Provider:      "codex",
 			Command:       "opencode",
 			Args:          []string{"-m", "gpt-5"},
-			Env:           map[string]string{"OPENCODE_PERMISSION": `{"*":"allow"}`},
+			Env:           map[string]string{"OPENCODE_PERMISSION": `{"*":"allow"}`, "OPENCODE_CONFIG_CONTENT": `{"lsp":false}`},
 			InitialPrompt: "test prompt",
 			PromptMode:    "none",
 			ResolvedAgent: "opencode",
@@ -2993,6 +2993,9 @@ func TestFillRuntimeDefaults(t *testing.T) {
 		}
 		if result.Env["OPENCODE_PERMISSION"] != input.Env["OPENCODE_PERMISSION"] {
 			t.Errorf("Env: got %v, want %v", result.Env, input.Env)
+		}
+		if result.Env["OPENCODE_CONFIG_CONTENT"] != input.Env["OPENCODE_CONFIG_CONTENT"] {
+			t.Errorf("OPENCODE_CONFIG_CONTENT was not preserved: got %v, want %v", result.Env, input.Env)
 		}
 		if result.InitialPrompt != input.InitialPrompt {
 			t.Errorf("InitialPrompt: got %q, want %q", result.InitialPrompt, input.InitialPrompt)
@@ -3582,6 +3585,9 @@ func TestLookupAgentConfigPreservesCustomFields(t *testing.T) {
 	if rc.Env["OPENCODE_PERMISSION"] != `{"*":"allow"}` {
 		t.Errorf("Env was not preserved: got %v", rc.Env)
 	}
+	if rc.Env["OPENCODE_CONFIG_CONTENT"] != `{"lsp":true}` {
+		t.Errorf("OpenCode LSP default missing: got %v", rc.Env)
+	}
 	if rc.Tmux == nil || len(rc.Tmux.ProcessNames) != 2 {
 		t.Errorf("Tmux.ProcessNames not preserved: got %+v", rc.Tmux)
 	}
@@ -3676,6 +3682,76 @@ func TestBuildCommandWithPromptNoWarnOnEmptyPrompt(t *testing.T) {
 	}
 }
 
+func TestCodexBuildCommandWithPromptIncludesBootstrapPrompt(t *testing.T) {
+	rc := RuntimeConfigFromPreset(AgentCodex)
+
+	var cmd string
+	stderr := captureStderr(t, func() {
+		cmd = rc.BuildCommandWithPrompt("bootstrap now")
+	})
+
+	if stderr != "" {
+		t.Errorf("no warning expected for codex prompt delivery, got: %q", stderr)
+	}
+	if !strings.Contains(cmd, "bootstrap now") {
+		t.Errorf("codex startup command should include bootstrap prompt, got: %s", cmd)
+	}
+	if !strings.Contains(cmd, codexUpdateCheckConfig) {
+		t.Errorf("codex startup command should suppress update checks, got: %s", cmd)
+	}
+}
+
+func TestFillRuntimeDefaultsCodexCustomArgsSuppressesUpdateCheck(t *testing.T) {
+	rc := fillRuntimeDefaults(&RuntimeConfig{
+		Provider: "codex",
+		Command:  "codex",
+		Args:     []string{"--profile", "fast"},
+	})
+
+	args := strings.Join(rc.Args, " ")
+	if !strings.Contains(args, codexUpdateCheckConfig) {
+		t.Fatalf("codex custom args missing update suppression: %v", rc.Args)
+	}
+	if strings.Count(args, "check_for_update_on_startup") != 1 {
+		t.Fatalf("codex update suppression duplicated: %v", rc.Args)
+	}
+}
+
+func TestFillRuntimeDefaultsCodexDoesNotOverrideExplicitUpdateCheck(t *testing.T) {
+	rc := fillRuntimeDefaults(&RuntimeConfig{
+		Provider: "codex",
+		Command:  "codex",
+		Args:     []string{"-c", "check_for_update_on_startup=true"},
+	})
+
+	args := strings.Join(rc.Args, " ")
+	if strings.Count(args, "check_for_update_on_startup") != 1 {
+		t.Fatalf("explicit codex update config should not be duplicated: %v", rc.Args)
+	}
+	if !strings.Contains(args, "check_for_update_on_startup=true") {
+		t.Fatalf("explicit codex update config should be preserved: %v", rc.Args)
+	}
+}
+
+func TestFillRuntimeDefaultsCodexIgnoresUnrelatedUpdateCheckSubstring(t *testing.T) {
+	rc := fillRuntimeDefaults(&RuntimeConfig{
+		Provider: "codex",
+		Command:  "codex",
+		Args:     []string{"--profile=check_for_update_on_startup-note"},
+	})
+
+	found := false
+	for _, arg := range rc.Args {
+		if arg == codexUpdateCheckConfig {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("codex update suppression should be injected despite unrelated substring: %v", rc.Args)
+	}
+}
+
 // TestBuildArgsWithPromptWarnsOnDroppedPrompt verifies the parallel warning in
 // BuildArgsWithPrompt when PromptMode is "none" and a non-empty prompt is provided.
 func TestBuildArgsWithPromptWarnsOnDroppedPrompt(t *testing.T) {
@@ -3718,7 +3794,7 @@ func TestBuildArgsWithPromptWarnsOnDroppedPrompt(t *testing.T) {
 //	      "command": "opencode",
 //	      "args": ["-m", "openai/gpt-5.2-codex"],
 //	      "prompt_mode": "none",
-//	      "process_names": ["opencode", "node"],
+//	      "process_names": ["opencode", "node", "bun"],
 //	      "env": {
 //	        "OPENCODE_PERMISSION": "{\"*\":\"allow\"}"
 //	      }

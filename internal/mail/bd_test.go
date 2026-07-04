@@ -1,11 +1,16 @@
 package mail
 
 import (
+	"context"
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
+
+	"github.com/steveyegge/gastown/internal/beads"
 )
 
 func TestBdError_Error(t *testing.T) {
@@ -166,6 +171,65 @@ func TestBdError_ImplementsErrorInterface(t *testing.T) {
 	_ = err.Error() // Should compile and not panic
 }
 
+func TestParseBeadsListOutput(t *testing.T) {
+	created := time.Date(2026, 6, 12, 12, 0, 0, 0, time.UTC)
+	valid, err := json.Marshal([]BeadsMessage{{
+		ID:        "msg-1",
+		Title:     "Hello",
+		Status:    "open",
+		Priority:  2,
+		CreatedAt: created,
+		Labels:    []string{"gt:message", "from:mayor/"},
+	}})
+	if err != nil {
+		t.Fatalf("marshal valid message: %v", err)
+	}
+
+	tests := []struct {
+		name    string
+		input   []byte
+		wantLen int
+		wantErr bool
+	}{
+		{name: "empty", input: nil},
+		{name: "plain no issues", input: []byte("No issues found.\n")},
+		{name: "null", input: []byte("null\n")},
+		{name: "empty array", input: []byte("[]\n")},
+		{name: "valid array", input: valid, wantLen: 1},
+		{name: "non json", input: []byte("warning: no rows")},
+		{name: "malformed json", input: []byte("[{bad json]"), wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := parseBeadsListOutput(tt.input)
+			if (err != nil) != tt.wantErr {
+				t.Fatalf("parseBeadsListOutput() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if len(got) != tt.wantLen {
+				t.Fatalf("parseBeadsListOutput() returned %d messages, want %d", len(got), tt.wantLen)
+			}
+		})
+	}
+
+	got, err := parseBeadsListOutput(valid)
+	if err != nil {
+		t.Fatalf("parse valid output: %v", err)
+	}
+	if len(got) != 1 {
+		t.Fatalf("parse valid output returned %d messages, want 1", len(got))
+	}
+	if got[0].ID != "msg-1" || got[0].Title != "Hello" || got[0].Status != "open" || got[0].Priority != 2 {
+		t.Fatalf("parse valid output returned unexpected message: %#v", got[0])
+	}
+	if !got[0].CreatedAt.Equal(created) {
+		t.Fatalf("CreatedAt = %v, want %v", got[0].CreatedAt, created)
+	}
+	if len(got[0].Labels) != 2 || got[0].Labels[0] != "gt:message" || got[0].Labels[1] != "from:mayor/" {
+		t.Fatalf("Labels = %#v, want gt:message/from:mayor/", got[0].Labels)
+	}
+}
+
 func TestBdError_WithAllFields(t *testing.T) {
 	originalErr := errors.New("original error")
 	bdErr := &bdError{
@@ -238,7 +302,10 @@ func TestBdSubprocessEnv_DoesNotMutateBaseEnv(t *testing.T) {
 }
 
 func TestBdSubprocessEnv_FiltersStaleBdTargetEnv(t *testing.T) {
-	beadsDir := t.TempDir()
+	beadsDir := filepath.Join(t.TempDir(), ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
 	metadata := []byte(`{"dolt_database":"rigdb"}`)
 	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), metadata, 0644); err != nil {
 		t.Fatal(err)
@@ -260,8 +327,8 @@ func TestBdSubprocessEnv_FiltersStaleBdTargetEnv(t *testing.T) {
 	if !envContains(got, "BEADS_DIR="+beadsDir) {
 		t.Fatalf("expected current BEADS_DIR in env, got %v", got)
 	}
-	if !envContains(got, "BEADS_DOLT_SERVER_DATABASE=rigdb") {
-		t.Fatalf("expected metadata database env in env, got %v", got)
+	if value, ok := envLastValue(got, "BEADS_DOLT_SERVER_DATABASE"); !ok || value != "rigdb" {
+		t.Fatalf("database selector = %q present=%v, want rigdb in %v", value, ok, got)
 	}
 	for _, want := range []string{"BD_READONLY=true", "BD_DOLT_AUTO_COMMIT=off", "BD_EXPORT_AUTO=false", "BD_BACKUP_ENABLED=false", "BD_DOLT_AUTO_PUSH=false", "BD_NO_PUSH=true", "BD_EXPORT_GIT_ADD=false", "BD_NO_GIT_OPS=true"} {
 		if !envContains(got, want) {
@@ -289,7 +356,7 @@ func TestBdSubprocessEnv_ReadonlyCannotBeOverridden(t *testing.T) {
 	}
 }
 
-func TestIsMailBdReadCommand(t *testing.T) {
+func TestArgsAreReadOnlyForMailCommands(t *testing.T) {
 	tests := []struct {
 		args []string
 		want bool
@@ -297,10 +364,10 @@ func TestIsMailBdReadCommand(t *testing.T) {
 		{[]string{"list", "--json"}, true},
 		{[]string{"show", "hq-abc"}, true},
 		{[]string{"sql", "--json", "SELECT * FROM wisps"}, true},
-		{[]string{"sql", "--json", "WITH x AS (SELECT 1) SELECT * FROM x"}, true},
 		{[]string{"mol", "wisp", "list", "--json"}, true},
 		{[]string{"message", "thread", "hq-abc", "--json"}, true},
 		{[]string{"sql", "UPDATE issues SET status='closed'"}, false},
+		{[]string{"sql", "--json", "WITH x AS (SELECT 1) SELECT * FROM x"}, false},
 		{[]string{"mol", "wisp", "create", "mol-test"}, false},
 		{[]string{"message", "send", "mayor", "--body", "hi"}, false},
 		{[]string{"create", "title"}, false},
@@ -308,8 +375,54 @@ func TestIsMailBdReadCommand(t *testing.T) {
 		{[]string{"label", "add", "hq-abc", "read"}, false},
 	}
 	for _, tt := range tests {
-		if got := isMailBdReadCommand(tt.args); got != tt.want {
-			t.Fatalf("isMailBdReadCommand(%v) = %v, want %v", tt.args, got, tt.want)
+		if got := beads.ArgsAreReadOnly(tt.args); got != tt.want {
+			t.Fatalf("beads.ArgsAreReadOnly(%v) = %v, want %v", tt.args, got, tt.want)
+		}
+	}
+}
+
+func TestRunBdCommandUsesCentralEnvPolicy(t *testing.T) {
+	binDir := t.TempDir()
+	logPath := filepath.Join(t.TempDir(), "bd.log")
+	writeMailBDStub(t, binDir)
+	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+	t.Setenv("BD_STUB_LOG", logPath)
+	t.Setenv("BEADS_DIR", "/wrong")
+	t.Setenv("BEADS_DOLT_SERVER_DATABASE", "wrongdb")
+	t.Setenv("BD_READONLY", "false")
+	t.Setenv("BD_DOLT_AUTO_COMMIT", "on")
+
+	beadsDir := filepath.Join(t.TempDir(), ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), []byte(`{"dolt_database":"maildb"}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	workDir := filepath.Dir(beadsDir)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if _, err := runBdCommand(ctx, []string{"list", "--json"}, workDir, beadsDir, "BD_IDENTITY=gastown/chrome", "BD_READONLY=false", "BD_DOLT_AUTO_COMMIT=on"); err != nil {
+		t.Fatalf("run read bd command: %v", err)
+	}
+	readLog := readStubLog(t, logPath)
+	for _, want := range []string{"args:[list][--json][--flat]", "BD_READONLY=true", "BD_DOLT_AUTO_COMMIT=off", "BEADS_NO_AUTO_IMPORT=1", "BD_IDENTITY=gastown/chrome", "BEADS_DIR=" + beadsDir, "BEADS_DOLT_SERVER_DATABASE=maildb"} {
+		if !strings.Contains(readLog, want) {
+			t.Fatalf("read command log missing %q:\n%s", want, readLog)
+		}
+	}
+
+	if err := os.WriteFile(logPath, nil, 0644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := runBdCommand(ctx, []string{"label", "add", "hq-msg", "read"}, workDir, beadsDir, "BD_IDENTITY=gastown/chrome", "BD_READONLY=true", "BD_DOLT_AUTO_COMMIT=off"); err != nil {
+		t.Fatalf("run write bd command: %v", err)
+	}
+	writeLog := readStubLog(t, logPath)
+	for _, want := range []string{"args:[label][add][hq-msg][read]", "\nBD_READONLY=\n", "BD_DOLT_AUTO_COMMIT=on", "BEADS_NO_AUTO_IMPORT=1", "BD_IDENTITY=gastown/chrome", "BEADS_DIR=" + beadsDir, "BEADS_DOLT_SERVER_DATABASE=maildb"} {
+		if !strings.Contains(writeLog, want) {
+			t.Fatalf("write command log missing %q:\n%s", want, writeLog)
 		}
 	}
 }
@@ -338,6 +451,38 @@ func TestBdSubprocessEnv_AllowsRoutingWhenBeadsDirEmpty(t *testing.T) {
 	if !envContains(got, "BEADS_DOLT_SERVER_HOST=127.0.0.2") || !envContains(got, "BEADS_DOLT_SERVER_PORT=5507") || !envContains(got, "BEADS_DOLT_PORT=5507") {
 		t.Fatalf("expected GT_DOLT host/port fallback for routed command, got %v", got)
 	}
+}
+
+func writeMailBDStub(t *testing.T, binDir string) {
+	t.Helper()
+	script := `#!/usr/bin/env sh
+{
+	printf 'args:'
+	for arg in "$@"; do
+		printf '[%s]' "$arg"
+	done
+	printf '\n'
+	printf 'BD_READONLY=%s\n' "${BD_READONLY-}"
+	printf 'BD_DOLT_AUTO_COMMIT=%s\n' "${BD_DOLT_AUTO_COMMIT-}"
+	printf 'BEADS_NO_AUTO_IMPORT=%s\n' "${BEADS_NO_AUTO_IMPORT-}"
+	printf 'BD_IDENTITY=%s\n' "${BD_IDENTITY-}"
+	printf 'BEADS_DIR=%s\n' "${BEADS_DIR-}"
+	printf 'BEADS_DOLT_SERVER_DATABASE=%s\n' "${BEADS_DOLT_SERVER_DATABASE-}"
+} >> "$BD_STUB_LOG"
+printf '[]\n'
+`
+	if err := os.WriteFile(filepath.Join(binDir, "bd"), []byte(script), 0755); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func readStubLog(t *testing.T, path string) string {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(data)
 }
 
 func envContains(env []string, kv string) bool {

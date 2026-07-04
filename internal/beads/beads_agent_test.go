@@ -348,6 +348,27 @@ func TestMergeAgentBeadSources(t *testing.T) {
 	})
 }
 
+func TestLabelsForAgentBeadReusePreservesOnlySafetyStop(t *testing.T) {
+	got := labelsForAgentBeadReuse([]string{
+		"gt:agent",
+		"heartbeat:123",
+		"idle:2",
+		"done-intent:COMPLETED:123",
+		"safety_stop:hq-vmrwr",
+		"safety_stop:hq-vmrwr",
+		"safety_stop:hq-other",
+	})
+	want := []string{"gt:agent", "safety_stop:hq-vmrwr", "safety_stop:hq-other"}
+	if len(got) != len(want) {
+		t.Fatalf("labels = %v, want %v", got, want)
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			t.Fatalf("labels = %v, want %v", got, want)
+		}
+	}
+}
+
 func installMockBDCreateRecorder(t *testing.T, logPath string) {
 	t.Helper()
 
@@ -543,7 +564,7 @@ esac
 	if strings.Contains(logOutput, "beads_dir="+rigBeadsDir) {
 		t.Fatalf("CreateOrReopenAgentBead used rig BEADS_DIR; log:\n%s", logOutput)
 	}
-	if !strings.Contains(logOutput, "beads_dir="+townBeadsDir) || !strings.Contains(logOutput, " show") || !strings.Contains(logOutput, " update") {
+	if !strings.Contains(logOutput, "beads_dir="+townBeadsDir) || !strings.Contains(logOutput, "args=show") || !strings.Contains(logOutput, "args=update") {
 		t.Fatalf("CreateOrReopenAgentBead did not use town BEADS_DIR for existing bead path; log:\n%s", logOutput)
 	}
 }

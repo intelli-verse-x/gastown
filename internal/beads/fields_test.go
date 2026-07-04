@@ -81,6 +81,68 @@ func TestSetAttachmentFieldsPreservesMode(t *testing.T) {
 	}
 }
 
+func TestAttachmentFormulaVarsRoundTrip(t *testing.T) {
+	fields := &AttachmentFields{
+		AttachedFormula: "mol-polecat-work",
+		FormulaVars:     "feature=Bug to fix\nissue=gt-abc123\nbase_branch=main",
+	}
+
+	formatted := FormatAttachmentFields(fields)
+	if !strings.Contains(formatted, `formula_vars: ["feature=Bug to fix","issue=gt-abc123","base_branch=main"]`) {
+		t.Fatalf("formula_vars should use single-line JSON array, got:\n%s", formatted)
+	}
+	if strings.Contains(formatted, "\nissue=gt-abc123") {
+		t.Fatalf("formula_vars leaked continuation lines:\n%s", formatted)
+	}
+
+	parsed := ParseAttachmentFields(&Issue{Description: formatted})
+	if parsed == nil {
+		t.Fatal("round-trip parse returned nil")
+	}
+	want := "feature=Bug to fix\nissue=gt-abc123\nbase_branch=main"
+	if parsed.FormulaVars != want {
+		t.Fatalf("FormulaVars = %q, want %q", parsed.FormulaVars, want)
+	}
+}
+
+func TestParseAttachmentFieldsDoesNotConsumeAdjacentKeyValueLines(t *testing.T) {
+	desc := "formula_vars: feature=Bug to fix\nissue=gt-abc123\nbase_branch=main\nexample=value\nmode: ralph"
+	fields := ParseAttachmentFields(&Issue{Description: desc})
+	if fields == nil {
+		t.Fatal("ParseAttachmentFields returned nil")
+	}
+	want := "feature=Bug to fix"
+	if fields.FormulaVars != want {
+		t.Fatalf("FormulaVars = %q, want %q", fields.FormulaVars, want)
+	}
+	for _, adjacent := range []string{"issue=gt-abc123", "base_branch=main", "example=value"} {
+		if strings.Contains(fields.FormulaVars, adjacent) {
+			t.Fatalf("adjacent key=value line should not be parsed as formula var: %q", fields.FormulaVars)
+		}
+	}
+	if fields.Mode != "ralph" {
+		t.Fatalf("Mode = %q, want ralph", fields.Mode)
+	}
+}
+
+func TestSetAttachmentFieldsPreservesAdjacentKeyValueLines(t *testing.T) {
+	issue := &Issue{Description: "formula_vars: old=1\nissue=old\nbase_branch=old\nexample=value\n\nBody"}
+	fields := &AttachmentFields{FormulaVars: "feature=New\nissue=gt-new"}
+
+	newDesc := SetAttachmentFields(issue, fields)
+	if !strings.Contains(newDesc, `formula_vars: ["feature=New","issue=gt-new"]`) {
+		t.Fatalf("new formula_vars missing, got:\n%s", newDesc)
+	}
+	for _, adjacent := range []string{"issue=old", "base_branch=old", "example=value"} {
+		if !strings.Contains(newDesc, adjacent) {
+			t.Fatalf("adjacent key=value line %q should be preserved, got:\n%s", adjacent, newDesc)
+		}
+	}
+	if !strings.Contains(newDesc, "Body") {
+		t.Fatalf("prose should be preserved, got:\n%s", newDesc)
+	}
+}
+
 // --- AgentFields Mode round-trip ---
 
 func TestAgentFieldsModeRoundTrip(t *testing.T) {
@@ -348,10 +410,11 @@ func TestSetConvoyFields(t *testing.T) {
 
 func TestConvoyFieldsParseFormatRoundTrip(t *testing.T) {
 	original := &ConvoyFields{
-		Owner:    "mayor/",
-		Notify:   "witness/",
-		Merge:    "direct",
-		Molecule: "gt-wisp-abc",
+		Owner:                "mayor/",
+		Notify:               "witness/",
+		Merge:                "direct",
+		Molecule:             "gt-wisp-abc",
+		CompletionNotifiedAt: "2026-05-25T02:30:00Z",
 	}
 	formatted := FormatConvoyFields(original)
 	parsed := ParseConvoyFields(&Issue{Description: formatted})
@@ -369,6 +432,9 @@ func TestConvoyFieldsParseFormatRoundTrip(t *testing.T) {
 	}
 	if parsed.Molecule != original.Molecule {
 		t.Errorf("Molecule: got %q, want %q", parsed.Molecule, original.Molecule)
+	}
+	if parsed.CompletionNotifiedAt != original.CompletionNotifiedAt {
+		t.Errorf("CompletionNotifiedAt: got %q, want %q", parsed.CompletionNotifiedAt, original.CompletionNotifiedAt)
 	}
 }
 
@@ -406,7 +472,7 @@ func TestSetConvoyFieldsWithMixedContent(t *testing.T) {
 // --- ParseAgentFields (not covered in beads_test.go) ---
 
 func TestParseAgentFields_AllFields(t *testing.T) {
-	desc := "role_type: polecat\nrig: gastown\nagent_state: working\nhook_bead: gt-abc\ncleanup_status: clean\nactive_mr: gt-mr1\nnotification_level: verbose"
+	desc := "role_type: polecat\nrig: gastown\nagent_state: working\nhook_bead: gt-abc\ncleanup_status: clean\nactive_mr: gt-mr1\nlast_source_issue: gt-src\nnotification_level: verbose"
 	got := ParseAgentFields(desc)
 	if got.RoleType != "polecat" {
 		t.Errorf("RoleType = %q, want %q", got.RoleType, "polecat")
@@ -426,6 +492,9 @@ func TestParseAgentFields_AllFields(t *testing.T) {
 	if got.ActiveMR != "gt-mr1" {
 		t.Errorf("ActiveMR = %q, want %q", got.ActiveMR, "gt-mr1")
 	}
+	if got.LastSourceIssue != "gt-src" {
+		t.Errorf("LastSourceIssue = %q, want %q", got.LastSourceIssue, "gt-src")
+	}
 	if got.NotificationLevel != "verbose" {
 		t.Errorf("NotificationLevel = %q, want %q", got.NotificationLevel, "verbose")
 	}
@@ -435,15 +504,16 @@ func TestParseAgentFields_AllFields(t *testing.T) {
 
 func TestAgentFieldsCompletionMetadataRoundTrip(t *testing.T) {
 	original := &AgentFields{
-		RoleType:       "polecat",
-		Rig:            "gastown",
-		AgentState:     "done",
-		HookBead:       "gt-abc",
-		ExitType:       "COMPLETED",
-		MRID:           "gt-mr-xyz",
-		Branch:         "polecat/nux/gt-abc@hash",
-		MRFailed:       false,
-		CompletionTime: "2026-02-28T01:00:00Z",
+		RoleType:        "polecat",
+		Rig:             "gastown",
+		AgentState:      "done",
+		HookBead:        "gt-abc",
+		ExitType:        "COMPLETED",
+		MRID:            "gt-mr-xyz",
+		Branch:          "polecat/nux/gt-abc@hash",
+		LastSourceIssue: "gt-abc",
+		MRFailed:        false,
+		CompletionTime:  "2026-02-28T01:00:00Z",
 	}
 
 	formatted := FormatAgentDescription("Polecat nux", original)
@@ -457,6 +527,9 @@ func TestAgentFieldsCompletionMetadataRoundTrip(t *testing.T) {
 	}
 	if !strings.Contains(formatted, "branch: polecat/nux/gt-abc@hash") {
 		t.Errorf("missing branch in formatted output:\n%s", formatted)
+	}
+	if !strings.Contains(formatted, "last_source_issue: gt-abc") {
+		t.Errorf("missing last_source_issue in formatted output:\n%s", formatted)
 	}
 	if !strings.Contains(formatted, "completion_time: 2026-02-28T01:00:00Z") {
 		t.Errorf("missing completion_time in formatted output:\n%s", formatted)
@@ -476,6 +549,9 @@ func TestAgentFieldsCompletionMetadataRoundTrip(t *testing.T) {
 	}
 	if parsed.Branch != "polecat/nux/gt-abc@hash" {
 		t.Errorf("Branch: got %q, want %q", parsed.Branch, "polecat/nux/gt-abc@hash")
+	}
+	if parsed.LastSourceIssue != "gt-abc" {
+		t.Errorf("LastSourceIssue: got %q, want %q", parsed.LastSourceIssue, "gt-abc")
 	}
 	if parsed.MRFailed != false {
 		t.Errorf("MRFailed: got %v, want false", parsed.MRFailed)
@@ -521,7 +597,7 @@ func TestAgentFieldsCompletionOmittedWhenEmpty(t *testing.T) {
 	}
 
 	formatted := FormatAgentDescription("Polecat nux", fields)
-	for _, keyword := range []string{"exit_type:", "mr_id:", "branch:", "mr_failed:", "completion_time:"} {
+	for _, keyword := range []string{"exit_type:", "mr_id:", "branch:", "last_source_issue:", "mr_failed:", "completion_time:"} {
 		if strings.Contains(formatted, keyword) {
 			t.Errorf("empty completion field %q should not appear in output:\n%s", keyword, formatted)
 		}
@@ -529,7 +605,7 @@ func TestAgentFieldsCompletionOmittedWhenEmpty(t *testing.T) {
 }
 
 func TestParseAgentFields_WithCompletionMetadata(t *testing.T) {
-	desc := "role_type: polecat\nrig: gastown\nagent_state: done\nhook_bead: gt-abc\nexit_type: ESCALATED\nbranch: polecat/nux/gt-abc@hash\nmr_failed: true\ncompletion_time: 2026-02-28T02:00:00Z"
+	desc := "role_type: polecat\nrig: gastown\nagent_state: done\nhook_bead: gt-abc\nexit_type: ESCALATED\nbranch: polecat/nux/gt-abc@hash\nlast_source_issue: gt-abc\nmr_failed: true\ncompletion_time: 2026-02-28T02:00:00Z"
 	got := ParseAgentFields(desc)
 	if got.ExitType != "ESCALATED" {
 		t.Errorf("ExitType = %q, want %q", got.ExitType, "ESCALATED")
@@ -539,6 +615,9 @@ func TestParseAgentFields_WithCompletionMetadata(t *testing.T) {
 	}
 	if !got.MRFailed {
 		t.Errorf("MRFailed = false, want true")
+	}
+	if got.LastSourceIssue != "gt-abc" {
+		t.Errorf("LastSourceIssue = %q, want %q", got.LastSourceIssue, "gt-abc")
 	}
 	if got.CompletionTime != "2026-02-28T02:00:00Z" {
 		t.Errorf("CompletionTime = %q, want %q", got.CompletionTime, "2026-02-28T02:00:00Z")

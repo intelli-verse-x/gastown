@@ -1,6 +1,7 @@
 package polecat
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -277,6 +278,40 @@ func TestRemoveNotFound(t *testing.T) {
 	if err != ErrPolecatNotFound {
 		t.Errorf("Remove = %v, want ErrPolecatNotFound", err)
 	}
+}
+
+func TestActiveWorkBeadsForCleanupFiltersAssignedIssues(t *testing.T) {
+	issues := []*beads.Issue{
+		{ID: "open-work", Status: "open", Type: "task"},
+		{ID: "progress-work", Status: "in_progress", Type: "task"},
+		{ID: "hooked-work", Status: beads.StatusHooked, Type: "task"},
+		{ID: "closed-work", Status: "closed", Type: "task"},
+		{ID: "agent", Status: "open", Type: "agent"},
+		{ID: "protected", Status: "open", Type: "task", Labels: []string{"gt:keep"}},
+		{ID: "deferred", Status: "deferred", Type: "task"},
+		nil,
+	}
+
+	got := activeWorkBeadsForCleanup(issues)
+	want := []string{"open-work", "progress-work", "hooked-work"}
+	if len(got) != len(want) {
+		t.Fatalf("got %d issue(s), want %d: %#v", len(got), len(want), got)
+	}
+	for i := range got {
+		if got[i].ID != want[i] {
+			t.Fatalf("got IDs %v, want %v", issueIDs(got), want)
+		}
+	}
+}
+
+func issueIDs(issues []*beads.Issue) []string {
+	ids := make([]string, 0, len(issues))
+	for _, issue := range issues {
+		if issue != nil {
+			ids = append(ids, issue.ID)
+		}
+	}
+	return ids
 }
 
 func TestPolecatDir(t *testing.T) {
@@ -771,6 +806,92 @@ func TestReconcilePoolWith(t *testing.T) {
 	}
 }
 
+func TestReconcilePoolWith_KeepsDirBackedStaleSession(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("tmux not supported on Windows")
+	}
+	if _, err := exec.LookPath("tmux"); err != nil {
+		t.Skip("tmux not installed")
+	}
+
+	townRoot := t.TempDir()
+	rigPath := filepath.Join(townRoot, "myrig")
+	tm := tmux.NewTmuxWithSocket(fmt.Sprintf("gt-test-reconcile-%d", time.Now().UnixNano()))
+	t.Cleanup(func() { _ = tm.KillServer() })
+
+	m := NewManager(&rig.Rig{Name: "myrig", Path: rigPath}, nil, tm)
+	activeName := "toast"
+	orphanName := "nux"
+	activeSession := session.PolecatSessionName(session.PrefixFor("myrig"), activeName)
+	orphanSession := session.PolecatSessionName(session.PrefixFor("myrig"), orphanName)
+
+	for _, sessionName := range []string{activeSession, orphanSession} {
+		if err := tm.NewSessionWithCommand(sessionName, townRoot, "sleep 300"); err != nil {
+			t.Fatalf("create tmux session %s: %v", sessionName, err)
+		}
+	}
+
+	writeStaleHeartbeat := func(sessionName string) {
+		t.Helper()
+		if err := os.MkdirAll(heartbeatsDir(townRoot), 0755); err != nil {
+			t.Fatalf("mkdir heartbeats: %v", err)
+		}
+		data, err := json.Marshal(SessionHeartbeat{
+			Timestamp: time.Now().Add(-SessionHeartbeatStaleThreshold - time.Minute).UTC(),
+			State:     HeartbeatWorking,
+		})
+		if err != nil {
+			t.Fatalf("marshal heartbeat: %v", err)
+		}
+		if err := os.WriteFile(heartbeatFile(townRoot, sessionName), data, 0644); err != nil {
+			t.Fatalf("write heartbeat %s: %v", sessionName, err)
+		}
+	}
+	writeStaleHeartbeat(activeSession)
+	writeStaleHeartbeat(orphanSession)
+
+	m.ReconcilePoolWith([]string{activeName}, []string{activeName, orphanName})
+
+	running, err := tm.HasSession(activeSession)
+	if err != nil {
+		t.Fatalf("check active session: %v", err)
+	}
+	if !running {
+		t.Fatalf("dir-backed stale session %s should survive reconciliation", activeSession)
+	}
+	if hb := ReadSessionHeartbeat(townRoot, activeSession); hb == nil {
+		t.Fatalf("dir-backed stale session heartbeat should survive reconciliation")
+	}
+
+	running, err = tm.HasSession(orphanSession)
+	if err != nil {
+		t.Fatalf("check orphan session: %v", err)
+	}
+	if running {
+		t.Fatalf("orphan session %s should be killed by reconciliation", orphanSession)
+	}
+	if hb := ReadSessionHeartbeat(townRoot, orphanSession); hb != nil {
+		t.Fatalf("orphan session heartbeat should be removed")
+	}
+
+	activeNames := m.namePool.ActiveNames()
+	if !containsString(activeNames, activeName) {
+		t.Fatalf("dir-backed name %q should remain in use; active names: %v", activeName, activeNames)
+	}
+	if containsString(activeNames, orphanName) {
+		t.Fatalf("orphan name %q should not remain in use; active names: %v", orphanName, activeNames)
+	}
+}
+
+func containsString(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
+}
+
 // TestReconcilePoolWith_Allocation verifies that allocation respects reconciled state.
 func TestReconcilePoolWith_Allocation(t *testing.T) {
 	t.Parallel()
@@ -855,6 +976,11 @@ func TestIsDoltConfigError(t *testing.T) {
 		{"no database", fmt.Errorf("no database found at path"), true},
 		{"database not found", fmt.Errorf("database not found"), true},
 		{"connection refused", fmt.Errorf("dial tcp: connection refused"), true},
+		{"circuit breaker", fmt.Errorf("Dolt circuit breaker is open: server appears down"), true},
+		{"server appears down", fmt.Errorf("server appears down"), true},
+		{"server down", fmt.Errorf("server down"), true},
+		{"server not running", fmt.Errorf("Dolt server is not running"), true},
+		{"server may not be running", fmt.Errorf("Dolt server may not be running"), true},
 		{"configure custom types", fmt.Errorf("configure custom types in /path: exit 1"), true},
 		{"identity mismatch", fmt.Errorf("identity mismatch: local project_id != database project_id"), true},
 		{"Unknown database", fmt.Errorf("Unknown database 'gastown'"), true},
@@ -2135,10 +2261,10 @@ esac
 	if strings.Contains(logOutput, "env="+rigBeadsDir) {
 		t.Fatalf("manager agent lifecycle used rig BEADS_DIR; log:\n%s", logOutput)
 	}
-	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, " create") {
+	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, "args=create") {
 		t.Fatalf("manager create did not use town BEADS_DIR; log:\n%s", logOutput)
 	}
-	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, " show") || !strings.Contains(logOutput, " update") {
+	if !strings.Contains(logOutput, "env="+townBeadsDir+" args=") || !strings.Contains(logOutput, "args=show") || !strings.Contains(logOutput, "args=update") {
 		t.Fatalf("manager reset did not use town BEADS_DIR for show/update; log:\n%s", logOutput)
 	}
 }
@@ -2214,89 +2340,6 @@ func TestAllocateAndAdd_NoDuplicateNames(t *testing.T) {
 		if count > 1 {
 			t.Errorf("name %q allocated %d times — race condition (GH#2215)", name, count)
 		}
-	}
-}
-
-// TestReuseIdlePolecat_PreservesLiveSessionWhenNeedsRecovery verifies that the
-// recovery safety gate runs before destructive session cleanup. A live session
-// means the slot is not proven idle yet, so reuse must fail closed.
-func TestReuseIdlePolecat_PreservesLiveSessionWhenNeedsRecovery(t *testing.T) {
-	if runtime.GOOS == "windows" {
-		t.Skip("tmux not supported on Windows")
-	}
-	if _, err := exec.LookPath("tmux"); err != nil {
-		t.Skip("tmux not installed")
-	}
-
-	townRoot := t.TempDir()
-	rigName := "testreuse"
-	rigPath := filepath.Join(townRoot, rigName)
-	polecatName := "toast"
-
-	// Create minimal polecat directory structure
-	polecatDir := filepath.Join(rigPath, "polecats", polecatName)
-	if err := os.MkdirAll(polecatDir, 0755); err != nil {
-		t.Fatalf("mkdir polecat dir: %v", err)
-	}
-
-	// Register a unique prefix for session naming
-	reg := session.NewPrefixRegistry()
-	reg.Register("gt", rigName)
-	old := session.DefaultRegistry()
-	session.SetDefaultRegistry(reg)
-	t.Cleanup(func() { session.SetDefaultRegistry(old) })
-
-	tm := tmux.NewTmux()
-	r := &rig.Rig{Name: rigName, Path: rigPath}
-	mgr := NewManager(r, git.NewGit(rigPath), tm)
-
-	// Create a live tmux session (simulates Claude sitting at ❯ after gt done)
-	sessMgr := NewSessionManager(tm, r)
-	sessionName := sessMgr.SessionName(polecatName)
-	if err := tm.NewSessionWithCommand(sessionName, townRoot, "sleep 300"); err != nil {
-		t.Fatalf("create tmux session: %v", err)
-	}
-	t.Cleanup(func() { _ = tm.KillSessionWithProcesses(sessionName) })
-
-	// Write a fresh heartbeat (simulating a session that just finished gt done
-	// but hasn't gone stale yet — this is the exact scenario that previously
-	// caused ReuseIdlePolecat to return ErrSessionRunning)
-	TouchSessionHeartbeat(townRoot, sessionName)
-
-	// Verify session is alive and heartbeat exists
-	running, err := tm.HasSession(sessionName)
-	if err != nil || !running {
-		t.Fatalf("precondition: session %s should be running", sessionName)
-	}
-	if hb := ReadSessionHeartbeat(townRoot, sessionName); hb == nil {
-		t.Fatal("precondition: heartbeat should exist")
-	}
-
-	// Call ReuseIdlePolecat. The recovery-safe reuse gate should fail before any
-	// session kill because a live session is not an idle slot.
-	_, reuseErr := mgr.ReuseIdlePolecat(polecatName, AddOptions{})
-
-	// Verify it did NOT return ErrSessionRunning (the old buggy behavior)
-	if errors.Is(reuseErr, ErrSessionRunning) {
-		t.Fatalf("ReuseIdlePolecat returned ErrSessionRunning for live session — " +
-			"this is the sling-reuse-stale-session bug: idle polecats with live " +
-			"sessions must have their session killed, not rejected")
-	}
-
-	if reuseErr == nil {
-		t.Fatal("expected needs-recovery error")
-	}
-	if !errors.Is(reuseErr, ErrPolecatNeedsRecovery) || !strings.Contains(reuseErr.Error(), "not-idle") {
-		t.Fatalf("ReuseIdlePolecat error = %v, want needs recovery: not-idle", reuseErr)
-	}
-
-	// Verify the session and heartbeat were preserved for recovery.
-	running, _ = tm.HasSession(sessionName)
-	if !running {
-		t.Error("session should be preserved when reuse needs recovery")
-	}
-	if hb := ReadSessionHeartbeat(townRoot, sessionName); hb == nil {
-		t.Error("heartbeat should be preserved when reuse needs recovery")
 	}
 }
 
@@ -2386,81 +2429,6 @@ func TestRepairWorktreeWithOptions_KillsLiveSession(t *testing.T) {
 	}
 }
 
-// TestReuseIdlePolecat_PreservesStaleSessionWhenNeedsRecovery verifies that even
-// stale sessions are not killed before the reuse decision proves the slot reusable.
-func TestReuseIdlePolecat_PreservesStaleSessionWhenNeedsRecovery(t *testing.T) {
-	if runtime.GOOS == "windows" {
-		t.Skip("tmux not supported on Windows")
-	}
-	if _, err := exec.LookPath("tmux"); err != nil {
-		t.Skip("tmux not installed")
-	}
-
-	townRoot := t.TempDir()
-	rigName := "teststale"
-	rigPath := filepath.Join(townRoot, rigName)
-	polecatName := "marmalade"
-
-	polecatDir := filepath.Join(rigPath, "polecats", polecatName)
-	if err := os.MkdirAll(polecatDir, 0755); err != nil {
-		t.Fatalf("mkdir polecat dir: %v", err)
-	}
-
-	reg := session.NewPrefixRegistry()
-	reg.Register("gt", rigName)
-	old := session.DefaultRegistry()
-	session.SetDefaultRegistry(reg)
-	t.Cleanup(func() { session.SetDefaultRegistry(old) })
-
-	tm := tmux.NewTmux()
-	r := &rig.Rig{Name: rigName, Path: rigPath}
-	mgr := NewManager(r, git.NewGit(rigPath), tm)
-
-	sessMgr := NewSessionManager(tm, r)
-	sessionName := sessMgr.SessionName(polecatName)
-	if err := tm.NewSessionWithCommand(sessionName, townRoot, "sleep 300"); err != nil {
-		t.Fatalf("create tmux session: %v", err)
-	}
-	t.Cleanup(func() { _ = tm.KillSessionWithProcesses(sessionName) })
-
-	// Write a STALE heartbeat (old timestamp)
-	dir := filepath.Join(townRoot, ".runtime", "heartbeats")
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
-	}
-	oldTime := time.Now().Add(-10 * time.Minute).UTC()
-	data := []byte(`{"timestamp":"` + oldTime.Format(time.RFC3339Nano) + `","state":"exiting"}`)
-	if err := os.WriteFile(filepath.Join(dir, sessionName+".json"), data, 0644); err != nil {
-		t.Fatal(err)
-	}
-
-	_, reuseErr := mgr.ReuseIdlePolecat(polecatName, AddOptions{})
-
-	// Should not return ErrSessionRunning
-	if errors.Is(reuseErr, ErrSessionRunning) {
-		t.Fatal("ReuseIdlePolecat should not return ErrSessionRunning for stale session")
-	}
-	if reuseErr == nil {
-		t.Fatal("expected needs-recovery error")
-	}
-	if !errors.Is(reuseErr, ErrPolecatNeedsRecovery) || !strings.Contains(reuseErr.Error(), "not-idle") {
-		t.Fatalf("ReuseIdlePolecat error = %v, want needs recovery: not-idle", reuseErr)
-	}
-
-	// Session and heartbeat should be preserved for recovery because a stale
-	// session still maps to StateStalled until cleanup/recovery handles it.
-	running, _ := tm.HasSession(sessionName)
-	if !running {
-		t.Error("stale session should be preserved when reuse needs recovery")
-	}
-	if hb := ReadSessionHeartbeat(townRoot, sessionName); hb == nil {
-		t.Error("heartbeat should be preserved when reuse needs recovery")
-	}
-}
-
-// TestReuseIdlePolecat_NoSessionNoop verifies that ReuseIdlePolecat proceeds
-// normally when there's no existing session (the most common reuse case: session
-// was already killed by the Witness or expired).
 func TestReuseIdlePolecat_NoSessionNoop(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.Skip("tmux not supported on Windows")

@@ -1722,6 +1722,19 @@ func (t *Tmux) NudgeSessionWithOpts(session, message string, opts NudgeOpts) err
 	// 2. Sanitize control characters that corrupt delivery
 	sanitized := sanitizeNudgeMessage(message)
 
+	if !opts.SkipEscape {
+		// Auto-skip Escape for Copilot CLI sessions. Escape cancels in-flight
+		// generation in Copilot CLI (like Gemini), leaving the nudge text
+		// stranded in the input field without Enter being processed. (hq-isz)
+		agentType, _ := t.GetEnvironment(session, "GT_AGENT")
+		if agentType == "copilot" {
+			opts.SkipEscape = true
+		}
+	}
+	// Snapshot before typing the nudge so the message text itself cannot look
+	// like the agent's busy indicator.
+	sendEscape := !opts.SkipEscape && t.shouldSendEscape(target)
+
 	// 3. Send text via send-keys -l. Messages > 512 bytes are chunked
 	//    with 10ms inter-chunk delays to avoid argument length limits.
 	if err := t.sendMessageToTarget(target, sanitized); err != nil {
@@ -1732,17 +1745,7 @@ func (t *Tmux) NudgeSessionWithOpts(session, message string, opts NudgeOpts) err
 	// enough time to process all chunks under load. (GH#gt-0b5)
 	time.Sleep(adaptiveTextDelay(len(sanitized)))
 
-	if !opts.SkipEscape {
-		// Auto-skip Escape for Copilot CLI sessions. Escape cancels in-flight
-		// generation in Copilot CLI (like Gemini), leaving the nudge text
-		// stranded in the input field without Enter being processed. (hq-isz)
-		agentType, _ := t.GetEnvironment(session, "GT_AGENT")
-		if agentType == "copilot" {
-			opts.SkipEscape = true
-		}
-	}
-
-	if !opts.SkipEscape {
+	if sendEscape {
 		// 5. Send Escape to exit vim INSERT mode if enabled (harmless in normal mode)
 		// See: https://github.com/anthropics/gastown/issues/307
 		_, _ = t.run("send-keys", "-t", target, "Escape")
@@ -1773,8 +1776,14 @@ func (t *Tmux) NudgeSessionWithOpts(session, message string, opts NudgeOpts) err
 		return fmt.Errorf("nudge to session %q: %w", session, err)
 	}
 
-	// 8. Wake the pane to trigger SIGWINCH for detached sessions
-	t.WakePaneIfDetached(session)
+	// 8. Wake the pane to trigger SIGWINCH for detached sessions.
+	// Use the resolved target (session:window.pane) rather than the bare
+	// session name. resize-window on a bare session name resizes the
+	// session's *active* window — in a multi-window session (e.g. one with a
+	// `gt feed -w` window open and focused) that is not the agent's window,
+	// so the agent's pane never receives SIGWINCH and stays idle despite the
+	// delivered nudge. Targeting the resolved pane wakes the correct window.
+	t.WakePaneIfDetached(target)
 	return nil
 }
 
@@ -1804,6 +1813,9 @@ func (t *Tmux) NudgePane(pane, message string) error {
 
 	// 2. Sanitize control characters that corrupt delivery
 	sanitized := sanitizeNudgeMessage(message)
+	// Snapshot before typing the nudge so the message text itself cannot look
+	// like the agent's busy indicator.
+	sendEscape := t.shouldSendEscape(pane)
 
 	// 3. Send text via send-keys -l. Messages > 512 bytes are chunked
 	//    with 10ms inter-chunk delays to avoid argument length limits.
@@ -1814,18 +1826,20 @@ func (t *Tmux) NudgePane(pane, message string) error {
 	// 4. Adaptive post-text delay: scales with message length. (GH#gt-0b5)
 	time.Sleep(adaptiveTextDelay(len(sanitized)))
 
-	// 5. Send Escape to exit vim INSERT mode if enabled (harmless in normal mode)
-	// See: https://github.com/anthropics/gastown/issues/307
-	_, _ = t.run("send-keys", "-t", pane, "Escape")
+	if sendEscape {
+		// 5. Send Escape to exit vim INSERT mode if enabled (harmless in normal mode)
+		// See: https://github.com/anthropics/gastown/issues/307
+		_, _ = t.run("send-keys", "-t", pane, "Escape")
 
-	// 6. Wait 600ms — must exceed bash readline's keyseq-timeout (500ms default)
-	time.Sleep(600 * time.Millisecond)
+		// 6. Wait 600ms — must exceed bash readline's keyseq-timeout (500ms default)
+		time.Sleep(600 * time.Millisecond)
 
-	// 6.5. Post-Escape: check if our Escape triggered Rewind mode. (GH#gt-8el)
-	if t.isInRewindMode(pane) {
-		t.dismissRewindMode(pane)
-		_ = t.sendMessageToTarget(pane, sanitized)
-		time.Sleep(adaptiveTextDelay(len(sanitized)))
+		// 6.5. Post-Escape: check if our Escape triggered Rewind mode. (GH#gt-8el)
+		if t.isInRewindMode(pane) {
+			t.dismissRewindMode(pane)
+			_ = t.sendMessageToTarget(pane, sanitized)
+			time.Sleep(adaptiveTextDelay(len(sanitized)))
+		}
 	}
 
 	// 7. Send Enter with verification — polls pane content to confirm Enter
@@ -1854,6 +1868,29 @@ func (t *Tmux) AcceptStartupDialogs(session string) error {
 		return fmt.Errorf("bypass permissions warning: %w", err)
 	}
 	return nil
+}
+
+// CheckStartupBlocked fails fast when a known interactive startup modal is
+// still visible after dialog acceptance. These modals block automated sessions
+// from receiving or acting on the bootstrap prompt.
+func (t *Tmux) CheckStartupBlocked(session string) error {
+	deadline := time.Now().Add(constants.DialogPollTimeout)
+	var blocker string
+	for {
+		content, err := t.CapturePane(session, 80)
+		if err != nil {
+			return err
+		}
+		current, ok := containsBlockingStartupDialog(content)
+		if !ok {
+			return nil
+		}
+		blocker = current
+		if time.Now().After(deadline) {
+			return fmt.Errorf("interactive startup dialog still visible in %s: %s", session, blocker)
+		}
+		time.Sleep(constants.DialogPollInterval)
+	}
 }
 
 // AcceptWorkspaceTrustDialog dismisses workspace trust dialogs for supported
@@ -1906,9 +1943,63 @@ func containsWorkspaceTrustDialog(content string) bool {
 		strings.Contains(content, "Do you trust the contents of this directory?")
 }
 
+func containsBlockingStartupDialog(content string) (string, bool) {
+	if promptAppearsAfterStartupBlocker(content) {
+		return "", false
+	}
+	if containsCodexUpdateDialog(content) {
+		return "codex update prompt", true
+	}
+	if containsWorkspaceTrustDialog(content) {
+		return "workspace trust prompt", true
+	}
+	if strings.Contains(content, "Bypass Permissions mode") {
+		return "bypass permissions prompt", true
+	}
+	return "", false
+}
+
+func promptAppearsAfterStartupBlocker(content string) bool {
+	promptLine := lastPromptIndicatorLine(content)
+	if promptLine < 0 {
+		return false
+	}
+	blockerLine := lastStartupBlockerLine(content)
+	return blockerLine >= 0 && promptLine > blockerLine
+}
+
+func lastStartupBlockerLine(content string) int {
+	markers := []string{
+		"Update available!",
+		"Update now",
+		"Skip until next version",
+		"trust this folder",
+		"Quick safety check",
+		"Do you trust the contents of this directory?",
+		"Bypass Permissions mode",
+	}
+	last := -1
+	for i, line := range strings.Split(content, "\n") {
+		for _, marker := range markers {
+			if strings.Contains(line, marker) {
+				last = i
+				break
+			}
+		}
+	}
+	return last
+}
+
+func containsCodexUpdateDialog(content string) bool {
+	return strings.Contains(content, "Update available!") &&
+		strings.Contains(content, "Update now") &&
+		strings.Contains(content, "Skip until next version")
+}
+
 // promptSuffixes are strings that indicate a shell or agent prompt is visible.
-// Claude prompt ends with ">", shell prompts end with "$", "%", "#", or "❯".
-var promptSuffixes = []string{">", "$", "%", "#", "❯"}
+// Claude prompt ends with ">", Codex uses "›", and shells often end with
+// "$", "%", "#", or "❯".
+var promptSuffixes = []string{">", "›", "$", "%", "#", "❯"}
 
 // containsPromptIndicator checks if pane content contains a prompt indicator
 // that signals a shell or agent is ready (no dialog blocking it).
@@ -1925,6 +2016,23 @@ func containsPromptIndicator(content string) bool {
 		}
 	}
 	return false
+}
+
+func lastPromptIndicatorLine(content string) int {
+	last := -1
+	for i, line := range strings.Split(content, "\n") {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			continue
+		}
+		for _, suffix := range promptSuffixes {
+			if strings.HasSuffix(trimmed, suffix) {
+				last = i
+				break
+			}
+		}
+	}
+	return last
 }
 
 // AcceptBypassPermissionsWarning dismisses the Claude Code bypass permissions warning dialog.
@@ -2875,6 +2983,45 @@ func hasBusyIndicator(line string) bool {
 		return false
 	}
 	return strings.Contains(trimmed, "esc to interrupt")
+}
+
+// shouldSendEscapeForLines reports whether the vim-mode Escape keystroke
+// (nudge delivery step 5) is safe to send, given a snapshot of pane lines.
+//
+// The Escape exists to exit a vim-mode composer's INSERT mode so the following
+// Enter submits the line (GH#307). But in Claude Code — and Codex/Gemini —
+// Escape also cancels in-flight generation; the status bar literally reads
+// "esc to interrupt" while the agent is working. Sending Escape in that state
+// would interrupt the agent's current turn (e.g. the Mayor). Returns false when
+// any line shows the busy indicator so the caller suppresses the Escape.
+//
+// FRAGILITY: this depends on the agent TUI rendering the literal substring
+// "esc to interrupt" while generating (via hasBusyIndicator — the same
+// assumption IsIdle/WaitForIdle already make). If that upstream status text
+// changes, the gate fails open and silently: the Escape is sent again and
+// nudges can resume interrupting the agent. Tracked in gastownhall/gastown#4240.
+func shouldSendEscapeForLines(lines []string) bool {
+	for _, line := range lines {
+		if hasBusyIndicator(line) {
+			return false
+		}
+	}
+	return true
+}
+
+// shouldSendEscape captures the target's pane and reports whether the vim-mode
+// Escape is safe to send right now (see shouldSendEscapeForLines). Callers
+// snapshot before writing nudge text so the message itself cannot masquerade as
+// the busy indicator. On capture failure it returns false: when we cannot
+// confirm the agent is idle, skipping the Escape is the safe default — it avoids
+// interrupting an active agent and is harmless for the common (non-vim) case
+// where Enter alone submits.
+func (t *Tmux) shouldSendEscape(target string) bool {
+	lines, err := t.CapturePaneLines(target, 5)
+	if err != nil {
+		return false
+	}
+	return shouldSendEscapeForLines(lines)
 }
 
 func readyPromptPrefixForSession(t *Tmux, session string) string {

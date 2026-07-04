@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/steveyegge/gastown/internal/beads"
 	"github.com/steveyegge/gastown/internal/refinery"
-	"github.com/steveyegge/gastown/internal/session"
 	"github.com/steveyegge/gastown/internal/rig"
+	"github.com/steveyegge/gastown/internal/session"
 	"github.com/steveyegge/gastown/internal/style"
 	"github.com/steveyegge/gastown/internal/tmux"
 	"github.com/steveyegge/gastown/internal/workspace"
@@ -61,7 +62,6 @@ If rig is not specified, infers it from the current directory.
 
 Examples:
   gt refinery start greenplace
-  gt refinery start greenplace --foreground
   gt refinery start              # infer rig from cwd`,
 	Args: cobra.MaximumNArgs(1),
 	RunE: runRefineryStart,
@@ -229,6 +229,7 @@ var refineryBlockedJSON bool
 func init() {
 	// Start flags
 	refineryStartCmd.Flags().BoolVar(&refineryForeground, "foreground", false, "Run in foreground (default: background)")
+	_ = refineryStartCmd.Flags().MarkHidden("foreground")
 	refineryStartCmd.Flags().StringVar(&refineryAgentOverride, "agent", "", "Agent alias to run the Refinery with (overrides town default)")
 
 	// Attach flags
@@ -307,6 +308,9 @@ func runRefineryStart(cmd *cobra.Command, args []string) error {
 	if err := checkRigNotParkedOrDocked(rigName); err != nil {
 		return err
 	}
+	if refineryForeground {
+		return fmt.Errorf("foreground mode is deprecated; use background mode (remove --foreground flag)")
+	}
 
 	fmt.Printf("Starting refinery for %s...\n", rigName)
 
@@ -316,11 +320,6 @@ func runRefineryStart(cmd *cobra.Command, args []string) error {
 			return nil
 		}
 		return fmt.Errorf("starting refinery: %w", err)
-	}
-
-	if refineryForeground {
-		// This will block until stopped
-		return nil
 	}
 
 	fmt.Printf("%s Refinery started for %s\n", style.Bold.Render("✓"), rigName)
@@ -498,7 +497,7 @@ func runRefineryAttach(cmd *cobra.Command, args []string) error {
 	}
 
 	// Use getRefineryManager to validate rig (and infer from cwd if needed)
-	mgr, _, rigName, err := getRefineryManager(rigName)
+	mgr, r, rigName, err := getRefineryManager(rigName)
 	if err != nil {
 		return err
 	}
@@ -511,6 +510,17 @@ func runRefineryAttach(cmd *cobra.Command, args []string) error {
 	running, err := t.HasSession(sessionID)
 	if err != nil {
 		return fmt.Errorf("checking session: %w", err)
+	}
+	if stop, err := refinery.ActiveSafetyStop(filepath.Dir(r.Path), rigName); err != nil {
+		return fmt.Errorf("checking refinery safety stop: %w", err)
+	} else if stop != nil {
+		if running {
+			fmt.Printf("Refinery %s is safety-stopped; stopping leftover session %s.\n", rigName, sessionID)
+			if err := mgr.Stop(); err != nil && err != refinery.ErrNotRunning {
+				return fmt.Errorf("%w: stopping leftover refinery session: %v", refinery.NewSafetyStoppedError(stop), err)
+			}
+		}
+		return refinery.NewSafetyStoppedError(stop)
 	}
 	if !running {
 		// Auto-start if not running
@@ -531,7 +541,7 @@ func runRefineryRestart(cmd *cobra.Command, args []string) error {
 		rigName = args[0]
 	}
 
-	mgr, _, rigName, err := getRefineryManager(rigName)
+	mgr, r, rigName, err := getRefineryManager(rigName)
 	if err != nil {
 		return err
 	}
@@ -541,6 +551,14 @@ func runRefineryRestart(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Printf("Restarting refinery for %s...\n", rigName)
+	if stop, err := refinery.ActiveSafetyStop(filepath.Dir(r.Path), rigName); err != nil {
+		return fmt.Errorf("checking refinery safety stop: %w", err)
+	} else if stop != nil {
+		if err := mgr.Stop(); err != nil && err != refinery.ErrNotRunning {
+			return fmt.Errorf("%w: stopping leftover refinery session: %v", refinery.NewSafetyStoppedError(stop), err)
+		}
+		return refinery.NewSafetyStoppedError(stop)
+	}
 
 	// Stop if running (ignore ErrNotRunning)
 	if err := mgr.Stop(); err != nil && err != refinery.ErrNotRunning {
@@ -637,6 +655,7 @@ func runRefineryUnclaimed(cmd *cobra.Command, args []string) error {
 		Status:   "open",
 		Label:    "gt:merge-request",
 		Priority: -1,
+		Rig:      rigName,
 	})
 	if err != nil {
 		return fmt.Errorf("listing merge requests: %w", err)

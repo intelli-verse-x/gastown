@@ -252,80 +252,19 @@ const (
 // syncTarget syncs a single target's .claude/settings.json.
 // Uses MarshalSettings/UnmarshalSettings to preserve unknown fields.
 func syncTarget(target hooks.Target, dryRun bool) (syncResult, error) {
-	// Compute expected hooks for this target
-	expected, err := hooks.ComputeExpected(target.Key)
+	result, err := hooks.SyncManagedClaudeSettings(target, dryRun)
 	if err != nil {
-		return 0, fmt.Errorf("computing expected config: %w", err)
+		return 0, err
 	}
 
-	// Compute expected MCP allowlist for this target. nil is fine and means
-	// "no MCP policy applies" — leave the MCP fields in settings.json alone.
-	expectedMCP, err := hooks.ComputeExpectedMCP(target.Key)
-	if err != nil {
-		return 0, fmt.Errorf("computing expected mcp config: %w", err)
-	}
-
-	// Load existing settings (returns zero-value if file doesn't exist)
-	current, err := hooks.LoadSettings(target.Path)
-	if err != nil {
-		return 0, fmt.Errorf("loading current settings: %w", err)
-	}
-
-	// Check if the file exists
-	_, statErr := os.Stat(target.Path)
-	fileExists := statErr == nil
-
-	// Compare hooks section, MCP allowlist, and the Claude startup defaults.
-	// Existing settings from older versions may have current hooks but still miss
-	// prompt defaults or MCP allowlist fields.
-	if fileExists &&
-		hooks.HooksEqual(expected, &current.Hooks) &&
-		hooks.HasClaudePromptDefaults(current) &&
-		hooks.HasExpectedMCP(current, expectedMCP) {
-		return syncUnchanged, nil
-	}
-
-	if dryRun {
-		if fileExists {
-			return syncUpdated, nil
-		}
+	switch result {
+	case hooks.SyncCreated:
 		return syncCreated, nil
-	}
-
-	// Update hooks section, preserving all other fields (including unknown ones)
-	current.Hooks = *expected
-
-	// Apply MCP allowlist policy. Writes enabledMcpjsonServers /
-	// disabledMcpjsonServers / enableAllProjectMcpServers into current.Extra
-	// so claude-code gates the per-workspace MCP surface to the role's allowlist.
-	// See internal/hooks/mcp.go for the default per-role policy.
-	hooks.ApplyMCPToSettings(current, expectedMCP)
-
-	// Ensure enabledPlugins map exists with beads disabled (Gas Town standard)
-	if current.EnabledPlugins == nil {
-		current.EnabledPlugins = make(map[string]bool)
-	}
-	current.EnabledPlugins["beads@beads-marketplace"] = false
-
-	// Create .claude directory if needed
-	claudeDir := filepath.Dir(target.Path)
-	if err := os.MkdirAll(claudeDir, 0755); err != nil {
-		return 0, fmt.Errorf("creating .claude directory: %w", err)
-	}
-
-	// Write settings.json using MarshalSettings to preserve unknown fields
-	data, err := hooks.MarshalSettings(current)
-	if err != nil {
-		return 0, fmt.Errorf("marshaling settings: %w", err)
-	}
-	data = append(data, '\n')
-
-	if err := os.WriteFile(target.Path, data, 0644); err != nil {
-		return 0, fmt.Errorf("writing settings: %w", err)
-	}
-
-	if fileExists {
+	case hooks.SyncUpdated:
 		return syncUpdated, nil
+	case hooks.SyncUnchanged:
+		return syncUnchanged, nil
+	default:
+		return 0, fmt.Errorf("unknown sync result: %d", result)
 	}
-	return syncCreated, nil
 }

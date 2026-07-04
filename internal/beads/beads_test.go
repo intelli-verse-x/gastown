@@ -1,9 +1,11 @@
 package beads
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
 	"runtime"
@@ -48,6 +50,33 @@ func TestListOptionsEphemeral(t *testing.T) {
 	}
 }
 
+func TestListEphemeralQuotesQueryValuesAndDisablesLimit(t *testing.T) {
+	ResetBdAllowStaleCacheForTest()
+	logPath := installMockBDRecorder(t)
+
+	b := New(t.TempDir())
+	_, err := b.List(ListOptions{
+		Status:    StatusHooked,
+		Assignee:  "deacon/dogs/alpha",
+		Parent:    "gt-wisp/root",
+		Priority:  -1,
+		Ephemeral: true,
+		Limit:     0,
+	})
+	if err != nil {
+		t.Fatalf("List() error = %v", err)
+	}
+
+	logOutput := readMockBDLog(t, logPath)
+	for _, want := range []string{
+		`query --json ephemeral=true AND status="hooked" AND parent="gt-wisp/root" AND assignee="deacon/dogs/alpha" --limit=0`,
+	} {
+		if !strings.Contains(logOutput, want) {
+			t.Fatalf("bd log missing %q\nlog:\n%s", want, logOutput)
+		}
+	}
+}
+
 // TestCreateOptions verifies CreateOptions fields.
 func TestCreateOptions(t *testing.T) {
 	opts := CreateOptions{
@@ -87,7 +116,7 @@ func TestCreateOptionsRig(t *testing.T) {
 	}
 }
 
-func TestBuildPinnedBDEnvUsesSelectedMetadata(t *testing.T) {
+func TestBuildPinnedBDEnvUsesSelectedConnectionMetadata(t *testing.T) {
 	beadsDir := filepath.Join(t.TempDir(), ".beads")
 	if err := os.MkdirAll(beadsDir, 0755); err != nil {
 		t.Fatal(err)
@@ -102,11 +131,13 @@ func TestBuildPinnedBDEnvUsesSelectedMetadata(t *testing.T) {
 		"BEADS_DIR=/wrong",
 		"BEADS_DB=/wrong.db",
 		"BD_DB=/wrong.bd",
+		"BEADS_DOLT_DATABASE=legacy-hq",
 		"BEADS_DOLT_SERVER_DATABASE=hq",
 		"BEADS_DOLT_SERVER_HOST=wrong-host",
 		"BEADS_DOLT_SERVER_PORT=9999",
 		"BEADS_DOLT_PORT=9999",
 		"BEADS_DOLT_DATA_DIR=/wrong/data",
+		"BEADS_DOLT_FUTURE_SELECTOR=wrong",
 		"BEADS_DOLT_AUTO_START=0",
 	}, beadsDir)
 	got := envMap(env)
@@ -117,19 +148,254 @@ func TestBuildPinnedBDEnvUsesSelectedMetadata(t *testing.T) {
 	if got["BEADS_DOLT_SERVER_DATABASE"] != "rigdb" {
 		t.Fatalf("BEADS_DOLT_SERVER_DATABASE = %q, want rigdb in %v", got["BEADS_DOLT_SERVER_DATABASE"], env)
 	}
+	if count := countEnvPrefix(env, "BEADS_DOLT_SERVER_DATABASE="); count != 1 {
+		t.Fatalf("BEADS_DOLT_SERVER_DATABASE count = %d, want 1 in %v", count, env)
+	}
 	if got["BEADS_DOLT_SERVER_HOST"] != "127.0.0.1" {
 		t.Fatalf("BEADS_DOLT_SERVER_HOST = %q, want 127.0.0.1 in %v", got["BEADS_DOLT_SERVER_HOST"], env)
 	}
 	if got["BEADS_DOLT_SERVER_PORT"] != "4407" || got["BEADS_DOLT_PORT"] != "4407" {
 		t.Fatalf("ports = server:%q legacy:%q, want 4407 in %v", got["BEADS_DOLT_SERVER_PORT"], got["BEADS_DOLT_PORT"], env)
 	}
-	for _, key := range []string{"BEADS_DB", "BD_DB", "BEADS_DOLT_DATA_DIR"} {
+	for _, key := range []string{"BEADS_DB", "BD_DB", "BEADS_DOLT_DATABASE", "BEADS_DOLT_DATA_DIR", "BEADS_DOLT_FUTURE_SELECTOR"} {
 		if value, ok := got[key]; ok {
 			t.Fatalf("%s should be stripped, got %q in %v", key, value, env)
 		}
 	}
 	if got["BEADS_DOLT_AUTO_START"] != "0" {
-		t.Fatalf("BEADS_DOLT_AUTO_START should be preserved, got %q in %v", got["BEADS_DOLT_AUTO_START"], env)
+		t.Fatalf("BEADS_DOLT_AUTO_START should be forced off, got %q in %v", got["BEADS_DOLT_AUTO_START"], env)
+	}
+}
+
+func TestBuildPinnedBDEnvPinsRigDatabaseInsideTown(t *testing.T) {
+	townDir := t.TempDir()
+	beadsDir := filepath.Join(townDir, "minime", ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	metadata := []byte(`{"dolt_database":"minime","dolt_server_host":"127.0.0.1","dolt_server_port":4407}`)
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), metadata, 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	env := BuildPinnedBDEnv([]string{
+		"PATH=/usr/bin",
+		"BEADS_DIR=" + filepath.Join(townDir, ".beads"),
+		"BEADS_DOLT_SERVER_DATABASE=hq",
+		"BEADS_DOLT_DATA_DIR=" + filepath.Join(townDir, ".dolt-data"),
+	}, beadsDir)
+	got := envMap(env)
+
+	if got["BEADS_DIR"] != beadsDir {
+		t.Fatalf("BEADS_DIR = %q, want %q in %v", got["BEADS_DIR"], beadsDir, env)
+	}
+	if got["BEADS_DOLT_SERVER_DATABASE"] != "minime" {
+		t.Fatalf("BEADS_DOLT_SERVER_DATABASE = %q, want minime in %v", got["BEADS_DOLT_SERVER_DATABASE"], env)
+	}
+	if value, ok := got["BEADS_DOLT_DATA_DIR"]; ok {
+		t.Fatalf("BEADS_DOLT_DATA_DIR should be stripped, got %q in %v", value, env)
+	}
+}
+
+func TestBuildPinnedBDEnvFollowsRedirectBeforeMetadata(t *testing.T) {
+	rigRoot := t.TempDir()
+	rigBeadsDir := filepath.Join(rigRoot, ".beads")
+	canonicalBeadsDir := filepath.Join(rigRoot, "mayor", "rig", ".beads")
+	for _, dir := range []string{rigBeadsDir, canonicalBeadsDir} {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.WriteFile(filepath.Join(rigBeadsDir, "redirect"), []byte("mayor/rig/.beads\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(rigBeadsDir, "metadata.json"), []byte(`{"dolt_database":"hq","dolt_server_host":"wrong-host","dolt_server_port":9999}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(canonicalBeadsDir, "metadata.json"), []byte(`{"dolt_database":"gastown","dolt_server_host":"127.0.0.2","dolt_server_port":4407}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	env := BuildPinnedBDEnv([]string{
+		"PATH=/usr/bin",
+		"BEADS_DIR=/wrong",
+		"BEADS_DOLT_SERVER_DATABASE=hq",
+		"BEADS_DOLT_DATA_DIR=/wrong/data",
+	}, rigBeadsDir)
+	got := envMap(env)
+
+	if got["BEADS_DIR"] != canonicalBeadsDir {
+		t.Fatalf("BEADS_DIR = %q, want canonical %q in %v", got["BEADS_DIR"], canonicalBeadsDir, env)
+	}
+	if got["BEADS_DOLT_SERVER_DATABASE"] != "gastown" {
+		t.Fatalf("BEADS_DOLT_SERVER_DATABASE = %q, want gastown in %v", got["BEADS_DOLT_SERVER_DATABASE"], env)
+	}
+	if got["BEADS_DOLT_SERVER_HOST"] != "127.0.0.2" || got["BEADS_DOLT_SERVER_PORT"] != "4407" || got["BEADS_DOLT_PORT"] != "4407" {
+		t.Fatalf("connection env used stale redirect metadata: %v", env)
+	}
+	if _, ok := got["BEADS_DOLT_DATA_DIR"]; ok {
+		t.Fatalf("BEADS_DOLT_DATA_DIR should be stripped in %v", env)
+	}
+
+	routingEnv := BuildRoutingBDEnv([]string{
+		"PATH=/usr/bin",
+		"BEADS_DIR=/wrong",
+		"BEADS_DOLT_SERVER_DATABASE=hq",
+	}, rigBeadsDir)
+	routingGot := envMap(routingEnv)
+	if _, ok := routingGot["BEADS_DIR"]; ok {
+		t.Fatalf("routing env should not set BEADS_DIR: %v", routingEnv)
+	}
+	if _, ok := routingGot["BEADS_DOLT_SERVER_DATABASE"]; ok {
+		t.Fatalf("routing env should not set BEADS_DOLT_SERVER_DATABASE: %v", routingEnv)
+	}
+	if routingGot["BEADS_DOLT_SERVER_HOST"] != "127.0.0.2" || routingGot["BEADS_DOLT_SERVER_PORT"] != "4407" || routingGot["BEADS_DOLT_PORT"] != "4407" {
+		t.Fatalf("routing env should use canonical connection metadata: %v", routingEnv)
+	}
+}
+
+func TestBuildBDEnvConnectionOverridesAndDoesNotRestoreDataDir(t *testing.T) {
+	beadsDir := filepath.Join(t.TempDir(), ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	metadata := []byte(`{"dolt_database":"rigdb","dolt_server_host":"metadata-host","dolt_server_port":3307}`)
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), metadata, 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	base := []string{
+		"PATH=/usr/bin",
+		"GT_DOLT_HOST=127.0.0.2",
+		"GT_DOLT_PORT=5507",
+		"GT_DOLT_DATA=/wrong/data",
+		"BEADS_DOLT_SERVER_HOST=stale-host",
+		"BEADS_DOLT_SERVER_PORT=9999",
+		"BEADS_DOLT_PORT=9999",
+		"BEADS_DOLT_DATA_DIR=/stale/data",
+		"BEADS_DOLT_SERVER_DATABASE=hq",
+	}
+
+	for _, tc := range []struct {
+		name       string
+		env        []string
+		wantDB     string
+		wantDBGone bool
+	}{
+		{name: "pinned", env: BuildPinnedBDEnv(base, beadsDir), wantDB: "rigdb"},
+		{name: "routing", env: BuildRoutingBDEnv(base, beadsDir), wantDBGone: true},
+		{name: "readonly routing", env: BuildReadOnlyRoutingBDEnv(base, beadsDir), wantDBGone: true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			got := envMap(tc.env)
+			if got["BEADS_DOLT_SERVER_HOST"] != "127.0.0.2" {
+				t.Fatalf("BEADS_DOLT_SERVER_HOST = %q, want GT_DOLT_HOST in %v", got["BEADS_DOLT_SERVER_HOST"], tc.env)
+			}
+			if got["BEADS_DOLT_SERVER_PORT"] != "5507" || got["BEADS_DOLT_PORT"] != "5507" {
+				t.Fatalf("Beads port aliases = server:%q legacy:%q, want 5507 in %v", got["BEADS_DOLT_SERVER_PORT"], got["BEADS_DOLT_PORT"], tc.env)
+			}
+			if _, ok := got["BEADS_DOLT_DATA_DIR"]; ok {
+				t.Fatalf("BEADS_DOLT_DATA_DIR should be stripped in %v", tc.env)
+			}
+			if _, ok := got["GT_DOLT_DATA"]; ok {
+				t.Fatalf("GT_DOLT_DATA should be stripped in %v", tc.env)
+			}
+			if tc.wantDBGone {
+				if _, ok := got["BEADS_DOLT_SERVER_DATABASE"]; ok {
+					t.Fatalf("routing env must not pin database: %v", tc.env)
+				}
+				return
+			}
+			if got["BEADS_DOLT_SERVER_DATABASE"] != tc.wantDB {
+				t.Fatalf("BEADS_DOLT_SERVER_DATABASE = %q, want %q in %v", got["BEADS_DOLT_SERVER_DATABASE"], tc.wantDB, tc.env)
+			}
+		})
+	}
+}
+
+func TestBuildPinnedBDEnvStripsCaseVariantTargetEnvWhenKeysAreCaseInsensitive(t *testing.T) {
+	withCaseInsensitiveEnvKeys(t)
+
+	beadsDir := filepath.Join(t.TempDir(), ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	metadata := []byte(`{"dolt_database":"rigdb","dolt_server_host":"127.0.0.1","dolt_server_port":4407}`)
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), metadata, 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	env := BuildPinnedBDEnv([]string{
+		"PATH=/usr/bin",
+		"beads_dir=/wrong",
+		"beads_db=/wrong.db",
+		"bd_db=/wrong.bd",
+		"beads_dolt_server_database=hq",
+		"beads_dolt_server_host=wrong-host",
+		"beads_dolt_server_port=9999",
+		"beads_dolt_port=9999",
+		"beads_dolt_data_dir=/wrong/data",
+		"beads_dolt_auto_start=0",
+		"bd_export_auto=true",
+	}, beadsDir)
+	got := envMap(env)
+
+	for _, key := range []string{
+		"beads_dir",
+		"beads_db",
+		"bd_db",
+		"beads_dolt_server_database",
+		"beads_dolt_server_host",
+		"beads_dolt_server_port",
+		"beads_dolt_port",
+		"beads_dolt_data_dir",
+		"bd_export_auto",
+	} {
+		if value, ok := got[key]; ok {
+			t.Fatalf("case-variant %s should be stripped, got %q in %v", key, value, env)
+		}
+	}
+	if got["BEADS_DIR"] != beadsDir || got["BEADS_DOLT_SERVER_DATABASE"] != "rigdb" {
+		t.Fatalf("pinned target env not restored canonically: %v", env)
+	}
+	if got["BEADS_DOLT_SERVER_HOST"] != "127.0.0.1" || got["BEADS_DOLT_SERVER_PORT"] != "4407" || got["BEADS_DOLT_PORT"] != "4407" {
+		t.Fatalf("connection env not restored canonically: %v", env)
+	}
+	if _, ok := got["beads_dolt_auto_start"]; ok {
+		t.Fatalf("case-variant BEADS_DOLT_AUTO_START should be stripped, got %v", env)
+	}
+	if got["BEADS_DOLT_AUTO_START"] != "0" {
+		t.Fatalf("BEADS_DOLT_AUTO_START should be restored canonically, got %v", env)
+	}
+	if got["BD_EXPORT_AUTO"] != "false" {
+		t.Fatalf("BD_EXPORT_AUTO = %q, want false in %v", got["BD_EXPORT_AUTO"], env)
+	}
+}
+
+func TestBuildPinnedBDEnvUsesLastCaseVariantGTDoltEndpoint(t *testing.T) {
+	withCaseInsensitiveEnvKeys(t)
+
+	beadsDir := filepath.Join(t.TempDir(), ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), []byte(`{"dolt_database":"rigdb"}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	env := BuildPinnedBDEnv([]string{
+		"PATH=/usr/bin",
+		"gt_dolt_host=stale-host",
+		"GT_DOLT_HOST=127.0.0.2",
+		"gt_dolt_port=3307",
+		"GT_DOLT_PORT=5507",
+	}, beadsDir)
+	got := envMap(env)
+	if got["BEADS_DOLT_SERVER_HOST"] != "127.0.0.2" {
+		t.Fatalf("BEADS_DOLT_SERVER_HOST = %q, want last GT_DOLT_HOST in %v", got["BEADS_DOLT_SERVER_HOST"], env)
+	}
+	if got["BEADS_DOLT_SERVER_PORT"] != "5507" || got["BEADS_DOLT_PORT"] != "5507" {
+		t.Fatalf("ports = server:%q legacy:%q, want 5507 in %v", got["BEADS_DOLT_SERVER_PORT"], got["BEADS_DOLT_PORT"], env)
 	}
 }
 
@@ -193,6 +459,7 @@ func TestSuppressBDSideEffectsOverridesInherited(t *testing.T) {
 	env := SuppressBDSideEffects([]string{
 		"PATH=/usr/bin",
 		"BD_EXPORT_AUTO=true",
+		"BEADS_DOLT_AUTO_START=1",
 		"BD_BACKUP_ENABLED=true",
 		"BD_DOLT_AUTO_PUSH=true",
 		"BD_NO_PUSH=false",
@@ -201,13 +468,14 @@ func TestSuppressBDSideEffectsOverridesInherited(t *testing.T) {
 	})
 	got := envMap(env)
 	for key, want := range map[string]string{
-		"BEADS_NO_AUTO_IMPORT": "1",
-		"BD_EXPORT_AUTO":       "false",
-		"BD_BACKUP_ENABLED":    "false",
-		"BD_DOLT_AUTO_PUSH":    "false",
-		"BD_NO_PUSH":           "true",
-		"BD_EXPORT_GIT_ADD":    "false",
-		"BD_NO_GIT_OPS":        "true",
+		"BEADS_NO_AUTO_IMPORT":  "1",
+		"BEADS_DOLT_AUTO_START": "0",
+		"BD_EXPORT_AUTO":        "false",
+		"BD_BACKUP_ENABLED":     "false",
+		"BD_DOLT_AUTO_PUSH":     "false",
+		"BD_NO_PUSH":            "true",
+		"BD_EXPORT_GIT_ADD":     "false",
+		"BD_NO_GIT_OPS":         "true",
 	} {
 		if got[key] != want {
 			t.Fatalf("%s = %q, want %q in %v", key, got[key], want, env)
@@ -263,6 +531,9 @@ func TestBuildMutationBDEnvForcesWritableCommit(t *testing.T) {
 	if got["BEADS_DIR"] != beadsDir {
 		t.Fatalf("BEADS_DIR = %q, want %q in %v", got["BEADS_DIR"], beadsDir, env)
 	}
+	if got["BEADS_DOLT_SERVER_DATABASE"] != "hq" {
+		t.Fatalf("BEADS_DOLT_SERVER_DATABASE = %q, want hq in %v", got["BEADS_DOLT_SERVER_DATABASE"], env)
+	}
 	if got["BD_DOLT_AUTO_COMMIT"] != "on" {
 		t.Fatalf("BD_DOLT_AUTO_COMMIT = %q, want on in %v", got["BD_DOLT_AUTO_COMMIT"], env)
 	}
@@ -271,14 +542,79 @@ func TestBuildMutationBDEnvForcesWritableCommit(t *testing.T) {
 	}
 }
 
+func TestDeleteBeadsUseSupportedBdDeleteFlags(t *testing.T) {
+	ResetBdAllowStaleCacheForTest()
+	t.Cleanup(ResetBdAllowStaleCacheForTest)
+
+	logPath := installMockBDRecorder(t)
+	b := NewIsolated(t.TempDir())
+
+	cases := []struct {
+		name   string
+		delete func() error
+		want   string
+	}{
+		{
+			name:   "group",
+			delete: func() error { return b.DeleteGroupBead("ops-team") },
+			want:   "delete hq-group-ops-team --force",
+		},
+		{
+			name:   "channel",
+			delete: func() error { return b.DeleteChannelBead("alerts") },
+			want:   "delete hq-channel-alerts --force",
+		},
+		{
+			name:   "queue",
+			delete: func() error { return b.DeleteQueueBead("hq-q-work") },
+			want:   "delete hq-q-work --force",
+		},
+		{
+			name:   "rig",
+			delete: func() error { return b.DeleteRigBead("gastown") },
+			want:   "delete gt-rig-gastown --force",
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if err := tc.delete(); err != nil {
+				t.Fatalf("delete error = %v", err)
+			}
+		})
+	}
+
+	logOutput := readMockBDLog(t, logPath)
+	if strings.Contains(logOutput, "--hard") {
+		t.Fatalf("delete call used unsupported --hard flag:\n%s", logOutput)
+	}
+	for _, tc := range cases {
+		if !strings.Contains(logOutput, tc.want) {
+			t.Fatalf("bd log missing %q\nlog:\n%s", tc.want, logOutput)
+		}
+	}
+}
+
 func TestArgsAreReadOnlyClassifiesKnownReadCommands(t *testing.T) {
 	cases := [][]string{
+		{"--version"},
+		{"--help"},
 		{"show", "gt-123", "--json"},
 		{"--allow-stale", "show", "gt-123", "--json"},
+		{"search", "term", "--json"},
 		{"query", "merge-request", "--json"},
 		{"dep", "list", "hq-cv-123", "--json"},
+		{"formula", "list"},
+		{"formula", "show", "mol-polecat-work"},
+		{"kv", "get", "key"},
+		{"kv", "list"},
+		{"message", "thread", "hq-msg", "--json"},
+		{"mol", "current", "--json"},
 		{"mol", "wisp", "list", "--json"},
 		{"sql", "SELECT 1"},
+		{"sql", "SHOW TABLES"},
+		{"sql", "EXPLAIN SELECT 1"},
+		{"sql", "DESCRIBE dependencies"},
 		{"sql", "--csv", "SELECT 1"},
 		{"config", "get", "issue_prefix"},
 	}
@@ -294,10 +630,25 @@ func TestArgsAreReadOnlyClassifiesKnownReadCommands(t *testing.T) {
 
 func TestArgsAreReadOnlyFailsClosedForMutations(t *testing.T) {
 	cases := [][]string{
+		{"--db", "hq", "show", "gt-123"},
+		{"--directory", "/tmp", "list"},
+		{"--repo", "gastown", "show", "gt-123"},
+		{"--unknown", "show", "gt-123"},
 		{"update", "gt-123", "--status=open"},
 		{"close", "gt-123"},
+		{"label", "add", "gt-123", "read"},
+		{"message", "send", "mayor", "--body", "hi"},
+		{"formula", "cook", "mol-polecat-work"},
+		{"kv", "set", "key", "value"},
 		{"mol", "wisp", "formula"},
+		{"mol", "wisp", "create", "mol-test"},
 		{"sql", "UPDATE issues SET status='open'"},
+		{"sql", "DELETE FROM issues"},
+		{"sql", "INSERT INTO issues (id) VALUES ('gt-1')"},
+		{"sql", "WITH x AS (SELECT 1) SELECT * FROM x"},
+		{"sql", "WITH x AS (SELECT 1) UPDATE issues SET status='open'"},
+		{"sql", "WITH x AS (SELECT 1) DELETE FROM issues"},
+		{"sql", "WITH x AS (SELECT 1) INSERT INTO issues (id) VALUES ('gt-1')"},
 		{"config", "set", "issue_prefix", "gt"},
 	}
 	for _, args := range cases {
@@ -319,6 +670,13 @@ func envMap(env []string) map[string]string {
 		}
 	}
 	return out
+}
+
+func withCaseInsensitiveEnvKeys(t *testing.T) {
+	t.Helper()
+	old := envKeysCaseInsensitive
+	envKeysCaseInsensitive = true
+	t.Cleanup(func() { envKeysCaseInsensitive = old })
 }
 
 // TestCreateRoutesSameDatabaseViaBEADSDIR verifies that when opts.Rig resolves
@@ -489,8 +847,9 @@ exit 0
 	}
 
 	for _, tc := range []struct {
-		name string
-		opts CreateOptions
+		name   string
+		opts   CreateOptions
+		withID bool
 	}{
 		{
 			name: "explicit rig",
@@ -500,6 +859,16 @@ exit 0
 			name: "parent prefix",
 			opts: CreateOptions{Title: "Child task", Parent: "tr-parent"},
 		},
+		{
+			name:   "deterministic id explicit rig",
+			opts:   CreateOptions{Title: "Fixed merge", Rig: "testrig"},
+			withID: true,
+		},
+		{
+			name:   "deterministic id parent prefix",
+			opts:   CreateOptions{Title: "Fixed child", Parent: "tr-parent"},
+			withID: true,
+		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if err := os.Remove(logPath); err != nil && !os.IsNotExist(err) {
@@ -507,7 +876,11 @@ exit 0
 			}
 
 			bd := New(workerDir)
-			if _, err := bd.Create(tc.opts); err != nil {
+			if tc.withID {
+				if _, err := bd.CreateWithID("tr-fixed", tc.opts); err != nil {
+					t.Fatalf("CreateWithID: %v", err)
+				}
+			} else if _, err := bd.Create(tc.opts); err != nil {
 				t.Fatalf("Create: %v", err)
 			}
 
@@ -522,7 +895,212 @@ exit 0
 			if strings.Contains(logOutput, "beads_dir="+rigBeadsDir+"\n") {
 				t.Fatalf("Create used intermediate redirect beads dir %q:\n%s", rigBeadsDir, logOutput)
 			}
+			if tc.withID && !strings.Contains(logOutput, "--id=tr-fixed") {
+				t.Fatalf("CreateWithID did not pass deterministic id:\n%s", logOutput)
+			}
 		})
+	}
+}
+
+func TestCreateWithRigRepairsTargetConfigPrefix(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("test uses Unix shell script mock for bd")
+	}
+
+	townRoot := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(townRoot, "mayor"), 0755); err != nil {
+		t.Fatalf("mkdir mayor: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(townRoot, "mayor", "town.json"), []byte(`{"name":"test"}`), 0644); err != nil {
+		t.Fatalf("write town.json: %v", err)
+	}
+
+	townBeadsDir := filepath.Join(townRoot, ".beads")
+	if err := os.MkdirAll(townBeadsDir, 0755); err != nil {
+		t.Fatalf("mkdir town .beads: %v", err)
+	}
+	if err := WriteRoutes(townBeadsDir, []Route{
+		{Prefix: "hq-", Path: "."},
+		{Prefix: "tr-", Path: "testrig/mayor/rig"},
+	}); err != nil {
+		t.Fatalf("write routes: %v", err)
+	}
+
+	rigDir := filepath.Join(townRoot, "testrig", "mayor", "rig")
+	rigBeadsDir := filepath.Join(rigDir, ".beads")
+	if err := os.MkdirAll(rigBeadsDir, 0755); err != nil {
+		t.Fatalf("mkdir rig .beads: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(rigBeadsDir, "config.yaml"), []byte("prefix: wrong\nissue-prefix: wrong\ncustom: keep\n"), 0644); err != nil {
+		t.Fatalf("write stale config: %v", err)
+	}
+
+	stubDir := t.TempDir()
+	stubScript := `#!/bin/sh
+if [ "$1" = "create" ] || { [ "$1" = "--allow-stale" ] && [ "$2" = "create" ]; }; then
+  config="$BEADS_DIR/config.yaml"
+  if ! grep -q '^prefix: tr$' "$config" || ! grep -q '^issue-prefix: tr$' "$config"; then
+    echo "target config was not repaired before create" >&2
+    cat "$config" >&2
+    exit 42
+  fi
+  printf '{"id":"tr-wisp-abc","title":"test","status":"open","priority":2,"labels":[]}\n'
+  exit 0
+fi
+printf '{}\n'
+`
+	stubPath := filepath.Join(stubDir, "bd")
+	if err := os.WriteFile(stubPath, []byte(stubScript), 0755); err != nil {
+		t.Fatalf("write bd stub: %v", err)
+	}
+	t.Setenv("PATH", stubDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+
+	workerDir := filepath.Join(townRoot, "testrig", "polecats", "quartz")
+	if err := os.MkdirAll(workerDir, 0755); err != nil {
+		t.Fatalf("mkdir worker: %v", err)
+	}
+
+	bd := New(workerDir)
+	issue, err := bd.Create(CreateOptions{
+		Title:     "Merge: hq-abc",
+		Rig:       "testrig",
+		Ephemeral: true,
+	})
+	if err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	if issue.ID != "tr-wisp-abc" {
+		t.Fatalf("Create ID = %q, want tr-wisp-abc", issue.ID)
+	}
+
+	configData, err := os.ReadFile(filepath.Join(rigBeadsDir, "config.yaml"))
+	if err != nil {
+		t.Fatalf("read repaired config: %v", err)
+	}
+	configText := string(configData)
+	for _, want := range []string{"prefix: tr\n", "issue-prefix: tr\n", "custom: keep\n"} {
+		if !strings.Contains(configText, want) {
+			t.Fatalf("repaired config missing %q:\n%s", want, configText)
+		}
+	}
+}
+
+func TestCreateWithTownAliasDoesNotRepairConfigPrefix(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("test uses Unix shell script mock for bd")
+	}
+
+	townRoot := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(townRoot, "mayor"), 0755); err != nil {
+		t.Fatalf("mkdir mayor: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(townRoot, "mayor", "town.json"), []byte(`{"name":"test"}`), 0644); err != nil {
+		t.Fatalf("write town.json: %v", err)
+	}
+
+	townBeadsDir := filepath.Join(townRoot, ".beads")
+	if err := os.MkdirAll(townBeadsDir, 0755); err != nil {
+		t.Fatalf("mkdir town .beads: %v", err)
+	}
+	if err := WriteRoutes(townBeadsDir, []Route{
+		{Prefix: "hq-", Path: "."},
+		{Prefix: "tr-", Path: "testrig/mayor/rig"},
+	}); err != nil {
+		t.Fatalf("write routes: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(townBeadsDir, "config.yaml"), []byte("prefix: hq\nissue-prefix: hq\ncustom: keep\n"), 0644); err != nil {
+		t.Fatalf("write town config: %v", err)
+	}
+
+	rigBeadsDir := filepath.Join(townRoot, "testrig", "mayor", "rig", ".beads")
+	if err := os.MkdirAll(rigBeadsDir, 0755); err != nil {
+		t.Fatalf("mkdir rig .beads: %v", err)
+	}
+
+	stubDir := t.TempDir()
+	stubScript := fmt.Sprintf(`#!/bin/sh
+if [ "$1" = "create" ] || { [ "$1" = "--allow-stale" ] && [ "$2" = "create" ]; }; then
+  if [ "$BEADS_DIR" != '%s' ]; then
+    echo "create was not pinned to town beads dir: $BEADS_DIR" >&2
+    exit 41
+  fi
+  config="$BEADS_DIR/config.yaml"
+  if ! grep -q '^prefix: hq$' "$config" || ! grep -q '^issue-prefix: hq$' "$config"; then
+    echo "town config should not be repaired as a rig" >&2
+    cat "$config" >&2
+    exit 42
+  fi
+  printf '{"id":"hq-wisp-abc","title":"test","status":"open","priority":2,"labels":[]}\n'
+  exit 0
+fi
+printf '{}\n'
+`, townBeadsDir)
+	stubPath := filepath.Join(stubDir, "bd")
+	if err := os.WriteFile(stubPath, []byte(stubScript), 0755); err != nil {
+		t.Fatalf("write bd stub: %v", err)
+	}
+	t.Setenv("PATH", stubDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+
+	workerDir := filepath.Join(townRoot, "testrig", "polecats", "quartz")
+	if err := os.MkdirAll(workerDir, 0755); err != nil {
+		t.Fatalf("mkdir worker: %v", err)
+	}
+
+	for _, alias := range []string{"hq", "town"} {
+		t.Run(alias, func(t *testing.T) {
+			issue, err := New(workerDir).Create(CreateOptions{
+				Title:     "Town note",
+				Rig:       alias,
+				Ephemeral: true,
+			})
+			if err != nil {
+				t.Fatalf("Create: %v", err)
+			}
+			if issue.ID != "hq-wisp-abc" {
+				t.Fatalf("Create ID = %q, want hq-wisp-abc", issue.ID)
+			}
+
+			configData, err := os.ReadFile(filepath.Join(townBeadsDir, "config.yaml"))
+			if err != nil {
+				t.Fatalf("read town config: %v", err)
+			}
+			configText := string(configData)
+			for _, want := range []string{"prefix: hq\n", "issue-prefix: hq\n", "custom: keep\n"} {
+				if !strings.Contains(configText, want) {
+					t.Fatalf("town config missing %q:\n%s", want, configText)
+				}
+			}
+			if strings.Contains(configText, "prefix: gt\n") || strings.Contains(configText, "issue-prefix: gt\n") {
+				t.Fatalf("town config was rewritten as gt:\n%s", configText)
+			}
+		})
+	}
+}
+
+func TestCreateWithUnknownRigErrors(t *testing.T) {
+	townRoot := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(townRoot, "mayor"), 0755); err != nil {
+		t.Fatalf("mkdir mayor: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(townRoot, "mayor", "town.json"), []byte(`{"name":"test"}`), 0644); err != nil {
+		t.Fatalf("write town.json: %v", err)
+	}
+	townBeadsDir := filepath.Join(townRoot, ".beads")
+	if err := os.MkdirAll(townBeadsDir, 0755); err != nil {
+		t.Fatalf("mkdir town .beads: %v", err)
+	}
+	if err := WriteRoutes(townBeadsDir, []Route{{Prefix: "hq-", Path: "."}}); err != nil {
+		t.Fatalf("write routes: %v", err)
+	}
+
+	workerDir := filepath.Join(townRoot, "gastown", "polecats", "rust")
+	if err := os.MkdirAll(workerDir, 0755); err != nil {
+		t.Fatalf("mkdir worker: %v", err)
+	}
+
+	_, err := New(workerDir).Create(CreateOptions{Title: "bad rig", Rig: "missing"})
+	if err == nil || !strings.Contains(err.Error(), `unknown repo/rig alias "missing"`) {
+		t.Fatalf("Create error = %v, want unknown rig alias", err)
 	}
 }
 
@@ -629,6 +1207,226 @@ func TestBdSupportsAllowStale_TimeoutTreatsProbeAsUnsupported(t *testing.T) {
 	}
 }
 
+func TestBDListSlowListDoesNotBlockUnrelatedList(t *testing.T) {
+	if os.Getenv("GT_BEADS_LIST_CONCURRENCY_HELPER") == "1" {
+		runBDListConcurrencyHelper(t)
+		return
+	}
+	if runtime.GOOS == "windows" {
+		t.Skip("process-level flock regression test is Unix-specific")
+	}
+
+	tmp := t.TempDir()
+	if outer := FindTownRoot(tmp); outer != "" {
+		t.Skipf("temp dir is nested under existing town root %s", outer)
+	}
+	townRoot := filepath.Join(tmp, "town")
+	if err := os.MkdirAll(filepath.Join(townRoot, "mayor"), 0755); err != nil {
+		t.Fatalf("create town mayor dir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(townRoot, "mayor", "town.json"), []byte(`{"name":"test"}`), 0644); err != nil {
+		t.Fatalf("write town.json: %v", err)
+	}
+
+	slowWorkDir := filepath.Join(townRoot, "rig-a")
+	fastWorkDir := filepath.Join(townRoot, "rig-b")
+	for _, dir := range []string{slowWorkDir, fastWorkDir} {
+		if err := os.MkdirAll(filepath.Join(dir, ".beads"), 0755); err != nil {
+			t.Fatalf("create beads dir %s: %v", dir, err)
+		}
+	}
+	if got := FindTownRoot(slowWorkDir); got != townRoot {
+		t.Fatalf("FindTownRoot(%s) = %s, want %s", slowWorkDir, got, townRoot)
+	}
+
+	markerDir := filepath.Join(tmp, "markers")
+	if err := os.MkdirAll(markerDir, 0755); err != nil {
+		t.Fatalf("create marker dir: %v", err)
+	}
+	binDir := filepath.Join(tmp, "bin")
+	if err := os.MkdirAll(binDir, 0755); err != nil {
+		t.Fatalf("create bin dir: %v", err)
+	}
+	writeConcurrentBDListStub(t, binDir)
+	helperPath := binDir + string(os.PathListSeparator) + os.Getenv("PATH")
+
+	releaseSlow := func() {
+		_ = os.WriteFile(filepath.Join(markerDir, "release-slow"), []byte("ok"), 0644)
+	}
+
+	slowCtx, slowCancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer slowCancel()
+	slowCmd := bdListConcurrencyHelperCommand(slowCtx, helperPath, markerDir, slowWorkDir, "open")
+	type helperResult struct {
+		output []byte
+		err    error
+	}
+	slowDone := make(chan helperResult, 1)
+	go func() {
+		out, err := slowCmd.CombinedOutput()
+		slowDone <- helperResult{output: out, err: err}
+	}()
+	slowConsumed := false
+	t.Cleanup(func() {
+		if slowConsumed {
+			return
+		}
+		releaseSlow()
+		slowCancel()
+		select {
+		case <-slowDone:
+		case <-time.After(5 * time.Second):
+		}
+	})
+
+	waitForFile(t, filepath.Join(markerDir, "slow-started"), 2*time.Second)
+
+	fastCtx, fastCancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer fastCancel()
+	fastCmd := bdListConcurrencyHelperCommand(fastCtx, helperPath, markerDir, fastWorkDir, "closed")
+	started := time.Now()
+	fastOut, fastErr := fastCmd.CombinedOutput()
+	fastElapsed := time.Since(started)
+	if fastCtx.Err() == context.DeadlineExceeded {
+		t.Fatalf("fast unrelated bd list blocked behind slow list; output:\n%s", fastOut)
+	}
+	if fastErr != nil {
+		t.Fatalf("fast unrelated bd list failed after %s: %v\n%s", fastElapsed, fastErr, fastOut)
+	}
+
+	select {
+	case res := <-slowDone:
+		slowConsumed = true
+		if res.err != nil {
+			t.Fatalf("slow bd list failed early: %v\n%s", res.err, res.output)
+		}
+		t.Fatalf("slow bd list completed before overlap was verified; fake bd did not hold the slow command")
+	default:
+	}
+
+	releaseSlow()
+	select {
+	case res := <-slowDone:
+		slowConsumed = true
+		if res.err != nil {
+			t.Fatalf("slow bd list failed: %v\n%s", res.err, res.output)
+		}
+	case <-time.After(3 * time.Second):
+		slowCancel()
+		t.Fatalf("slow bd list did not finish")
+	}
+}
+
+func runBDListConcurrencyHelper(t *testing.T) {
+	ResetBdAllowStaleCacheForTest()
+	workDir := os.Getenv("GT_BEADS_LIST_HELPER_WORKDIR")
+	status := os.Getenv("GT_BEADS_LIST_HELPER_STATUS")
+	if workDir == "" || status == "" {
+		t.Fatalf("missing helper environment: workdir=%q status=%q", workDir, status)
+	}
+	if _, err := NewIsolated(workDir).List(ListOptions{Status: status}); err != nil {
+		t.Fatalf("List(%s): %v", status, err)
+	}
+}
+
+func bdListConcurrencyHelperCommand(ctx context.Context, path, markerDir, workDir, status string) *exec.Cmd {
+	cmd := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestBDListSlowListDoesNotBlockUnrelatedList$")
+	cmd.Env = append(sanitizedBDListConcurrencyEnv(),
+		"GT_BEADS_LIST_CONCURRENCY_HELPER=1",
+		"GT_BEADS_LIST_MARKER_DIR="+markerDir,
+		"GT_BEADS_LIST_HELPER_WORKDIR="+workDir,
+		"GT_BEADS_LIST_HELPER_STATUS="+status,
+		"PATH="+path,
+	)
+	return cmd
+}
+
+func sanitizedBDListConcurrencyEnv() []string {
+	env := make([]string, 0, len(os.Environ()))
+	for _, item := range os.Environ() {
+		switch {
+		case strings.HasPrefix(item, "PATH="),
+			strings.HasPrefix(item, "BD_ACTOR="),
+			strings.HasPrefix(item, "BEADS_"),
+			strings.HasPrefix(item, "GT_ROOT="),
+			strings.HasPrefix(item, "HOME="),
+			strings.HasPrefix(item, "GT_BEADS_LIST_CONCURRENCY_HELPER="),
+			strings.HasPrefix(item, "GT_BEADS_LIST_MARKER_DIR="),
+			strings.HasPrefix(item, "GT_BEADS_LIST_HELPER_WORKDIR="),
+			strings.HasPrefix(item, "GT_BEADS_LIST_HELPER_STATUS="):
+			continue
+		default:
+			env = append(env, item)
+		}
+	}
+	return env
+}
+
+func waitForFile(t *testing.T, path string, timeout time.Duration) {
+	t.Helper()
+	deadline := time.Now().Add(timeout)
+	for time.Now().Before(deadline) {
+		if _, err := os.Stat(path); err == nil {
+			return
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	t.Fatalf("timed out waiting for %s", path)
+}
+
+func writeConcurrentBDListStub(t *testing.T, dir string) {
+	t.Helper()
+	scriptPath := filepath.Join(dir, "bd")
+	script := `#!/bin/sh
+set -eu
+
+if [ "${1:-}" = "--allow-stale" ]; then
+  shift
+fi
+
+if [ "${1:-}" = "version" ]; then
+  exit 0
+fi
+
+if [ "${1:-}" != "list" ]; then
+  echo "unexpected bd args: $*" >&2
+  exit 1
+fi
+
+status=""
+prev=""
+for arg in "$@"; do
+  if [ "$prev" = "status" ]; then
+    status="$arg"
+    prev=""
+    continue
+  fi
+  case "$arg" in
+    --status=*) status="${arg#--status=}" ;;
+    --status) prev="status" ;;
+  esac
+done
+
+if [ "$status" = "open" ]; then
+  : > "${GT_BEADS_LIST_MARKER_DIR}/slow-started"
+  i=0
+  while [ ! -e "${GT_BEADS_LIST_MARKER_DIR}/release-slow" ]; do
+    i=$((i + 1))
+    if [ "$i" -ge 1000 ]; then
+      echo "timed out waiting for release-slow" >&2
+      exit 2
+    fi
+    sleep 0.01
+  done
+fi
+
+printf '[]\n'
+`
+	if err := os.WriteFile(scriptPath, []byte(script), 0755); err != nil {
+		t.Fatalf("write bd concurrency stub: %v", err)
+	}
+}
+
 // writeAllowStaleBDStub creates a mock bd binary in dir.
 //
 // The detection function (BdSupportsAllowStaleWithEnv) ignores the exit code
@@ -647,7 +1445,7 @@ func writeAllowStaleBDStub(t *testing.T, dir string, supportsAllowStale bool) {
 		if supportsAllowStale {
 			script = `@echo off
 setlocal enableextensions
-if "%1"=="--allow-stale" exit /b 0
+if "%1"=="--allow-stale" echo bd test
 exit /b 0
 `
 		} else {
@@ -664,6 +1462,7 @@ exit /b 0
 		scriptPath = filepath.Join(dir, "bd")
 		if supportsAllowStale {
 			script = `#!/bin/sh
+	echo "bd test"
 exit 0
 `
 		} else {
@@ -1056,6 +1855,21 @@ commit_sha: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2`,
 				CommitSHA:   "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
 			},
 		},
+		{
+			name: "null optional fields are empty",
+			issue: &Issue{
+				Description: `branch: polecat/Nux/gt-null
+target: main
+source_issue: gt-null
+last_conflict_sha: null
+conflict_task_id: null`,
+			},
+			wantFields: &MRFields{
+				Branch:      "polecat/Nux/gt-null",
+				Target:      "main",
+				SourceIssue: "gt-null",
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -1096,6 +1910,12 @@ commit_sha: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2`,
 			}
 			if fields.CloseReason != tt.wantFields.CloseReason {
 				t.Errorf("CloseReason = %q, want %q", fields.CloseReason, tt.wantFields.CloseReason)
+			}
+			if fields.LastConflictSHA != tt.wantFields.LastConflictSHA {
+				t.Errorf("LastConflictSHA = %q, want %q", fields.LastConflictSHA, tt.wantFields.LastConflictSHA)
+			}
+			if fields.ConflictTaskID != tt.wantFields.ConflictTaskID {
+				t.Errorf("ConflictTaskID = %q, want %q", fields.ConflictTaskID, tt.wantFields.ConflictTaskID)
 			}
 		})
 	}
@@ -1236,6 +2056,7 @@ It spans multiple lines.`,
 				Description: `branch: polecat/Nux/gt-old
 target: develop
 source_issue: gt-old
+commit_sha: oldsha
 worker: Nux
 
 Some existing prose content.`,
@@ -1244,6 +2065,7 @@ Some existing prose content.`,
 				Branch:      "polecat/Nux/gt-new",
 				Target:      "main",
 				SourceIssue: "gt-new",
+				CommitSHA:   "newsha",
 				Worker:      "Nux",
 				MergeCommit: "abc123",
 			},
@@ -1251,6 +2073,7 @@ Some existing prose content.`,
 target: main
 source_issue: gt-new
 worker: Nux
+commit_sha: newsha
 merge_commit: abc123
 
 Some existing prose content.`,
@@ -3366,6 +4189,7 @@ func TestFilterBeadsEnv_PreservesDoltPortVars(t *testing.T) {
 		"BEADS_DB=/tmp/beads.db",
 		"BEADS_DOLT_PORT=13306",
 		"GT_DOLT_PORT=13307",
+		"GT_DOLT_DATA=/tmp/dolt-data",
 		"GT_ROOT=/tmp/gt",
 		"HOME=/home/test",
 		"PATH=/usr/bin",
@@ -3387,6 +4211,37 @@ func TestFilterBeadsEnv_PreservesDoltPortVars(t *testing.T) {
 	}
 }
 
+func TestFilterBeadsEnv_StripsCaseVariantBeadsEnv(t *testing.T) {
+	withCaseInsensitiveEnvKeys(t)
+
+	environ := []string{
+		"bd_actor=test-actor",
+		"beads_dir=/tmp/beads",
+		"Beads_Db=/tmp/beads.db",
+		"beads_dolt_data_dir=/tmp/dolt-data",
+		"gt_dolt_data=/tmp/dolt-data",
+		"gt_root=/tmp/gt",
+		"home=/home/test",
+		"gt_dolt_port=13307",
+		"beads_dolt_server_port=13307",
+		"PATH=/usr/bin",
+	}
+	got := filterBeadsEnv(environ)
+	want := []string{
+		"gt_dolt_port=13307",
+		"beads_dolt_server_port=13307",
+		"PATH=/usr/bin",
+	}
+	if len(got) != len(want) {
+		t.Fatalf("filterBeadsEnv returned %d items, want %d\n  got:  %v\n  want: %v", len(got), len(want), got, want)
+	}
+	for i := range got {
+		if got[i] != want[i] {
+			t.Errorf("[%d] = %q, want %q", i, got[i], want[i])
+		}
+	}
+}
+
 // TestNewIsolatedWithPort verifies the constructor sets serverPort.
 func TestNewIsolatedWithPort(t *testing.T) {
 	b := NewIsolatedWithPort("/tmp/test", 13307)
@@ -3398,11 +4253,138 @@ func TestNewIsolatedWithPort(t *testing.T) {
 	}
 }
 
-func TestInitPassesServerFlag(t *testing.T) {
+func TestIsolatedWithPortOverridesInheritedDoltEnv(t *testing.T) {
+	t.Setenv("GT_DOLT_PORT", "3307")
+	t.Setenv("GT_DOLT_DATA", filepath.Join(t.TempDir(), "wrong-data"))
+	t.Setenv("BEADS_DOLT_SERVER_PORT", "3307")
+	t.Setenv("BEADS_DOLT_PORT", "3307")
+	t.Setenv("BEADS_DOLT_AUTO_START", "1")
+
 	b := NewIsolatedWithPort(t.TempDir(), 19999)
-	err := b.Init("covertest")
-	if err == nil {
-		t.Fatal("expected error (no bd/dolt server), got nil")
+	for _, env := range []struct {
+		name string
+		got  []string
+	}{
+		{name: "run", got: b.buildRunEnv()},
+		{name: "routing", got: b.buildRoutingEnv()},
+	} {
+		if got := countEnvPrefix(env.got, "GT_DOLT_PORT="); got != 1 {
+			t.Fatalf("%s env GT_DOLT_PORT count = %d, want 1", env.name, got)
+		}
+		if got := countEnvPrefix(env.got, "BEADS_DOLT_PORT="); got != 1 {
+			t.Fatalf("%s env BEADS_DOLT_PORT count = %d, want 1", env.name, got)
+		}
+		if got := countEnvPrefix(env.got, "BEADS_DOLT_SERVER_PORT="); got != 1 {
+			t.Fatalf("%s env BEADS_DOLT_SERVER_PORT count = %d, want 1", env.name, got)
+		}
+		if got := countEnvPrefix(env.got, "BEADS_DOLT_AUTO_START="); got != 1 {
+			t.Fatalf("%s env BEADS_DOLT_AUTO_START count = %d, want 1", env.name, got)
+		}
+		if !containsEnv(env.got, "GT_DOLT_PORT=19999") || !containsEnv(env.got, "BEADS_DOLT_SERVER_PORT=19999") || !containsEnv(env.got, "BEADS_DOLT_PORT=19999") || !containsEnv(env.got, "BEADS_DOLT_AUTO_START=0") {
+			t.Fatalf("%s env missing isolated Dolt overrides", env.name)
+		}
+		if containsEnvPrefix(env.got, "GT_DOLT_DATA=") {
+			t.Fatalf("%s env should strip GT_DOLT_DATA", env.name)
+		}
+	}
+}
+
+func countEnvPrefix(environ []string, prefix string) int {
+	count := 0
+	for _, env := range environ {
+		if strings.HasPrefix(env, prefix) {
+			count++
+		}
+	}
+	return count
+}
+
+func containsEnv(environ []string, want string) bool {
+	for _, env := range environ {
+		if env == want {
+			return true
+		}
+	}
+	return false
+}
+
+func containsEnvPrefix(environ []string, prefix string) bool {
+	for _, env := range environ {
+		if strings.HasPrefix(env, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+func TestInitPassesServerFlag(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("uses Unix shell script bd stub")
+	}
+
+	bdAllowStaleMu.Lock()
+	prevPath := bdAllowStalePath
+	prevResult := bdAllowStaleResult
+	bdAllowStaleMu.Unlock()
+	ResetBdAllowStaleCacheForTest()
+	t.Cleanup(func() {
+		bdAllowStaleMu.Lock()
+		bdAllowStalePath = prevPath
+		bdAllowStaleResult = prevResult
+		bdAllowStaleMu.Unlock()
+	})
+
+	stubDir := t.TempDir()
+	logPath := filepath.Join(stubDir, "bd.log")
+	stubPath := filepath.Join(stubDir, "bd")
+	script := `#!/bin/sh
+if [ "$1" = "--allow-stale" ]; then
+  echo "Error: unknown flag: --allow-stale" >&2
+  exit 0
+fi
+if [ "$1" != "init" ]; then
+  echo "unexpected args=$*" > "$MOCK_BD_LOG"
+  exit 2
+fi
+{
+  printf 'args=%s\n' "$*"
+  printf 'BEADS_DIR=%s\n' "$BEADS_DIR"
+  printf 'GT_DOLT_PORT=%s\n' "$GT_DOLT_PORT"
+  printf 'BEADS_DOLT_SERVER_PORT=%s\n' "$BEADS_DOLT_SERVER_PORT"
+  printf 'BEADS_DOLT_PORT=%s\n' "$BEADS_DOLT_PORT"
+  printf 'BEADS_DOLT_AUTO_START=%s\n' "$BEADS_DOLT_AUTO_START"
+} > "$MOCK_BD_LOG"
+exit 0
+`
+	if err := os.WriteFile(stubPath, []byte(script), 0o755); err != nil {
+		t.Fatalf("write bd stub: %v", err)
+	}
+	t.Setenv("PATH", stubDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+	t.Setenv("MOCK_BD_LOG", logPath)
+
+	workDir := t.TempDir()
+	b := NewIsolatedWithPort(workDir, 19999)
+	if err := b.Init("covertest"); err != nil {
+		t.Fatalf("Init: %v", err)
+	}
+
+	data, err := os.ReadFile(logPath)
+	if err != nil {
+		t.Fatalf("read bd log: %v", err)
+	}
+	log := string(data)
+	checks := []string{
+		"args=init --prefix covertest --quiet --server --server-port 19999",
+		"BEADS_DIR=" + filepath.Join(workDir, ".beads"),
+		"GT_DOLT_PORT=19999",
+		"BEADS_DOLT_SERVER_PORT=19999",
+		"BEADS_DOLT_PORT=19999",
+		"BEADS_DOLT_AUTO_START=0",
+	}
+	for _, check := range checks {
+		if !strings.Contains(log, check) {
+			t.Fatalf("bd init stub log missing %q:\n%s", check, log)
+		}
 	}
 }
 
@@ -3488,52 +4470,19 @@ func TestStripEnvPrefixes_PreservesOrder(t *testing.T) {
 	}
 }
 
-// ---------------------------------------------------------------------------
-// translateDoltPort tests
-// ---------------------------------------------------------------------------
+func TestStripEnvPrefixes_CaseInsensitiveKeys(t *testing.T) {
+	withCaseInsensitiveEnvKeys(t)
 
-// TestTranslateDoltPort verifies GT_DOLT_PORT → BEADS_DOLT_PORT translation.
-// This is the core fix for hq-27t: gastown sets GT_DOLT_PORT but bd only reads
-// BEADS_DOLT_PORT. Without translation, bd falls back to metadata.json port 3307.
-func TestTranslateDoltPort(t *testing.T) {
-	tests := []struct {
-		name string
-		env  []string
-		want []string
-	}{
-		{
-			name: "translates GT to BEADS",
-			env:  []string{"GT_DOLT_PORT=12345", "PATH=/usr/bin"},
-			want: []string{"GT_DOLT_PORT=12345", "PATH=/usr/bin", "BEADS_DOLT_PORT=12345"},
-		},
-		{
-			name: "skips if BEADS_DOLT_PORT already set",
-			env:  []string{"GT_DOLT_PORT=12345", "BEADS_DOLT_PORT=99999"},
-			want: []string{"GT_DOLT_PORT=12345", "BEADS_DOLT_PORT=99999"},
-		},
-		{
-			name: "no-op without GT_DOLT_PORT",
-			env:  []string{"PATH=/usr/bin"},
-			want: []string{"PATH=/usr/bin"},
-		},
-		{
-			name: "empty env",
-			env:  []string{},
-			want: []string{},
-		},
+	environ := []string{"beads_dir=/tmp", "Beads_Db=/tmp/db", "PATH=/usr/bin", "beads_dolt_server_port=3307"}
+	got := stripEnvPrefixes(environ, "BEADS_DIR=", "BEADS_DB=", "BEADS_DOLT_")
+	want := []string{"PATH=/usr/bin"}
+	if len(got) != len(want) {
+		t.Fatalf("stripEnvPrefixes() returned %d items, want %d\n  got:  %v\n  want: %v", len(got), len(want), got, want)
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := translateDoltPort(tt.env)
-			if len(got) != len(tt.want) {
-				t.Fatalf("translateDoltPort() = %v, want %v", got, tt.want)
-			}
-			for i := range got {
-				if got[i] != tt.want[i] {
-					t.Errorf("[%d] = %q, want %q", i, got[i], tt.want[i])
-				}
-			}
-		})
+	for i := range got {
+		if got[i] != want[i] {
+			t.Errorf("[%d] = %q, want %q", i, got[i], want[i])
+		}
 	}
 }
 
@@ -3709,6 +4658,7 @@ func TestBuildRunEnv_OverridesStaleDoltPortFromBeadsDir(t *testing.T) {
 		t.Fatalf("write dolt-server.port: %v", err)
 	}
 
+	t.Setenv("GT_DOLT_PORT", "")
 	t.Setenv("BEADS_DOLT_PORT", "3307")
 
 	env := (&Beads{workDir: tmpDir}).buildRunEnv()
@@ -3737,6 +4687,7 @@ func TestBuildRoutingEnv_OverridesStaleDoltPortFromBeadsDir(t *testing.T) {
 		t.Fatalf("write dolt-server.port: %v", err)
 	}
 
+	t.Setenv("GT_DOLT_PORT", "")
 	t.Setenv("BEADS_DOLT_PORT", "3307")
 
 	env := (&Beads{workDir: tmpDir}).buildRoutingEnv()
@@ -3752,6 +4703,108 @@ func TestBuildRoutingEnv_OverridesStaleDoltPortFromBeadsDir(t *testing.T) {
 	}
 	if !found {
 		t.Fatalf("expected BEADS_DOLT_PORT=43113 in env, got %v", env)
+	}
+}
+
+func TestRunEnv_StripsPollutedDoltEnvAndUsesRigMetadata(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("uses Unix shell script bd stub")
+	}
+
+	bdAllowStaleMu.Lock()
+	prevPath := bdAllowStalePath
+	prevResult := bdAllowStaleResult
+	bdAllowStaleMu.Unlock()
+	ResetBdAllowStaleCacheForTest()
+	t.Cleanup(func() {
+		bdAllowStaleMu.Lock()
+		bdAllowStalePath = prevPath
+		bdAllowStaleResult = prevResult
+		bdAllowStaleMu.Unlock()
+	})
+
+	workDir := t.TempDir()
+	beadsDir := filepath.Join(workDir, ".beads")
+	if err := os.MkdirAll(beadsDir, 0755); err != nil {
+		t.Fatalf("mkdir .beads: %v", err)
+	}
+	metadata := []byte(`{"backend":"dolt","dolt_mode":"server","dolt_server_host":"127.0.0.1","dolt_server_port":3307,"dolt_database":"gastown"}`)
+	if err := os.WriteFile(filepath.Join(beadsDir, "metadata.json"), metadata, 0644); err != nil {
+		t.Fatalf("write metadata.json: %v", err)
+	}
+
+	stubDir := t.TempDir()
+	logPath := filepath.Join(stubDir, "bd.log")
+	stubPath := filepath.Join(stubDir, "bd")
+	script := `#!/bin/sh
+if [ "$1" = "--allow-stale" ]; then
+  echo "Error: unknown flag: --allow-stale" >&2
+  exit 0
+fi
+{
+  printf 'BEADS_DIR=%s\n' "${BEADS_DIR:-}"
+  printf 'BEADS_DOLT_DATA_DIR=%s\n' "${BEADS_DOLT_DATA_DIR:-}"
+  printf 'BEADS_DOLT_HOST=%s\n' "${BEADS_DOLT_HOST:-}"
+  printf 'BEADS_DOLT_PORT=%s\n' "${BEADS_DOLT_PORT:-}"
+  printf 'BEADS_DOLT_SERVER_HOST=%s\n' "${BEADS_DOLT_SERVER_HOST:-}"
+  printf 'BEADS_DOLT_SERVER_PORT=%s\n' "${BEADS_DOLT_SERVER_PORT:-}"
+  printf 'BEADS_DOLT_SERVER_DATABASE=%s\n' "${BEADS_DOLT_SERVER_DATABASE:-}"
+} > "$MOCK_BD_LOG"
+if [ -n "${BEADS_DOLT_HOST:-}" ] || [ "${BEADS_DOLT_SERVER_DATABASE:-}" = "hq" ]; then
+  printf 'hq\n'
+  exit 0
+fi
+if [ "${BEADS_DIR:-}" = "${PWD}/.beads" ]; then
+  printf 'gt\n'
+  exit 0
+fi
+printf 'unknown\n'
+`
+	if err := os.WriteFile(stubPath, []byte(script), 0o755); err != nil {
+		t.Fatalf("write bd stub: %v", err)
+	}
+	t.Setenv("PATH", stubDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+	t.Setenv("MOCK_BD_LOG", logPath)
+	t.Setenv("BEADS_DOLT_DATA_DIR", "/home/coder/gt/.dolt-data")
+	t.Setenv("BEADS_DOLT_HOST", "127.0.0.1")
+	t.Setenv("GT_DOLT_DATA", "")
+	t.Setenv("GT_DOLT_PORT", "")
+	t.Setenv("BEADS_DOLT_PORT", "3307")
+	t.Setenv("BEADS_DOLT_SERVER_HOST", "127.0.0.1")
+	t.Setenv("BEADS_DOLT_SERVER_PORT", "3307")
+	t.Setenv("BEADS_DOLT_SERVER_DATABASE", "hq")
+
+	out, err := New(workDir).Run("config", "get", "issue_prefix")
+	if err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	if got := strings.TrimSpace(string(out)); got != "gt" {
+		t.Fatalf("polluted env selected prefix %q, want gt", got)
+	}
+
+	data, err := os.ReadFile(logPath)
+	if err != nil {
+		t.Fatalf("read bd log: %v", err)
+	}
+	log := string(data)
+	for _, forbidden := range []string{
+		"BEADS_DOLT_DATA_DIR=/home/coder/gt/.dolt-data",
+		"BEADS_DOLT_HOST=127.0.0.1",
+		"BEADS_DOLT_SERVER_DATABASE=hq",
+	} {
+		if strings.Contains(log, forbidden) {
+			t.Fatalf("stale Dolt env leaked into bd subprocess (%s):\n%s", forbidden, log)
+		}
+	}
+	for _, want := range []string{
+		"BEADS_DIR=" + beadsDir,
+		"BEADS_DOLT_SERVER_DATABASE=gastown",
+		"BEADS_DOLT_PORT=3307",
+		"BEADS_DOLT_SERVER_HOST=127.0.0.1",
+	} {
+		if !strings.Contains(log, want) {
+			t.Fatalf("bd subprocess env missing %q:\n%s", want, log)
+		}
 	}
 }
 

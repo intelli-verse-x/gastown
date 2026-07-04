@@ -15,6 +15,7 @@ import (
 	"github.com/steveyegge/gastown/internal/config"
 	"github.com/steveyegge/gastown/internal/constants"
 	"github.com/steveyegge/gastown/internal/deacon"
+	"github.com/steveyegge/gastown/internal/refinery"
 	"github.com/steveyegge/gastown/internal/rig"
 	"github.com/steveyegge/gastown/internal/session"
 	"github.com/steveyegge/gastown/internal/style"
@@ -410,7 +411,7 @@ func outputCommandQuickReference(ctx RoleContext) {
 		fmt.Println("|------------|----------------|----------------|")
 		fmt.Printf("| Run triage | `%s boot triage` | ~~gt deacon heartbeat~~ (that's Deacon's job) |\n", c)
 		fmt.Printf("| Check Deacon health | `%s deacon status` | ~~gt status~~ (town-wide, not Deacon-specific) |\n", c)
-		fmt.Printf("| Nudge the Deacon | `%s nudge deacon \"msg\"` | ~~tmux send-keys~~ (unreliable) |\n", c)
+		fmt.Printf("| Nudge the Deacon | `%s nudge deacon \"msg\"` | ~~tmux send-keys~~ (blocked; can stage unsubmitted input) |\n", c)
 	}
 
 	fmt.Println()
@@ -518,6 +519,20 @@ func outputStartupDirective(ctx RoleContext) {
 			fmt.Println("---")
 			fmt.Println()
 			fmt.Printf("Rig %s is %s. No patrol needed. Exit cleanly.\n", ctx.Rig, reason)
+			return
+		}
+		if stop, err := refinery.ActiveSafetyStop(ctx.TownRoot, ctx.Rig); err != nil {
+			fmt.Println()
+			fmt.Println("---")
+			fmt.Println()
+			style.PrintWarning("could not check refinery safety stop: %v", err)
+			fmt.Println("No patrol needed. Exit cleanly until safety-stop state can be verified.")
+			return
+		} else if stop != nil {
+			fmt.Println()
+			fmt.Println("---")
+			fmt.Println()
+			fmt.Printf("Refinery %s is %s. No patrol needed. Exit cleanly.\n", ctx.Rig, stop.Reason())
 			return
 		}
 		fmt.Println()

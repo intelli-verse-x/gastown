@@ -80,6 +80,28 @@ These are the instructions.
 	}
 }
 
+func TestDoltShellPluginsPreferGTDoltEnv(t *testing.T) {
+	root := filepath.Join("..", "..")
+	for _, rel := range []string{
+		filepath.Join("plugins", "compactor-dog", "run.sh"),
+		filepath.Join("plugins", "dolt-archive", "run.sh"),
+	} {
+		data, err := os.ReadFile(filepath.Join(root, rel))
+		if err != nil {
+			t.Fatalf("read %s: %v", rel, err)
+		}
+		content := string(data)
+		for _, want := range []string{
+			`DOLT_HOST="${GT_DOLT_HOST:-${DOLT_HOST:-127.0.0.1}}"`,
+			`DOLT_PORT="${GT_DOLT_PORT:-${DOLT_PORT:-3307}}"`,
+		} {
+			if !strings.Contains(content, want) {
+				t.Fatalf("%s missing %q", rel, want)
+			}
+		}
+	}
+}
+
 func TestParsePluginMD_MissingName(t *testing.T) {
 	content := []byte(`+++
 description = "No name"
@@ -435,8 +457,11 @@ func TestParsePluginMD_StuckAgentDogUsesCanonicalHeartbeatPath(t *testing.T) {
 	if !strings.Contains(plugin.Instructions, "could not parse rigs.json") {
 		t.Fatalf("expected fail-safe rigs.json parse handling in instructions, got:\n%s", plugin.Instructions)
 	}
-	if !strings.Contains(plugin.Instructions, ">15m threshold") {
-		t.Fatalf("expected canonical deacon very-stale threshold in instructions, got:\n%s", plugin.Instructions)
+	if !strings.Contains(plugin.Instructions, "GT_STUCK_AGENT_DOG_DEACON_STALE_SECONDS") {
+		t.Fatalf("expected configurable deacon stale threshold in instructions, got:\n%s", plugin.Instructions)
+	}
+	if !strings.Contains(plugin.Instructions, "heartbeat_write_divergence") {
+		t.Fatalf("expected heartbeat write-divergence handling in instructions, got:\n%s", plugin.Instructions)
 	}
 }
 
@@ -684,6 +709,12 @@ func TestFormatMailBody_WithRunScript(t *testing.T) {
 	if !strings.Contains(body, "Do NOT interpret the plugin.md instructions") {
 		t.Error("expected mail body to warn against interpreting markdown")
 	}
+	if !strings.Contains(body, "gt plugin record-run --plugin test-plugin --result <outcome>") {
+		t.Error("expected mail body to use canonical plugin run recorder")
+	}
+	if strings.Contains(body, "bd create --ephemeral") {
+		t.Error("expected mail body to avoid raw ephemeral receipt creation")
+	}
 	// Must NOT contain "## Instructions" section
 	if strings.Contains(body, "## Instructions") {
 		t.Error("expected mail body to NOT contain markdown instructions section")
@@ -862,5 +893,11 @@ func TestFormatMailBody_WithoutRunScript(t *testing.T) {
 	// Must NOT contain run.sh dispatch
 	if strings.Contains(body, "bash run.sh") {
 		t.Error("expected mail body to NOT contain run.sh command")
+	}
+	if !strings.Contains(body, "gt plugin record-run --plugin test-plugin --result <outcome>") {
+		t.Error("expected mail body to use canonical plugin run recorder")
+	}
+	if strings.Contains(body, "bd create --ephemeral") {
+		t.Error("expected mail body to avoid raw ephemeral receipt creation")
 	}
 }

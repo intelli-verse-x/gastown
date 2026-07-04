@@ -1,10 +1,12 @@
 package daemon
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"slices"
@@ -13,6 +15,7 @@ import (
 	"time"
 
 	"github.com/gofrs/flock"
+	"github.com/steveyegge/gastown/internal/tmux"
 )
 
 func TestDefaultConfig(t *testing.T) {
@@ -79,6 +82,210 @@ func TestCleanupLegacySocketSessionsRunsOnce(t *testing.T) {
 	d.cleanupLegacySocketSessions()
 	if calls != 1 {
 		t.Fatalf("cleanup calls after second invocation = %d, want 1", calls)
+	}
+}
+
+func TestSyncWorkspaceRefusesTownRootWorkDir(t *testing.T) {
+	townRoot := t.TempDir()
+	cmd := exec.Command("git", "init")
+	cmd.Dir = townRoot
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git init: %v\n%s", err, out)
+	}
+	for _, args := range [][]string{{"config", "user.email", "test@test.com"}, {"config", "user.name", "Test User"}} {
+		cmd = exec.Command("git", args...)
+		cmd.Dir = townRoot
+		if out, err := cmd.CombinedOutput(); err != nil {
+			t.Fatalf("git %v: %v\n%s", args, err, out)
+		}
+	}
+	if err := os.WriteFile(filepath.Join(townRoot, "README.md"), []byte("# Town\n"), 0644); err != nil {
+		t.Fatalf("write README: %v", err)
+	}
+	cmd = exec.Command("git", "add", "README.md")
+	cmd.Dir = townRoot
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git add: %v\n%s", err, out)
+	}
+	cmd = exec.Command("git", "commit", "-m", "initial")
+	cmd.Dir = townRoot
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git commit: %v\n%s", err, out)
+	}
+
+	writeDaemonTownFile(t, townRoot, "mayor/town.json", `{"name":"test-town"}\n`)
+	writeDaemonTownFile(t, townRoot, "mayor/rigs.json", `{"rigs":[]}\n`)
+	writeDaemonTownFile(t, townRoot, ".dolt-data/gastown/.dolt/noms/manifest", "manifest\n")
+	writeDaemonTownFile(t, townRoot, ".runtime/sentinel", "runtime\n")
+	writeDaemonTownFile(t, townRoot, ".beads/metadata.json", `{"prefix":"hq"}\n`)
+	writeDaemonTownFile(t, townRoot, "daemon/daemon.pid", "12345\n")
+	writeDaemonTownFile(t, townRoot, "user-work.txt", "user work\n")
+
+	headBefore := daemonGitOutput(t, townRoot, "rev-parse", "HEAD")
+	filesBefore := snapshotDaemonTownFiles(t, townRoot)
+	var logBuf bytes.Buffer
+	d := &Daemon{
+		config: DefaultConfig(townRoot),
+		logger: log.New(&logBuf, "", 0),
+	}
+	d.syncWorkspace(townRoot)
+
+	if !strings.Contains(logBuf.String(), "refusing daemon git sync") {
+		t.Fatalf("log = %q, want refusal", logBuf.String())
+	}
+	if got := daemonGitOutput(t, townRoot, "rev-parse", "HEAD"); got != headBefore {
+		t.Fatalf("HEAD changed: got %s, want %s", got, headBefore)
+	}
+	assertDaemonTownFilesPreserved(t, townRoot, filesBefore)
+
+	nestedRig := filepath.Join(townRoot, "gastown")
+	if err := os.MkdirAll(nestedRig, 0755); err != nil {
+		t.Fatalf("mkdir nested rig: %v", err)
+	}
+	logBuf.Reset()
+	d.syncWorkspace(nestedRig)
+	if !strings.Contains(logBuf.String(), "refusing daemon git sync") {
+		t.Fatalf("nested log = %q, want refusal", logBuf.String())
+	}
+	if got := daemonGitOutput(t, townRoot, "rev-parse", "HEAD"); got != headBefore {
+		t.Fatalf("HEAD changed after nested sync: got %s, want %s", got, headBefore)
+	}
+	assertDaemonTownFilesPreserved(t, townRoot, filesBefore)
+}
+
+func TestEnsureRefineryRunningSafetyStoppedDoesNotSpawn(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("mock bd/tmux scripts use POSIX shell")
+	}
+	townRoot := t.TempDir()
+	writeDaemonTownFile(t, townRoot, "mayor/town.json", `{"name":"test"}`)
+	writeDaemonTownFile(t, townRoot, ".beads/metadata.json", `{"prefix":"hq"}`)
+	writeDaemonTownFile(t, townRoot, "events/refinery/pending.event", "{}")
+	if err := os.MkdirAll(filepath.Join(townRoot, "testrig"), 0o755); err != nil {
+		t.Fatalf("mkdir rig: %v", err)
+	}
+
+	binDir := t.TempDir()
+	logPath := filepath.Join(binDir, "commands.log")
+	writeDaemonSafetyStopMockBD(t, binDir, logPath)
+	writeDaemonSafetyStopMockTmux(t, binDir, logPath)
+	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
+
+	d := &Daemon{
+		config: DefaultConfig(townRoot),
+		logger: log.New(io.Discard, "", 0),
+		tmux:   tmux.NewTmux(),
+	}
+	d.ensureRefineryRunning("testrig")
+
+	logData, err := os.ReadFile(logPath)
+	if err != nil {
+		t.Fatalf("read command log: %v", err)
+	}
+	if strings.Contains(string(logData), "new-session") {
+		t.Fatalf("daemon spawned refinery despite safety stop; log:\n%s", logData)
+	}
+}
+
+func writeDaemonSafetyStopMockBD(t *testing.T, binDir, logPath string) {
+	t.Helper()
+	script := `#!/bin/sh
+printf 'bd %s\n' "$*" >> "` + logPath + `"
+cmd=""
+for arg in "$@"; do
+  case "$arg" in
+    --*) ;;
+    *) cmd="$arg"; break ;;
+  esac
+done
+case "$cmd" in
+  version)
+    echo "bd test"
+    ;;
+  show)
+    printf '%s\n' '[{"id":"gt-testrig-refinery","title":"Refinery","issue_type":"task","labels":["gt:agent","safety_stop:hq-vmrwr"],"status":"open","description":"role_type: refinery\nrig: testrig\nagent_state: idle"}]'
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+`
+	if err := os.WriteFile(filepath.Join(binDir, "bd"), []byte(script), 0o755); err != nil {
+		t.Fatalf("write fake bd: %v", err)
+	}
+}
+
+func writeDaemonSafetyStopMockTmux(t *testing.T, binDir, logPath string) {
+	t.Helper()
+	script := `#!/bin/sh
+printf 'tmux %s\n' "$*" >> "` + logPath + `"
+case "$1" in
+  has-session)
+    exit 1
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+`
+	if err := os.WriteFile(filepath.Join(binDir, "tmux"), []byte(script), 0o755); err != nil {
+		t.Fatalf("write fake tmux: %v", err)
+	}
+}
+
+func writeDaemonTownFile(t *testing.T, root, rel, contents string) {
+	t.Helper()
+	path := filepath.Join(root, filepath.FromSlash(rel))
+	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+		t.Fatalf("mkdir %s: %v", filepath.Dir(path), err)
+	}
+	if err := os.WriteFile(path, []byte(contents), 0644); err != nil {
+		t.Fatalf("write %s: %v", rel, err)
+	}
+}
+
+func daemonGitOutput(t *testing.T, dir string, args ...string) string {
+	t.Helper()
+	cmd := exec.Command("git", args...)
+	cmd.Dir = dir
+	out, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("git %v: %v", args, err)
+	}
+	return strings.TrimSpace(string(out))
+}
+
+func snapshotDaemonTownFiles(t *testing.T, root string) map[string]string {
+	t.Helper()
+	files := make(map[string]string)
+	for _, rel := range []string{
+		"mayor/town.json",
+		"mayor/rigs.json",
+		".dolt-data/gastown/.dolt/noms/manifest",
+		".runtime/sentinel",
+		".beads/metadata.json",
+		"daemon/daemon.pid",
+		"user-work.txt",
+	} {
+		contents, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(rel)))
+		if err != nil {
+			t.Fatalf("read %s: %v", rel, err)
+		}
+		files[rel] = string(contents)
+	}
+	return files
+}
+
+func assertDaemonTownFilesPreserved(t *testing.T, root string, before map[string]string) {
+	t.Helper()
+	for rel, want := range before {
+		contents, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(rel)))
+		if err != nil {
+			t.Fatalf("read preserved %s: %v", rel, err)
+		}
+		if got := string(contents); got != want {
+			t.Fatalf("%s changed: got %q, want %q", rel, got, want)
+		}
 	}
 }
 
