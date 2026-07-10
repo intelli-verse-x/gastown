@@ -447,7 +447,19 @@ func (d *Daemon) Run() (err error) {
 	pid := os.Getpid()
 	d.logger.Printf("Daemon starting (PID %d)", pid)
 	startupComplete := false
+	var state *State
 	defer func() {
+		if r := recover(); r != nil {
+			d.logCrash(pid, r, debug.Stack())
+			if state != nil {
+				state.Running = false
+				if saveErr := SaveState(d.config.TownRoot, state); saveErr != nil {
+					d.logger.Printf("Warning: failed to save state after panic: %v", saveErr)
+				}
+			}
+			err = fmt.Errorf("daemon panic: %v", r)
+			return
+		}
 		if err == nil {
 			return
 		}
@@ -495,7 +507,7 @@ func (d *Daemon) Run() (err error) {
 	defer func() { _ = os.Remove(d.config.PidFile) }() // best-effort cleanup
 
 	// Update state
-	state := &State{
+	state = &State{
 		Running:   true,
 		PID:       os.Getpid(),
 		StartedAt: time.Now(),
@@ -2258,6 +2270,30 @@ func (d *Daemon) isRigOperational(rigName string) (bool, string) {
 // processLifecycleRequests checks for and processes lifecycle requests.
 func (d *Daemon) processLifecycleRequests() {
 	d.ProcessLifecycleRequests()
+}
+
+// logCrash records a recovered panic to a dedicated crash.log, separate from
+// the lumberjack-rotated daemon.log. The daemon subprocess is normally
+// launched with Stdout/Stderr set to nil, so an unrecovered panic's stack
+// trace would otherwise be silently discarded, leaving no evidence of why
+// the daemon died (see hq-3ny).
+func (d *Daemon) logCrash(pid int, recovered any, stack []byte) {
+	d.logger.Printf("PANIC recovered (PID %d): %v", pid, recovered)
+
+	crashLogPath := filepath.Join(d.config.TownRoot, "daemon", "crash.log")
+	if err := os.MkdirAll(filepath.Dir(crashLogPath), 0755); err != nil {
+		d.logger.Printf("Warning: failed to create daemon dir for crash.log: %v", err)
+		return
+	}
+	f, err := os.OpenFile(crashLogPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		d.logger.Printf("Warning: failed to open crash.log: %v", err)
+		return
+	}
+	defer func() { _ = f.Close() }()
+
+	fmt.Fprintf(f, "=== Daemon panic at %s (PID %d) ===\n%v\n\n%s\n\n",
+		time.Now().Format(time.RFC3339), pid, recovered, stack)
 }
 
 // shutdown performs graceful shutdown.
