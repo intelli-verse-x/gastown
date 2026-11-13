@@ -10,7 +10,6 @@
 
 # IDE
 .idea/
-.vscode/
 *.swp
 *.swo
 *~
@@ -99,3 +98,5 @@ docs/fork-info/
 
 # Gas Town (added by gt)
 GEMINI.md
+config.bat
+node_modules
